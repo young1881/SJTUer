@@ -2,19 +2,21 @@
   <div id="app">
     <div id="head">
       <img id="logo" src="./assets/logo.png">
+      <searchbox id="searchbox"></searchbox>
       <flip-clock></flip-clock>
     </div>
 
-    <websites></websites>
+    <websites id="websites"></websites>
 
   </div>
 </template>
 
 <script>
 import FlipClock from './components/FlipClock.vue'
+import Searchbox from './components/searchbox.vue'
 import websites from './components/websites.vue'
 export default {
-  components: { FlipClock, websites },
+  components: { FlipClock, websites, Searchbox },
   name: 'App'
 }
 </script>
@@ -23,6 +25,11 @@ export default {
 body{
   background: rgb(254, 232, 253);
   z-index: -3;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #head{
@@ -34,6 +41,14 @@ body{
   top: 30px;
   left: 30px;
   width: 5%;
+}
+#searchbox {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50px;
+    z-index:700;
 }
 
 </style>
