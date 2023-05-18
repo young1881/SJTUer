@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+    <script type="text/javascript" src="../static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/js/echarts.min.js"></script>
+</head>
+<body>
+    <div id="lib_bar" style="width:270px; height:250px;"></div>
+    <script>
+        var chart = echarts.init(document.getElementById('lib_bar'), 'white', {renderer: 'canvas'});
+
+        $(
+            function () {
+                fetchData(chart);
+                setInterval(fetchData, 60000);
+            }
+        );
+
+        function fetchData() {
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/index/lib_bar",
+                dataType: 'json',
+                success: function (result) {
+                    chart.setOption(result.data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

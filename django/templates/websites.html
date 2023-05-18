@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% from '_includes/corona_data.html' import corona_data %}
+{% from '_includes/site_box.html' import site_box %}
+{% from '_includes/wallpaper.html' import color_wallpaper, img_wallpaper %}
+
+{% block counter %}
+    <div class="counter" id="counter" style="cursor: pointer">
+        <div class="flip">
+            <div class="digital front" data-number="0"></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+        <div class="flip">
+            <div class="digital front" data-number="0 "></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+        <em class="divider">:</em>
+        <div class="flip">
+            <div class="digital front" data-number="0"></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+        <div class="flip">
+            <div class="digital front" data-number="0"></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+        <em class="divider">:</em>
+        <div class="flip">
+            <div class="digital front" data-number="0"></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+        <div class="flip">
+            <div class="digital front" data-number="0"></div>
+            <div class="digital back" data-number="1"></div>
+        </div>
+    </div>
+    <div class="long_date" id={{ simple_mode.is_active }}></div>
+    <div class="username" id={{ simple_mode.username }}></div>
+{% endblock %}
+
+
+{% block poem %}
+    <div class="poem" id="poem">
+        <p class="sentence" id="sentence">「 {{ poem.content }} 」</p>
+        <p class="sentence" id="author">——《{{ poem.origin }}》 {{ poem.author }}</p>
+    </div>
+{% endblock %}
+
+
+{% block search %}
+    <div class="search-box" id="search-box">
+        <div class="search-form">
+            <div class='engine-box' style="cursor: pointer">
+                <img class="engine" src="https://files.codelife.cc/itab/search/baidu.svg" alt="加载中">
+                <i class="fa-solid fa-caret-down" style="font-size:12px; display:flex; padding: 3px 3px;"></i>
+            </div>
+            <input class="search-txt" id="search-text" name="search_msg" placeholder="输入文本搜索，左侧切换引擎" onkeydown="if(event.keyCode==13) document.getElementById('search-btn').click()">
+            <div class='search-btn-box' id='search-btn' style="cursor: pointer">
+                <i class="fa-solid fa-magnifying-glass" class='search-btn'></i>
+            </div>
+        </div>
+        <div class="search-engine" style="display: none;">
+            <div class="search-engine-head">
+                <div class="search-engine-tit">点击选择搜索引擎：</div>
+            </div>
+            <ul class="search-engine-list"></ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block weather %}
+{% from '_includes/forecast_list.html' import forecast_list %}
+    <div class="weather" id="weather">
+        <div class="weather_card">
+            <div class="today_weather">
+                <div class="today_city">
+                    <p class="city" id="currentcity">{{ weather.city }}</p>
+                    <div class="edit" id="edit"></div>
+                </div>
+                <div class="today_info">
+                    <i id="day0_icon"></i>
+                    <p class="type" id="day0_type">{{ weather.forecast.day0.type }}</p>
+                    <p class="T_current" id="day0_temp">当前 {{ weather.wendu }}℃<br>今日 {{ weather.forecast.day0.low }}~{{ weather.forecast.day0.high }}℃</p>
+                </div>
+            </div>
+            <div class="forecast" id="forecast">
+                <ul>
+                    <li>
+                        {% for day in weather.forecast %}
+                            {% if loop.first == false and loop.last == false %}
+                                {{ forecast_list(day, weather.forecast[day]) }}
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+            <div class="citywindow" id="citywindow" style="display: none;">
+                <button id="getVal">确定</button>
+                <div style="width: 110px; height: 20px;" id="cityselect" data-role="cityselector">上海市 上海市 闵行区</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block news %}
+    <div class="news" id="news">
+        <div class="card">
+            <button class="info_btn active" style="cursor: pointer">通知</button>
+            <button class="info_btn" style="cursor: pointer">要闻</button>
+            <button class="info_btn" style="cursor: pointer">微博</button>
+            <button class="info_btn" style="cursor: pointer">B站</button>
+            <button class="info_btn" style="cursor: pointer">知乎</button>
+            <div class="infoBox">
+                <div class="info show">
+                    <ul>
+                        {% for x in jwc %}
+                            <li>
+                                <a href={{ x.url }} target="_blank">{{ x.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        {% for x in jnews %}
+                            <li>
+                                <a href={{ x.url }} target="_blank">{{ x.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        {% for x in weibo %}
+                            <li>
+                <span style="float:left">
+                    <a href={{ x.url }} target="_blank">{{ x.name }}</a>
+                </span>
+                                <span style="float:right">
+                    <p>{{ x.hot }}</p>
+                </span><br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        {% for x in bilibili %}
+                            <li>
+                <span style="float:left">
+                    <a href={{ x.url }} target="_blank">{{ x.title }}</a>
+                </span>
+                                <span style="float:right">
+                    <p>{{ x.view }}</p>
+                </span><br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="info">
+                    <ul>
+                        {% for x in zhihu %}
+                            <li>
+                                <a href={{ x.url }} target="_blank">{{ x.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tools %}
+    <div class="tools" id="tools">
+        <div class="tool_card">
+            <button class="tool_btn active" style="cursor: pointer">国内疫情</button>
+            <button class="tool_btn" style="cursor: pointer">图书馆</button>
+            <button class="tool_btn" style="cursor: pointer">食堂</button>
+            <div class="toolBox">
+                <div class="tool show">
+                    {{ corona_data("累计确诊", corona.chinaTotal.confirm, corona.chinaAdd.confirm, '#a31d13') }}
+                    {{ corona_data("境外输入", corona.chinaTotal.importedCase, corona.chinaAdd.importedCase, '#D2691E') }}
+                    {{ corona_data("累计治愈", corona.chinaTotal.heal, corona.chinaAdd.heal, '#34aa70') }}
+                    {{ corona_data("现存确诊", corona.chinaTotal.nowConfirm, corona.chinaAdd.nowConfirm, '#e44a3d') }}
+                    {{ corona_data("累计死亡", corona.chinaTotal.dead, corona.chinaAdd.dead, '#333') }}
+                    {{ corona_data("无症状", corona.chinaTotal.noInfectH5, corona.chinaAdd.noInfectH5, '#791618') }}
+                    <div class="information">
+                        <p>统计截至{{corona.lastUpdateTime}}</p>
+                        <p>数据来源自国家及各地卫健委每日信息发布</p>
+                    </div>
+                </div>
+                <div class="tool">
+                    <iframe frameborder=0 src="lib_index" width="100%" height="300"></iframe>
+                </div>
+                <div class="tool">
+                    <iframe frameborder=0 src="can_index" width="100%" height="300"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sites %}
+    <div class="sites" id="sites">
+        {% for site in sites %}
+        {{ site_box (site.site_name, site.site_url, site.site_src)  }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block sidebar %}
+    <div class="sidebar" id="sidebar">
+        <!-- --t是自定义属性，通过var函数可调用 -->
+        
+        <li style="--t:20%;">
+            <a href="/login">
+                <i class="fa-solid fa-user"></i>
+            <p> 
+            {% if jac == '' %}
+                登录 
+            {% else %}
+                {{jac}}
+            {% endif %}
+            </p>
+            </a>
+        </li>
+
+        {% if jac == '' %}
+        <li style="--t:30%;">
+            <a href = "JavaScript:void(0)" onclick = "noPermissions('请登陆后使用该功能')">
+                <i class="fa-solid fa-splotch"></i>
+                <p>网站收藏</p>
+            </a>
+        </li>
+        <li style="--t:40%;">
+            <a href="JavaScript:void(0)" onclick = "noPermissions('请登陆后使用该功能')">
+                <i class="fa-solid fa-clock"></i>
+                <p>倒计时修改</p>
+            </a>
+        </li>
+        <li style="--t:50%;">
+            <a href="JavaScript:void(0)" onclick = "noPermissions('请登陆后使用该功能')">
+                <i class="fa-solid fa-palette"></i>
+                <p>修改壁纸</p>
+            </a>
+        </li>
+        <li style="--t:60%;">
+            <a href="/about/" target="_blank">
+                <i class="fa-solid fa-house"></i>
+                <p>关于</p>
+            </a>
+        </li>
+
+        {% else %}
+        <li style="--t:30%;">
+            <a href = "JavaScript:void(0)" onclick = "openSiteDialog()">
+                <i class="fa-solid fa-splotch"></i>
+            <p>网站收藏</p>
+            </a>
+        </li>
+        <li style="--t:40%;">
+            <a href="JavaScript:void(0)" onclick = "openCountdownDialog()">
+                <i class="fa-solid fa-clock"></i>
+                <p>倒计时修改</p>
+            </a>
+        </li>
+        <li style="--t:50%;">
+            <a href="JavaScript:void(0)" onclick = "openWallpaperDialog()">
+                <i class="fa-solid fa-palette"></i>
+                <p>修改壁纸</p>
+            </a>
+        </li>
+        <li style="--t:60%;">
+            <a href="/about/" target="_blank">
+                <i class="fa-solid fa-house"></i>
+                <p>关于</p>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if (jac != '') %}
+
+        <li style="--t:70%;">
+            <a href="/logout">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+            <p> 
+                登出 
+            </p>
+        </li>
+        {% endif %}
+
+        <div class="top"></div>
+        <div class="middle"></div>
+        <div class="bottom"></div>
+</div>
+{% endblock %}
+
+{% block windows %}
+
+{% if jac == '' %}
+
+{% else %}
+    <div id="sub-menu">
+    <table cellspace="2">
+        <tr>
+            <td>
+                <a href = "JavaScript:void(0)" onclick = "openRefactorDialog()">
+                   <input type="button" class="sub-menu-btn" id="site_refactor" value="修改" />
+                </a>
+            </td>
+            <td>
+                <a href = "javaScript:void(0)" onclick = "delete_site()">
+                   <input type="button" class="sub-menu-btn" id="site_delete" value="删除"/>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <div id="add_site" class="content_box">
+        <form>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <h1>添加网站收藏</h1>
+            <div class = "box_form">
+                <div class = "item">
+                    <input type="text" placeholder="网站名称" id="site_name" name="site_name" required="required">
+                </div>
+                <div class = "item">
+                    <input type="text" placeholder="网址" id="site_url" name="site_url" required="required" >
+                </div>
+                <a class = "button1" href = "javascript:void(0)" onclick = "add_site()">
+                    <input type="submit" value="完 成" id="site_submit" style="cursor: pointer"/>
+                </a>
+                <div class = "button2">
+                    <a href = "javascript:void(0)" onclick = "closeSiteDialog()"> 取 消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="refactor_site" class="content_box">
+        <h1>修改网页名称</h1>
+        <form class = "box_form">
+            <div class = "item">
+                 <input type="text" placeholder="网站名" id="refactor_site_name" name="refactor_site_name">
+            </div>
+            <a class = "button1" href = "javascript:void(0)" onclick = "refactor_site()">
+                <input type="submit" value="修 改" id="site_submit" style="cursor: pointer"/>
+            </a>
+            <div class = "button2">
+                <a href = "javascript:void(0)" onclick = "closeRefactorDialog()">取 消</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="countdown_dialog" class="content_box">
+        <h1>自定义倒计时</h1>
+        <form name="reg_testdate" class = "box_form">
+            <div class = "item">
+                    <input type="text" placeholder="日期名" id="refactor_date_name" name="refactor_date_name">
+            </div>
+            <div class="date_list">
+                <select name="YYYY" id="YYYY" onchange="YYYYDD(this.value)" style="width:80px;font-size:16px;margin-left:10px">
+                    <option value="">请选择 年</option>
+                </select>
+                <select name="MM" id="MM" onchange="MMDD(this.value)" style="width:80px;font-size:16px;margin-left:10px">
+                    <option value="">选择 月</option>
+                </select>
+                <select name="DD" id="DD" style="width:80px;font-size:16px;margin-left:10px">
+                    <option value="">选择 日</option>
+                </select>
+            </div>
+
+            <div class = "button1">
+                <a  href = "javascript:void(0)" onclick = "refactor_countdown()">
+                    <input type="submit" value="修 改" id="site_submit" style="cursor: pointer"/>
+                </a>
+            </div>
+
+            <div class = "button2">
+                    <a href = "javascript:void(0)" onclick = "closeCountdownDialog()">取 消</a>
+            </div>
+        </form>
+    </div>
+{% endif %}
+
+<div class="wallpapers" id="wallpapers">
+        <div class="card">
+            <button class="wallpaper_btn active">预设壁纸</button>
+            <button class="wallpaper_btn">自主上传</button>
+            <div class="wallpaperBox">
+                <div class="wallpaper show">
+                    <div class="color_wallpaper_all">
+                        {{ color_wallpaper("DustyGrass", "Dusty Grass", "background: linear-gradient(90deg, #70e1f5 0%, #ffd194 100%);") }}
+                        {{ color_wallpaper("NightFade", "Night Fade", "background: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);") }}
+                        {{ color_wallpaper("WinterNeva", "Winter Neva", "background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)") }}
+                        {{ color_wallpaper("SunnyDay", "Sunny Day", "background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);") }}
+                        {{ color_wallpaper("RareWind", "Rare Wind", "background: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);") }}
+                    </div>
+                    <div class = "button4">
+                            <a href = "javascript:void(0)" onclick = "closeWallpaperDialog()">点我关闭</a>
+                    </div>
+                </div>
+                <div class="wallpaper">
+                    <form id="upload_img_form">
+                        <div class="upload">
+                            <input type="file" name="upload_file" id="upload_file">
+                        </div>
+                        <div class="button3">
+
+                            <a href = "javascript:void(0)" onclick = "upload_img()">
+                                <input type="submit" value="提 交">
+                            </a>
+                        </div>
+                        <div class = "button5">
+                            <a href = "javascript:void(0)" onclick = "closeWallpaperDialog()">点我关闭</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
+
+{% block countdown %}
+<div class="countdown" id="countdown">
+    <div class="countdown_card">
+        <div class="count_font">
+            离{{ countdown.date_name }}还有
+        </div>
+        <div class="number_box">
+            <div class="count_number">
+                {{ countdown.interval }}
+            </div>
+        </div>
+        <div class="count_font">
+            天
+        </div>
+    </div>
+</div>
+{% endblock %}

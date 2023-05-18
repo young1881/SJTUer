@@ -1,0 +1,7 @@
+{% macro index_list(index, src) %}
+<li>
+    <i class="{{ src }}"></i>
+    <p class="title">{{ index.name }}：{{ index.value }}</p>
+    <p class="detail">{{ index.detail }}</p>
+</li>
+{% endmacro %}
