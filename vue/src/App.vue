@@ -7,17 +7,26 @@
     </div>
 
     <websites id="websites"></websites>
-
+    <sidebar></sidebar>
   </div>
 </template>
 
 <script>
 import FlipClock from './components/FlipClock.vue'
 import Searchbox from './components/searchbox.vue'
+import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
+import {getBooks} from './api/api.js'
 export default {
-  components: { FlipClock, websites, Searchbox },
-  name: 'App'
+  components: { FlipClock, websites, Searchbox, Sidebar },
+  name: 'App',
+  methods: {
+    bookSubmit () {
+      getBooks().then(response => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>
 
@@ -44,7 +53,7 @@ body{
 }
 #searchbox {
     position: absolute;
-    top: 25%;
+    top: 230px;
     left: 50%;
     transform: translate(-50%, -50%);
     height: 50px;
