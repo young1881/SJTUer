@@ -1,0 +1,10 @@
+{% macro site_box(name, url, src) %}
+<div class="box" id={{name}} name={{ url }}>
+    <div class="img">
+        <a href="{{ url }}" target="_blank" id={{name}}url>
+            <img src="{{ src }}"/>
+        </a>
+    </div>
+    <p>{{ name }}</p>
+</div>
+{% endmacro %}

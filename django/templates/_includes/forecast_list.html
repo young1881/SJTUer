@@ -1,0 +1,8 @@
+{% macro forecast_list(day, detail) %}
+<li>
+    <p class="weather_date">{{ detail.date }}</p>
+    <i id="{{ day }}_icon"></i>
+    <p class="weather_type" id="{{ day }}_temp">{{ detail.low }}/{{ detail.high }}</p>
+    <p class="weather_type" id="{{ day }}_type">{{ detail.type }}</p>
+</li>
+{% endmacro %}

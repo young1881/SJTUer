@@ -1,0 +1,65 @@
+{% from '_includes/forecast_list.html' import forecast_list %}
+{% from '_includes/index_list.html' import index_list %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../static/img/wz2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-p1KAotb3W9ndluCsqePPYnjRm3c6abdnIjo0tQwYUv83VsbsYd43RuofnFAaDo0E" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/weather/weather.css" media="screen">
+    <link rel="stylesheet" href="../static/css/weather/weather-icons.min.css" media="screen">
+    <link rel="stylesheet" href="../static/css/weather/weather-icons-wind.min.css" media="screen">
+
+    <title>天气详情</title>
+</head>
+<body class="body" id="body" onload="change_background()">
+<div class="main">
+    <div class="clear_box">
+        <div class="text_box">
+            <div class="today">
+                <div class="left">
+                    <i id="today_icon"></i>
+                    <p class="T_current">{{ wendu }}℃</p>
+                    <p class="city" id="currentWeather">{{ city }} {{ forecast.day0.type }}</p>
+                    <p class="city">{{ forecast.day0.low }} ~ {{ forecast.day0.high }}℃</p>
+                </div>
+                <div class="right">
+                    <p class="update_time">更新时间：{{ updatetime }}</p>
+                    <p class="T_today"></p>
+                    <p class="wind">{{ fengxiang }} {{ fengli }}</p>
+                    <p class="shidu">湿度：{{ shidu }}</p>
+                    <p class="sun">日出时间：{{ sunrise }}</p>
+                    <p class="sun">日落时间：{{ sunset }}</p>
+                </div>
+            </div>
+            <div class="forecast">
+                <ul>
+                    {{ forecast_list('day-1', yesterday) }}
+                    {% for day in forecast %}
+                        {{ forecast_list(day, forecast[day]) }}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="index">
+                <ul>
+                    {{ index_list(index.index1, "fa-solid fa-shirt") }}
+                    {{ index_list(index.index7, "fa-solid fa-basketball") }}
+                    {{ index_list(index.index8, "fa-solid fa-mask-face") }}
+                    {{ index_list(index.index12, "fa-regular fa-moon") }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="foot">
+
+</div>
+
+<script src="https://kit.fontawesome.com/80275103ba.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/js/weather.js"></script>
+<script type="text/javascript" src="../static/js/weatherbackground.js"></script>
+</body>
+</html>

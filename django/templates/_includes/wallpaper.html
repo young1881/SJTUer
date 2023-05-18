@@ -1,0 +1,7 @@
+{% macro color_wallpaper(name, desc, css) %}
+<div class="color_wallpaper">
+    <div class="color_wallpaper_img" id={{ name }} style="{{ css }}" onclick="change_color_wallpaper(this)">
+    </div>
+    <div class="color_wallpaper_desc">{{ desc }}</div>
+</div>
+{% endmacro %}
