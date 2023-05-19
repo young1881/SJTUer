@@ -176,6 +176,10 @@ def index_view(request):
         library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
     except Exception as e:
         library_data = "图书馆信息获取失败，请联系管理员！"
+    try:
+        weather_data = weather(city)
+    except Exception as e:
+        weather_data = "天气信息获取失败，请联系管理员！"
 
 
     locals = {
@@ -193,7 +197,8 @@ def index_view(request):
         "wallpaper": wallpaper,
         'countdown': countdown,
         'canteen': canteen_data,
-        'library': library_data
+        'library': library_data,
+        'weather': weather_data
     }
     print(locals)
     return HttpResponse(json.dumps(locals), content_type="application/json")
@@ -320,35 +325,21 @@ def zhihu(response):
         zhihu_dict.append(zhihu_item)
     return zhihu_dict
 
-
-def weather(response):
-    data = get_html(response)
-    parser = etree.XMLParser(resolve_entities=False, strip_cdata=False, recover=True, ns_clean=True)
-    XML_tree = etree.fromstring(data.encode(), parser=parser)
-
-    forecast_list = XML_tree.xpath('//forecast/weather')
-    forecast_dic = {}
-    for i in range(len(forecast_list)):
-        day_name = 'day' + str(i)
-        forecast_dic[day_name] = {}
-        forecast_dic[day_name]['date'] = '周' + forecast_list[i].xpath('./date/text()')[0][-1]
-        forecast_dic[day_name]['high'] = forecast_list[i].xpath('./high/text()')[0][-3:-1]
-        forecast_dic[day_name]['low'] = forecast_list[i].xpath('./low/text()')[0][-3:-1]
-        forecast_dic[day_name]['type'] = forecast_list[i].xpath('.//type/text()')[0]
-    forecast_dic['day0']['date'] = '今天'
-
-    weather_dict = {
-        'city': XML_tree.xpath('//city/text()')[0],
-        'wendu': XML_tree.xpath('//wendu/text()')[0],
-        'forecast': forecast_dic,
-    }
-    return weather_dict
-
 #
 # def corona(response):
 #     data = get_json(response)['data']["diseaseh5Shelf"]
 #     del data["areaTree"]
 #     return data
+
+def weather(city):
+    city_code_url = "https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=339c9d989bcc444d870c470dd01b520b"
+    city_code = requests.get(city_code_url).json()['location'][0]['id']
+    current_weather_url = "https://devapi.qweather.com/v7/weather/now?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
+    current_weather = requests.get(current_weather_url).json()['now']
+    forecast_weather_url = "https://devapi.qweather.com/v7/weather/7d?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
+    forecast_weather = requests.get(forecast_weather_url).json()['daily']
+
+    return {"current_weather": current_weather, 'forecast_weather': forecast_weather}
 
 
 def poem(response):
@@ -377,6 +368,7 @@ def get_city(request):
     else:
         user_ip = request.META.get('REMOTE_ADDR')
     url = 'http://ip-api.com/json/' + user_ip + '?lang=zh-CN&fields=city'
+    print(url)
     response = urllib.request.urlopen(url)
     html = json.loads(response.read())
     try:
@@ -387,22 +379,22 @@ def get_city(request):
 
 
 def initialize_site(user):
-    Site.objects.create(site_name='Canvas',site_url='https://oc.sjtu.edu.cn/', site_src='../static/img/site_icon/在线课程.png', user=user)
-    Site.objects.create(site_name='教学信息', site_url='https://i.sjtu.edu.cn/', site_src='../static/img/site_icon/教学信息.png', user=user)
-    Site.objects.create(site_name='学生事务', site_url='https://affairs.sjtu.edu.cn/', site_src='../static/img/site_icon/学生事务.png', user=user)
-    Site.objects.create(site_name='交我办', site_url='https://my.sjtu.edu.cn/', site_src='../static/img/site_icon/交我办.png', user=user)
-    Site.objects.create(site_name='交大官网', site_url='https://www.sjtu.edu.cn/', site_src='../static/img/site_icon/官网.png', user=user)
-    Site.objects.create(site_name='研究生院', site_url='https://www.gs.sjtu.edu.cn/', site_src='../static/img/site_icon/研究生网.png', user=user)
-    Site.objects.create(site_name='交大邮箱', site_url='https://mail.sjtu.edu.cn/', site_src='../static/img/site_icon/邮箱.png', user=user)
-    Site.objects.create(site_name='交大云盘', site_url='https://jbox.sjtu.edu.cn/', site_src='../static/img/site_icon/交大云盘.png', user=user)
-    Site.objects.create(site_name='水源社区', site_url='https://shuiyuan.sjtu.edu.cn/', site_src='../static/img/site_icon/水源.png', user=user)
-    Site.objects.create(site_name='䇹政项目', site_url='https://chuntsung.sjtu.edu.cn/', site_src='../static/img/site_icon/䇹政.png', user=user)
-    Site.objects.create(site_name='创新实践', site_url='https://uitp.sjtu.edu.cn/', site_src='../static/img/site_icon/大创.png', user=user)
-    Site.objects.create(site_name='教学楼', site_url='https://ids.sjtu.edu.cn/', site_src='../static/img/site_icon/教学楼.png', user=user)
-    Site.objects.create(site_name='图书馆', site_url='https://www.lib.sjtu.edu.cn/', site_src='../static/img/site_icon/图书馆.png', user=user)
-    Site.objects.create(site_name='选课社区', site_url='https://course.sjtu.plus/', site_src='../static/img/site_icon/选课社区.png', user=user)
+    Site.objects.create(site_name='Canvas',site_url='https://oc.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/在线课程.png', user=user)
+    Site.objects.create(site_name='教学信息', site_url='https://i.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/教学信息.png', user=user)
+    Site.objects.create(site_name='学生事务', site_url='https://affairs.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/学生事务.png', user=user)
+    Site.objects.create(site_name='交我办', site_url='https://my.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/交我办.png', user=user)
+    Site.objects.create(site_name='交大官网', site_url='https://www.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/官网.png', user=user)
+    Site.objects.create(site_name='研究生院', site_url='https://www.gs.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/研究生网.png', user=user)
+    Site.objects.create(site_name='交大邮箱', site_url='https://mail.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/邮箱.png', user=user)
+    Site.objects.create(site_name='交大云盘', site_url='https://jbox.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/交大云盘.png', user=user)
+    Site.objects.create(site_name='水源社区', site_url='https://shuiyuan.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/水源.png', user=user)
+    Site.objects.create(site_name='䇹政项目', site_url='https://chuntsung.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/䇹政.png', user=user)
+    Site.objects.create(site_name='创新实践', site_url='https://uitp.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/大创.png', user=user)
+    Site.objects.create(site_name='教学楼', site_url='https://ids.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/教学楼.png', user=user)
+    Site.objects.create(site_name='图书馆', site_url='https://www.lib.sjtu.edu.cn/', site_src='../../../django/static/img/site_icon/图书馆.png', user=user)
+    Site.objects.create(site_name='选课社区', site_url='https://course.sjtu.plus/', site_src='../../../django/static/img/site_icon/选课社区.png', user=user)
     Site.objects.create(site_name='github', site_url='https://github.com/', site_src=get_icon_src('https://github.com/'), user=user)
-    Site.objects.create(site_name='bilibili', site_url='https://bilibili.com/', site_src=get_icon_src('https://github.com/'), user=user)
+    Site.objects.create(site_name='bilibili', site_url='https://bilibili.com/', site_src=get_icon_src('https://bilibili.com/'), user=user)
     Site.objects.create(site_name='知乎', site_url='https://www.zhihu.com/', site_src=get_icon_src('https://www.zhihu.com/'), user=user)
     Site.objects.create(site_name='豆瓣', site_url='https://www.douban.com/', site_src=get_icon_src('https://www.douban.com/'), user=user)
     Site.objects.create(site_name='淘宝', site_url='https://www.taobao.com/', site_src=get_icon_src('https://www.taobao.com/'), user=user)
