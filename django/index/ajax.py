@@ -53,7 +53,7 @@ def add_site(request):
             return JsonResponse(1, safe=False)
         return JsonResponse(2, safe=False)
     elif 'sjtu' in site_url:
-        site_src = '../static/img/school.png'
+        site_src = '../../../django/static/img/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
     else:
         site_src = get_icon_src(site_url)
