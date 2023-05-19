@@ -10,7 +10,7 @@ import json
 import datetime
 
 from lxml import etree
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from asyncio.proactor_events import _ProactorBasePipeTransport
 from functools import wraps
 
@@ -31,6 +31,8 @@ def index_view(request):
         'bilibili',
         # 'corona',
         'poem',
+        'canteen',
+        'library'
     ]
     urls = [
         'https://jwc.sjtu.edu.cn/xwtg/tztg.htm',
@@ -42,7 +44,9 @@ def index_view(request):
         'https://tophub.today/n/mproPpoq6O',
         'https://api.bilibili.com/x/web-interface/popular?ps=5&pn=1',
         # 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf',
-        'https://v1.jinrishici.com/all.json'
+        'https://v1.jinrishici.com/all.json',
+        'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
+        'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
     ]
     urls_names = dict(zip(urls, names))
     responses = {}
@@ -66,10 +70,10 @@ def index_view(request):
     loop.run_until_complete(main())
 
     # 初始化default用户
-    jaccount_default_flag = User.objects.filter(jaccount='000')
+    jaccount_default_flag = User.objects.filter(jaccount='0000')
     if not jaccount_default_flag:
-        User.objects.create(jaccount='000')
-        user = User.objects.filter(jaccount='000')[0]
+        User.objects.create(jaccount='0000')
+        user = User.objects.filter(jaccount='0000')[0]
         SimpleMode.objects.create(user=user)
         Wallpaper.objects.create(user=user)
         Countdown.objects.create(user=user)
@@ -89,7 +93,7 @@ def index_view(request):
             SimpleMode.objects.create(user=user, username=result, is_active=False)
             Wallpaper.objects.create(user=user, username=result)
             Countdown.objects.create(user=user, username=result)
-            user_site_flag = Site.objects.filter(user='000')
+            user_site_flag = Site.objects.filter(user='0000')
             for site in user_site_flag:
                 Site.objects.create(site_name=site.site_name, site_url=site.site_url, site_src=site.site_src, user=user,
                                     is_active=site.is_active)
@@ -103,15 +107,14 @@ def index_view(request):
                      'photo_name': wallpaper_flag.photo_name,
                      'css': wallpaper_flag.css}
 
-        countdown_flag = Countdown.objects.filter(user=jaccount)
         countdown_flag = Countdown.objects.filter(user=jaccount)[0]
 
         countdown = compute_countdown(countdown_flag.date_name, countdown_flag.year,
                                       countdown_flag.month, countdown_flag.day)
     except:
         result = ''
-        jaccount = '000'
-        user = User.objects.filter(jaccount='000')[0]
+        jaccount = '0000'
+        user = User.objects.filter(jaccount='0000')[0]
         simple_mode = {'username': 'visitor', 'is_active': False}
         wallpaper = {'username': "visitor",
                      'photo_url': '../media/wallpaper/visitor.jpg',
@@ -127,7 +130,6 @@ def index_view(request):
     for site in sites_object:
         site_json = {'site_name': site.site_name, 'site_url': site.site_url, 'site_src': site.site_src, 'is_active': site.is_active}
         sites.append(site_json)
-    print(sites)
 
     # 对爬取内容进行获取，如果由于获取数据结构变化而导致不能正常获取，则获取信息为报错信息
     try:
@@ -166,6 +168,15 @@ def index_view(request):
         poem_data = poem(responses['poem'])
     except Exception as e:
         poem_data = {'content': "诗句信息获取失败，请联系管理员！", 'origin': '', 'author': '', 'category': ''}
+    try:
+        canteen_data =get_json(responses['canteen'])
+    except Exception as e:
+        canteen_data = "食堂信息获取失败，请联系管理员！"
+    try:
+        library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
+    except Exception as e:
+        library_data = "图书馆信息获取失败，请联系管理员！"
+
 
     locals = {
         'jwc': jwc_data,
@@ -181,6 +192,8 @@ def index_view(request):
         'simple_mode': simple_mode,
         "wallpaper": wallpaper,
         'countdown': countdown,
+        'canteen': canteen_data,
+        'library': library_data
     }
     print(locals)
     return HttpResponse(json.dumps(locals), content_type="application/json")
@@ -388,15 +401,31 @@ def initialize_site(user):
     Site.objects.create(site_name='教学楼', site_url='https://ids.sjtu.edu.cn/', site_src='../static/img/site_icon/教学楼.png', user=user)
     Site.objects.create(site_name='图书馆', site_url='https://www.lib.sjtu.edu.cn/', site_src='../static/img/site_icon/图书馆.png', user=user)
     Site.objects.create(site_name='选课社区', site_url='https://course.sjtu.plus/', site_src='../static/img/site_icon/选课社区.png', user=user)
-    Site.objects.create(site_name='github', site_url='https://github.com/', site_src='https://files.codelife.cc/itab/search/github.svg', user=user)
-    Site.objects.create(site_name='bilibili', site_url='https://bilibili.com/', site_src='https://files.codelife.cc/itab/search/bilibili.svg', user=user)
-    Site.objects.create(site_name='知乎', site_url='https://www.zhihu.com/', site_src='https://files.codelife.cc/itab/search/zhihu.svg', user=user)
-    Site.objects.create(site_name='豆瓣', site_url='https://www.douban.com/', site_src='https://files.codelife.cc/itab/search/douban.svg', user=user)
-    Site.objects.create(site_name='淘宝', site_url='https://www.taobao.com/', site_src='https://www.taobao.com/favicon.ico', user=user)
-    Site.objects.create(site_name='爱奇艺', site_url='https://www.iqiyi.com/', site_src='https://www.iqiyi.com/favicon.ico', user=user)
-    Site.objects.create(site_name='一个木函', site_url='https://web.woobx.cn/', site_src='https://web.woobx.cn/favicon.ico', user=user)
-    Site.objects.create(site_name='百度', site_url='https://www.baidu.com/', site_src='https://www.baidu.com/favicon.ico', user=user, is_active=False)
-    Site.objects.create(site_name='搜狗', site_url='https://www.sogou.com/', site_src='https://www.sogou.com/favicon.ico', user=user, is_active=False)
+    Site.objects.create(site_name='github', site_url='https://github.com/', site_src=get_icon_src('https://github.com/'), user=user)
+    Site.objects.create(site_name='bilibili', site_url='https://bilibili.com/', site_src=get_icon_src('https://github.com/'), user=user)
+    Site.objects.create(site_name='知乎', site_url='https://www.zhihu.com/', site_src=get_icon_src('https://www.zhihu.com/'), user=user)
+    Site.objects.create(site_name='豆瓣', site_url='https://www.douban.com/', site_src=get_icon_src('https://www.douban.com/'), user=user)
+    Site.objects.create(site_name='淘宝', site_url='https://www.taobao.com/', site_src=get_icon_src('https://www.taobao.com/'), user=user)
+    Site.objects.create(site_name='爱奇艺', site_url='https://www.iqiyi.com/', site_src=get_icon_src('https://www.iqiyi.com/'), user=user)
+    Site.objects.create(site_name='一个木函', site_url='https://web.woobx.cn/', site_src=get_icon_src('https://web.woobx.cn/'), user=user)
+    Site.objects.create(site_name='百度', site_url='https://www.baidu.com/', site_src=get_icon_src('https://www.baidu.com/'), user=user, is_active=False)
+    Site.objects.create(site_name='搜狗', site_url='https://www.sogou.com/', site_src=get_icon_src('https://www.sogou.com/'), user=user, is_active=False)
+
+
+def get_icon_src(site_url):
+    # 获取主域名
+    domain_url = str(urlparse(site_url).netloc)
+    try:
+        response = requests.get("https://favicongrabber.com/api/grab/" + domain_url + "?pretty=true")
+        for src in response.json()["icons"]:
+            if src['src'][-3:] == 'png':
+                return src['src']
+        for src in response.json()["icons"]:
+            if src['src'][-3:] == 'svg':
+                return src['src']
+        return response.json()["icons"][0]['src']
+    except:
+        return "https://" + domain_url + "/favicon.ico"
 
 
 def silence_event_loop_closed(func):

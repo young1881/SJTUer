@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
 from .models import Site, SimpleMode, Wallpaper, User, Countdown
-
+from .views import get_icon_src
 
 def img_upload(request):
     jaccount = request.session['jaccount']
@@ -56,7 +56,7 @@ def add_site(request):
         site_src = '../static/img/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
     else:
-        site_src = site_url_main + 'favicon.ico'
+        site_src = get_icon_src(site_url)
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
     return JsonResponse(1, safe=False)
 
