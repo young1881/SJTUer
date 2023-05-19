@@ -16,17 +16,9 @@ import FlipClock from './components/FlipClock.vue'
 import Searchbox from './components/searchbox.vue'
 import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
-import {getBooks} from './api/api.js'
 export default {
   components: { FlipClock, websites, Searchbox, Sidebar },
-  name: 'App',
-  methods: {
-    bookSubmit () {
-      getBooks().then(response => {
-        console.log(response)
-      })
-    }
-  }
+  name: 'App'
 }
 </script>
 

@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .sidebar {
   position: fixed;
   right: 0;

@@ -11,7 +11,12 @@
 
 <script>
 export default {
-  name: 'site'
+  name: 'site',
+  props: {
+    siteUrl: String,
+    siteSrc: String,
+    siteName: String
+  }
 }
 </script>
 
@@ -22,7 +27,7 @@ export default {
   align-items: center;
   align-content: center;
   width: 60px;
-  height: 60px;
+  height: 80px;
   margin: 5px 10px;
 }
 

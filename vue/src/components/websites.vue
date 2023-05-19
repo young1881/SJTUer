@@ -1,20 +1,38 @@
 <template>
   <div class="websites">
     <div class = "sitebox">
-        <site></site><site></site><site></site><site></site><site></site><site></site><site></site><site></site>
+        <site v-for="item in sites" :key="item.site_name" :siteUrl="item.site_url" :siteSrc="item.site_src" :siteName="item.site_name"></site>
     </div>
   </div>
 </template>
 
 <script>
 import site from './site.vue'
+import {getview} from '../api/api.js'
 export default {
   components: { site },
-  name: 'websites'
+  name: 'websites',
+  data () {
+    return {
+      sites: [] // 初始化空数组
+    }
+  },
+  created () { // 在创建实例时一次性获取数据
+    this.getSite()
+  },
+  methods: {
+    getSite () {
+      getview().then(response => {
+        this.sites = response.data['sites']
+        // document.getElementById('response').innerHTML = response.data['sites']
+        console.log(response.data['sites'][0]['site_url'])
+      })
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
 .websites{
   display: flex;
   justify-content: center;
