@@ -49,6 +49,7 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     height: 50px;
+    width: 70%;
     z-index:700;
 }
 

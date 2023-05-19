@@ -26,12 +26,20 @@ export default {
 </script>
 
 <style scoped>
-
+#searchbox {
+    position: absolute;
+    top: 230px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50px;
+    width: 550px;
+    z-index:700;
+}
 .search-engine {
     position: absolute;
     top: 60px;
     left: 0;
-    width: 550px;
+    width: 100%;
     background-color: rgba(255, 255, 255);
     padding: 15px 0 0 15px;
     border-radius: 30px;
@@ -44,7 +52,7 @@ export default {
 
 .search-engine-list::after {
     content: '';
-    width: 425px;
+    width: 90%;
     height: 50px;
     position: absolute;
     top: -25px;
@@ -53,7 +61,7 @@ export default {
 
 .search-engine-list li {
     float: left;
-    width: 140px;
+    width: 10%;
     line-height: 30px;
     padding: 5px 10px 5px 10px;
     margin: 0 15px 15px 0;
@@ -108,7 +116,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.2);
     display:flex;
     height:50px;
-    width: 550px;
+    width: 100%;
     border-radius: 40px;
     transition: 0.3s;
 }
@@ -122,8 +130,8 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-width: 60px;
-    max-width: 60px;
+    min-width: 10%;
+    max-width: 10%;
     transition: .2s;
     position: relative;
     border-radius: 40px 0 0 40px;
@@ -150,7 +158,7 @@ export default {
     outline: none;
     padding: 0 6px;
     transition: 0.2s;
-    width: 450px;
+    width: 80%;
 }
 
 .search-btn-box{
@@ -158,8 +166,8 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-width: 50px;
-    max-width: 50px;
+    min-width: 10%;
+    max-width: 10%;
     position: relative;
     transition: 0.4s;
     border-radius: 0 40px 40px 0;

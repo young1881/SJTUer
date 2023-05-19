@@ -25,7 +25,7 @@ export default {
       getview().then(response => {
         this.sites = response.data['sites']
         // document.getElementById('response').innerHTML = response.data['sites']
-        console.log(response.data['sites'][0]['site_url'])
+        console.log(response.data['sites'][0]['site_src'])
       })
     }
   }
@@ -42,9 +42,8 @@ export default {
 .sitebox{
   margin: 10%;
   padding: 10px;
-  width: 40%;
-  height: 300px;
-  background-color: rgb(255,255,255,0.5);
+  width: 70%;
+  background-color: rgb(255,255,255,0);
   border-radius: 30px;
   display: flex;
   flex-wrap: wrap;
