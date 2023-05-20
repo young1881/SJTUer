@@ -1,13 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-from .models import Site, SimpleMode, User, Wallpaper, Countdown
+from .models import Site, SimpleMode, User, Wallpaper, Task
 import urllib.request
 
 import requests
 import asyncio
 import aiohttp
 import json
-import datetime
 
 from lxml import etree
 from urllib.parse import quote, urlparse
@@ -76,7 +74,7 @@ def index_view(request):
         user = User.objects.filter(jaccount='0000')[0]
         SimpleMode.objects.create(user=user)
         Wallpaper.objects.create(user=user)
-        Countdown.objects.create(user=user)
+        Task.objects.create(user=user)
         initialize_site(user)
 
     try:
@@ -92,7 +90,7 @@ def index_view(request):
             user = User.objects.filter(jaccount=jaccount)[0]
             SimpleMode.objects.create(user=user, username=result, is_active=False)
             Wallpaper.objects.create(user=user, username=result)
-            Countdown.objects.create(user=user, username=result)
+            Task.objects.create(user=user, username=result)
             user_site_flag = Site.objects.filter(user='0000')
             for site in user_site_flag:
                 Site.objects.create(site_name=site.site_name, site_url=site.site_url, site_src=site.site_src, user=user,
@@ -107,10 +105,9 @@ def index_view(request):
                      'photo_name': wallpaper_flag.photo_name,
                      'css': wallpaper_flag.css}
 
-        countdown_flag = Countdown.objects.filter(user=jaccount)[0]
+        tasks_flag = [Task.objects.filter(user=jaccount)]
+        task = task_json(result, tasks_flag)
 
-        countdown = compute_countdown(countdown_flag.date_name, countdown_flag.year,
-                                      countdown_flag.month, countdown_flag.day)
     except:
         result = ''
         jaccount = '0000'
@@ -120,7 +117,7 @@ def index_view(request):
                      'photo_url': '../media/wallpaper/visitor.jpg',
                      'photo_name': 'visitor.jpg',
                      "css": "linear-gradient(90deg, #70e1f5 0%, #ffd194 100%)"}
-        countdown = compute_countdown("元旦", 2023, 1, 1)
+        task = task_json("visitor", [Task.objects.create(user=user)])
         print(f"Please login!")
         print("except!")
 
@@ -195,7 +192,7 @@ def index_view(request):
         'jac': result,
         'simple_mode': simple_mode,
         "wallpaper": wallpaper,
-        'countdown': countdown,
+        'task': task,
         'canteen': canteen_data,
         'library': library_data,
         'weather': weather_data,
@@ -356,12 +353,23 @@ def jac(request):
     return result.json()
 
 
-def compute_countdown(date_name, year, month, day):
-    d1 = datetime.date.today()
-    d2 = datetime.date(year, month, day)
-    interval = d2 - d1
-    countdown = {'date_name': date_name, "interval": interval.days}
-    return countdown
+def task_json(result, tasks):
+    res = []
+    priority_arr = ["Low", "Medium", "High"]
+    category_arr = ["School", "Home"]
+    timeslice_arr = ["5min", "25min", "1h", "2h", ">2h"]
+    for task in tasks:
+        tmp = {'username': result}
+        category_val = task.category
+        priority_val = task.priority
+        timeslice_val = task.timeslice
+        tmp['category'] = {"name": category_arr[category_val - 1], "value": category_val}
+        tmp['done'] = task.done
+        tmp['name'] = task.name
+        tmp['priority'] = {"name": priority_arr[priority_val - 1], "value": priority_val}
+        tmp['timeslice'] = {"name": timeslice_arr[timeslice_val - 1], "value": timeslice_val}
+        res.append(tmp)
+    return res
 
 
 def get_city(request):
