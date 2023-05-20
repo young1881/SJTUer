@@ -12,7 +12,6 @@ urlpatterns = [
     path('delete_site/', ajax.delete_site, name="delete_site"),
     path('color_wallpaper/', ajax.color_wallpaper, name="color_wallpaper"),
     path('simple_mode/', ajax.simple_mode, name="simple_mode"),
-    path('refactor_countdown/', ajax.refactor_countdown, name="refactor_countdown"),
     # 可视化子页面：visual.py
     path('bar', visual.ChartViewCanteen.as_view(), name='can_bar'),
     path('can_index', visual.IndexViewCanteen.as_view(), name='can_index'),

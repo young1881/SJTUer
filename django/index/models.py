@@ -61,18 +61,22 @@ class Wallpaper(models.Model):
         return '%s' % self.username
 
 
-class Countdown(models.Model):
+class Task(models.Model):
     user = models.ForeignKey(User, to_field='jaccount', on_delete=models.CASCADE, default='000')
     username = models.CharField(max_length=64, default='visitor')
-    date_name = models.CharField(max_length=64, default="元旦")
-    year = models.IntegerField(default=2023)
-    month = models.IntegerField(default=1)
-    day = models.IntegerField(default=1)
+    category = models.IntegerField(default=1)
+    done = models.BooleanField(default=False)
+    name = models.CharField(max_length=64, default="新的任务")
+    priority = models.IntegerField(default=1)
+    timeslice = models.IntegerField(default=1)
+
+    is_active = models.BooleanField(default=True)
 
     class Meta:
-        db_table = 'countdown'
-        verbose_name = 'countdown'
-        verbose_name_plural = 'countdown'
+        db_table = 'Task'
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
 
     def __str__(self):
-        return '%s' % self.username
+        return '%s' % self.name
+

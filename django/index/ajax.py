@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
-from .models import Site, SimpleMode, Wallpaper, User, Countdown
+from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
 
 def img_upload(request):
@@ -103,24 +103,24 @@ def color_wallpaper(request):
     return HttpResponse("已保存")
 
 
-def refactor_countdown(request):
-    jaccount = request.session['jaccount']
-    date_name = request.POST.get('refactor_date_name').strip()
-
-    if date_name == "":
-        return JsonResponse(0, safe=False)
-
-    year = request.POST.get('year')
-    month = request.POST.get('month')
-    day = request.POST.get('day')
-    countdown = Countdown.objects.filter(user=jaccount)[0]
-    countdown.date_name = date_name
-    countdown.year = int(year)
-    countdown.month = int(month)
-    countdown.day = int(day)
-    countdown.save()
-
-    this_simple_mode = SimpleMode.objects.get(user=jaccount)
-    this_simple_mode.is_active = True
-    this_simple_mode.save()
-    return JsonResponse(1, safe=False)
+# def refactor_countdown(request):
+#     jaccount = request.session['jaccount']
+#     date_name = request.POST.get('refactor_date_name').strip()
+#
+#     if date_name == "":
+#         return JsonResponse(0, safe=False)
+#
+#     year = request.POST.get('year')
+#     month = request.POST.get('month')
+#     day = request.POST.get('day')
+#     countdown = Countdown.objects.filter(user=jaccount)[0]
+#     countdown.date_name = date_name
+#     countdown.year = int(year)
+#     countdown.month = int(month)
+#     countdown.day = int(day)
+#     countdown.save()
+#
+#     this_simple_mode = SimpleMode.objects.get(user=jaccount)
+#     this_simple_mode.is_active = True
+#     this_simple_mode.save()
+#     return JsonResponse(1, safe=False)

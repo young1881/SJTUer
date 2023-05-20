@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Site, SimpleMode, Wallpaper, Countdown, User
+from .models import Site, SimpleMode, Wallpaper, Task, User
 
 
 class UserManager(admin.ModelAdmin):
@@ -40,10 +40,10 @@ class WallpaperManager(admin.ModelAdmin):
 admin.site.register(Wallpaper, WallpaperManager)
 
 
-class CountdownManager(admin.ModelAdmin):
-    list_display = ['id', 'user', 'username', 'date_name', 'year', 'month', 'day']
+class TaskManager(admin.ModelAdmin):
+    list_display = ['id', 'user', 'username', 'category', 'done', 'name', 'priority', 'timeslice', 'is_active']
     list_display_links = ['username']
     search_fields = ['username']
 
 
-admin.site.register(Countdown, CountdownManager)
+admin.site.register(Task, TaskManager)
