@@ -6,7 +6,7 @@
       <flip-clock></flip-clock>
     </div>
 
-    <websites id="websites"></websites>
+    <websites id="websites" :sites="sites"></websites>
     <sidebar></sidebar>
   </div>
 </template>
@@ -16,10 +16,33 @@ import FlipClock from './components/FlipClock.vue'
 import Searchbox from './components/searchbox.vue'
 import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
+import {getview} from './api/api.js'
 export default {
   components: { FlipClock, websites, Searchbox, Sidebar },
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      sites: [] // 初始化空数组
+    }
+  },
+  created () { // 在创建实例时一次性获取数据
+    this.getView()
+  },
+  methods: {
+    getView () {
+      getview().then(response => {
+        this.sites = response.data["sites"]
+        // document.getElementById('response').innerHTML = response.data['sites']
+
+        // 将name和jaccount存入session
+        sessionStorage.setItem("name", response.data['name'])
+        sessionStorage.setItem("jaccount", response.data['account'])
+        console.log(this.sites)
+      })
+    },
+  }
 }
+</script>
 </script>
 
 <style>
@@ -42,15 +65,6 @@ body{
   top: 30px;
   left: 30px;
   width: 5%;
-}
-#searchbox {
-    position: absolute;
-    top: 230px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 50px;
-    width: 70%;
-    z-index:700;
 }
 
 </style>

@@ -8,13 +8,13 @@
 
 <script>
 import site from './site.vue'
-import {getview} from '../api/api.js'
 export default {
   components: { site },
   name: 'websites',
-  data () {
-    return {
-      sites: [] // 初始化空数组
+  props: {
+    sites: {
+      type: Array,
+      required: true
     }
   },
   created () { // 在创建实例时一次性获取数据
@@ -22,15 +22,7 @@ export default {
   },
   methods: {
     getSite () {
-      getview().then(response => {
-        this.sites = response.data['sites']
-        // document.getElementById('response').innerHTML = response.data['sites']
-
-        // 将name和jaccount存入session
-        sessionStorage.setItem("name", response.data['name'])
-        sessionStorage.setItem("jaccount", response.data['account'])
-        console.log(response.data['sites'][0]['site_url'])
-      })
+      console.log(this.site)
     },
   }
 }
