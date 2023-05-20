@@ -225,10 +225,10 @@ def jwc(response):
     tree = etree.HTML(html)
     a_list = tree.xpath('//div[@class="wz"]/a')
     jwc_dic = []
-    for i in range(5):
+    for i in range(10):
         title = str(i + 1) + ' ' + a_list[i].xpath('./h2/text()')[0]
-        if len(title.encode('utf-8')) > 55:
-            title = cut_str(title, 53) + '...'
+        # if len(title.encode('utf-8')) > 55:
+        #     title = cut_str(title, 53) + '...'
         url = 'https://jwc.sjtu.edu.cn' + a_list[i].xpath('./@href')[0][2:]
         dic = {'title': title, 'url': url}
         jwc_dic.append(dic)
@@ -240,10 +240,10 @@ def jnews(response):
     tree = etree.HTML(html)
     a_list = tree.xpath('//div[@class="new-add-list  clearfix"]//ul[1]//a')
     jnews_dic = []
-    for i in range(5):
+    for i in range(10):
         title = str(i + 1) + ' ' + a_list[i].xpath('./text()')[0]
-        if len(title.encode('utf-8')) > 55:
-            title = cut_str(title, 53) + '...'
+        # if len(title.encode('utf-8')) > 55:
+        #     title = cut_str(title, 53) + '...'
         url = a_list[i].xpath('./@href')[0]
         dic = {'title': title, 'url': url}
         jnews_dic.append(dic)
@@ -253,12 +253,11 @@ def jnews(response):
 def bilibli(response):
     bilibili_json = get_json(response)['data']['list']
     bilibili = []
-    for i in range(5):
-        dic = {'title': str(i + 1) + ' ' + bilibili_json[i]['title']}
-        if len(dic['title'].encode("utf-8")) > 46:
-            dic['title'] = cut_str(dic['title'], 44) + '...'
-        dic['url'] = bilibili_json[i]['short_link']
-        dic['view'] = bilibili_json[i]['stat']['view']
+    for i in range(10):
+        dic = {'title': str(i + 1) + ' ' + bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
+               'view': bilibili_json[i]['stat']['view']}
+        # if len(dic['title'].encode("utf-8")) > 46:
+        #     dic['title'] = cut_str(dic['title'], 44) + '...'
         bilibili.append(dic)
     return bilibili
 
@@ -296,14 +295,14 @@ def bilibli(response):
 def weibo(response):
     html = get_html(response)
     tree = etree.HTML(html)
-    tr_list = tree.xpath('//table/tbody/tr')[:5]
+    tr_list = tree.xpath('//table/tbody/tr')[:10]
     weibo_dict = []
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[2]/a/text()')[0]
         url = 'https://s.weibo.com/weibo?q=%23' + name + "%23"
         name = str(i + 1) + ' ' + name
-        if len(name.encode('utf-8')) > 46:
-            name = cut_str(name, 44) + '...'
+        # if len(name.encode('utf-8')) > 46:
+        #     name = cut_str(name, 44) + '...'
         hot = tr_list[i].xpath('./td[3]/text()')[0]
         weibo_item = {'name': name, 'url': url, 'hot': hot}
         weibo_dict.append(weibo_item)
@@ -313,14 +312,14 @@ def weibo(response):
 def zhihu(response):
     html = get_html(response)
     tree = etree.HTML(html)
-    tr_list = tree.xpath('//tbody/tr')[:5]
+    tr_list = tree.xpath('//tbody/tr')[:10]
     zhihu_dict = []
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[@class="al"]/a/text()')[0]
         url = 'https://tophub.today' + tr_list[i].xpath('./td[@class="al"]/a/@href')[0]
         name = str(i + 1) + ' ' + name
-        if len(name.encode('utf-8')) > 55:
-            name = cut_str(name, 53) + "..."
+        # if len(name.encode('utf-8')) > 55:
+        #     name = cut_str(name, 53) + "..."
         zhihu_item = {'name': name, 'url': url}
         zhihu_dict.append(zhihu_item)
     return zhihu_dict
