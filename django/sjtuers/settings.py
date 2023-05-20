@@ -141,9 +141,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-JACCOUNT_CLIENT_ID = os.environ.get('JACCOUNT_CLIENT_ID', '')
+JACCOUNT_CLIENT_ID = 'ZjpxY3dA6fpkp7o4kM0g'
+# JACCOUNT_CLIENT_ID = os.environ.get('JACCOUNT_CLIENT_ID', '')
 
-JACCOUNT_CLIENT_SECRET = os.environ.get('JACCOUNT_CLIENT_SECRET', '')
+JACCOUNT_CLIENT_SECRET = 'CE1FEABAD368510B161F8F0E582CBA6864EAF4137FC18079'
+# JACCOUNT_CLIENT_SECRET = os.environ.get('JACCOUNT_CLIENT_SECRET', '')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

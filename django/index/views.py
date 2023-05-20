@@ -198,7 +198,9 @@ def index_view(request):
         'countdown': countdown,
         'canteen': canteen_data,
         'library': library_data,
-        'weather': weather_data
+        'weather': weather_data,
+        'name': result,
+        'account': jaccount
     }
     print(locals)
     return HttpResponse(json.dumps(locals), content_type="application/json")

@@ -5,9 +5,13 @@
     <!-- 侧边栏 -->
     <div class="sidebar-box" v-show="isSidebarShown" @mouseleave="hideSidebar">
       <ul>
-        <li><a href="#">登录</a></li>
+        <li>
+          <a href="http://localhost:8000/login/" v-if = "!islogin" > 登录 </a>
+          <a v-else>{{ name }}</a>
+        </li>  
         <li><a href="#">todo</a></li>
         <li><a href="#">资讯</a></li>
+        <li><a href="http://localhost:8000/logout/" v-if = "islogin">登出</a></li>
       </ul>
     </div>
   </div>
@@ -18,18 +22,26 @@ export default {
   name: 'Sidebar',
   data () {
     return {
-      isSidebarShown: false
+      isSidebarShown: false,
+      islogin: false,
+      name: null
     }
   },
   methods: {
     // 鼠标移入显示侧边栏
     showSidebar () {
       this.isSidebarShown = true
+      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+      else 
+      {
+        this.islogin = true
+        this.name = sessionStorage.getItem("name")
+      }
     },
     // 鼠标移出隐藏侧边栏
     hideSidebar () {
       this.isSidebarShown = false
-    }
+    },
   }
 }
 </script>

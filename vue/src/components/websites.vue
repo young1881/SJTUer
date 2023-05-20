@@ -25,9 +25,13 @@ export default {
       getview().then(response => {
         this.sites = response.data['sites']
         // document.getElementById('response').innerHTML = response.data['sites']
+
+        // 将name和jaccount存入session
+        sessionStorage.setItem("name", response.data['name'])
+        sessionStorage.setItem("jaccount", response.data['account'])
         console.log(response.data['sites'][0]['site_url'])
       })
-    }
+    },
   }
 }
 </script>
