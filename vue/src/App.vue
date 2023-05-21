@@ -25,7 +25,7 @@ export default {
   setup()
   {
     const sites = ref([]);
-    const showcomponent = ref();
+    const showcomponent = ref('websites');
 
     const getView = async() => {
       const response = await getView();

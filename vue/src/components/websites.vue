@@ -39,7 +39,7 @@ export default {
   margin: 10%;
   padding: 10px;
   width: 70%;
-  background-color: rgb(255,255,255,0.5);
+  background-color: rgb(255,255,255,0);
   border-radius: 30px;
   display: flex;
   flex-wrap: wrap;
