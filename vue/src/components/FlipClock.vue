@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Flipper from './Flipper'
+import Flipper from './Flipper.vue'
 
 export default {
   name: 'FlipClock',

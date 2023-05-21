@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <!-- 提示标签 -->
-    <div class="hint" v-show="!isSidebarShown" @mouseover="showSidebar">侧边栏</div>
+    <img id="logo" src="../assets/logo.png" @mouseover="showSidebar">
     <!-- 侧边栏 -->
     <div class="sidebar-box" v-show="isSidebarShown" @mouseleave="hideSidebar">
       <ul>
@@ -9,24 +9,72 @@
           <a href="http://localhost:8000/login/" v-if = "!islogin" > 登录 </a>
           <a v-else>{{ name }}</a>
         </li>  
+        <li><a href="#" @click.prevent="ChangeComponent('websites')">网页</a></li>
         <li><a href="#">todo</a></li>
         <li><a href="#">资讯</a></li>
-        <li><a href="http://localhost:8000/logout/" v-if = "islogin">登出</a></li>
+        <li><a href="#">天气</a></li>
+        <li><a href="#" @click.prevent="ChangeComponent('charts')">人流量</a></li>
+        <li><a href="http://localhost:8000/logout/" v-if = "islogin">退出</a></li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
+
 export default {
   name: 'Sidebar',
+  setup(props, context){
+    const isSidebarShown = ref(false)
+    const islogin = ref(false)
+    const name = ref(null)
+
+    function showSidebar(){
+      isSidebarShown.value = true
+      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) islogin.value = false
+      else 
+      {
+        islogin.value = true
+        name.value = sessionStorage.getItem("name")
+      }
+    }
+
+    function hideSidebar(){
+      isSidebarShown.value = false
+    }
+
+    const ChangeComponent = (component) => {
+      context.emit("ChangeComponent", component);
+      console.log(component)
+    }
+
+
+    return{
+      isSidebarShown,
+      islogin,
+      name,
+      showSidebar,
+      hideSidebar,
+      ChangeComponent
+    }
+  }
+  /*
   data () {
     return {
       isSidebarShown: false,
       islogin: false,
-      name: null
+      name: null,
     }
   },
+  props:{
+    show:{
+      type:String,
+      required:true
+    }
+  },
+
   methods: {
     // 鼠标移入显示侧边栏
     showSidebar () {
@@ -42,43 +90,40 @@ export default {
     hideSidebar () {
       this.isSidebarShown = false
     },
+    changeComponent (currentname) {
+      this.show = currentname
+      this.$emit('change-component', currentname)
+      console.log(this.show)
+    }
   }
+  */
 }
 </script>
 
 <style scoped>
 .sidebar {
   position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 100px;
+  top: 2%;
+  left:2%;
+  width: 60px;
+  height: 70%;
 }
 
-.hint {
-  position: absolute;
-  right: 0px;
-  width: 60px;
-  height: 60px;
-  background-color: #777777;
-  border-radius: 50%;
-  color: #ffffff;
+#logo{
+  position:absolute;
   text-align: center;
-  line-height: 60px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: right 0.3s ease-in-out;
+  left:0px;
+  width: 100%;
 }
 
 .sidebar-box {
   position: absolute;
-  top: calc(50% - 110px);
-  right: 0px; /* 隐藏侧边栏 */
-  width: 50px;
-  height: 200px;
-  background-color: #ffffff;
-  border-radius: 20px 0px 0px 20px;
+  top:15%;
+  /*left: 0px;  隐藏侧边栏 */
+  width: 100%;
+  height: 100%;
+  background-color:rgba(254, 232, 253);
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -88,25 +133,25 @@ export default {
 
 .sidebar-box ul {
   list-style: none;
+  display: flex;
   margin: 0;
   padding: 0;
-  display: flex;
   flex-direction: column;
-  justify-content: space-around;
   height: 100%;
+  justify-content: space-around;
 }
 
 .sidebar-box li a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  line-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #333;
+  height: 90px;
+  font-size: large;
   text-decoration: none;
 }
 
 .sidebar-box li a:hover {
-  background-color: #f5f5f5;
+  background-color: rgb(236, 209, 234);
 }
 </style>

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import Axios from 'axios'
 
 const axiosInstance = Axios.create({
@@ -22,6 +22,6 @@ axiosInstance.interceptors.response.use(
   }
 )
 
-Vue.prototype.axios = axiosInstance
+//Vue.prototype.axios = axiosInstance
 
 export default axiosInstance
