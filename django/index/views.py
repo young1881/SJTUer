@@ -6,6 +6,7 @@ import requests
 import asyncio
 import aiohttp
 import json
+import os
 
 from lxml import etree
 from urllib.parse import quote, urlparse
@@ -18,8 +19,19 @@ headers = {
 }
 
 
-def index_view(request):
+def weather_view(request):
     city = get_city(request)
+    try:
+        weather_data = weather(city)
+    except Exception as e:
+        weather_data = "天气信息获取失败，请联系管理员！"
+    locals = {
+        'weather': weather_data,
+    }
+    return HttpResponse(json.dumps(locals), content_type="application/json")
+
+
+def scrap_view(request):
     names = [
         'jwc',
         'jnews',
@@ -29,7 +41,7 @@ def index_view(request):
         'bilibili',
         # 'corona',
         'poem',
-        'canteen',
+        # 'canteen',
         'library'
     ]
     urls = [
@@ -43,7 +55,7 @@ def index_view(request):
         'https://api.bilibili.com/x/web-interface/popular?ps=5&pn=1',
         # 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf',
         'https://v1.jinrishici.com/all.json',
-        'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
+        # 'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
         'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
     ]
     urls_names = dict(zip(urls, names))
@@ -67,6 +79,73 @@ def index_view(request):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(main())
 
+    # 对爬取内容进行获取，如果由于获取数据结构变化而导致不能正常获取，则获取信息为报错信息
+    try:
+        jwc_data = jwc(responses['jwc'])
+    except Exception as e:
+        jwc_data = [{"title": "教务处信息获取失败，请联系管理员！", "url": ""}]
+    try:
+        jnews_data = jnews(responses['jnews'])
+    except Exception as e:
+        jnews_data = [{"title": "交大新闻信息获取失败，请联系管理员！", "url": ""}]
+    # try:
+    #     weather_data = weather(responses['weather'])
+    # except Exception as e:
+    #     weather_data = ["天气信息获取失败，请联系管理员！"]
+    try:
+        weibo_data = weibo(responses['weibo'])
+    except Exception as e:
+        weibo_data = [{"name": "微博信息获取失败，请联系管理员！", "url": "", "hot": ""}]
+    try:
+        zhihu_data = zhihu(responses['zhihu'])
+    except Exception as e:
+        zhihu_data = [{"name": "知乎信息获取失败，请联系管理员！", "url": ""}]
+    try:
+        bilibili_data = bilibli(responses['bilibili'])
+    except Exception as e:
+        bilibili_data = [{"title": "bilibili信息获取失败，请联系管理员！", "url": "", "view": ""}]
+    # try:
+    #     corona_data = corona(responses['corona'])
+    # except Exception as e:
+    #     corona_data = {'lastUpdateTime': '疫情数据获取失败，请联系管理员',
+    #                    'chinaTotal': {'dead': "Error", 'importedCase': "Error", 'heal': "Error", 'nowConfirm': "Error",
+    #                                   'noInfectH5': "Error", 'confirm': "Error", 'suspect': "Error"},
+    #                    'chinaAdd': {'dead': 0, 'importedCase': 0, 'heal': 0, 'nowConfirm': 0,
+    #                                   'noInfectH5': 0, 'confirm': 0, 'suspect': 0}}
+    try:
+        poem_data = poem(responses['poem'])
+    except Exception as e:
+        poem_data = {'content': "诗句信息获取失败，请联系管理员！", 'origin': '', 'author': '', 'category': ''}
+    try:
+        canteen_data = get_json(responses['canteen'])
+    except Exception as e:
+        canteen_data = "食堂信息获取失败，请联系管理员！"
+    try:
+        library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
+    except Exception as e:
+        library_data = "图书馆信息获取失败，请联系管理员！"
+
+    locals = {
+        'jwc': jwc_data,
+        'jnews': jnews_data,
+        # 'weather': weather_data,
+        'weibo': weibo_data,
+        'zhihu': zhihu_data,
+        'bilibili': bilibili_data,
+        # 'corona': corona_data,
+        'poem': poem_data,
+        'canteen': canteen_data,
+        'library': library_data,
+    }
+    return HttpResponse(json.dumps(locals), content_type="application/json")
+
+
+def test_view(request):
+    image_data = open("static/img/wz.png", 'rb').read()
+    return HttpResponse(image_data, content_type="image/png")
+
+
+def index_view(request):
     # 初始化default用户
     jaccount_default_flag = User.objects.filter(jaccount='0000')
     if not jaccount_default_flag:
@@ -129,77 +208,15 @@ def index_view(request):
                      'is_active': site.is_active}
         sites.append(site_json)
 
-    # 对爬取内容进行获取，如果由于获取数据结构变化而导致不能正常获取，则获取信息为报错信息
-    try:
-        jwc_data = jwc(responses['jwc'])
-    except Exception as e:
-        jwc_data = [{"title": "教务处信息获取失败，请联系管理员！", "url": ""}]
-    try:
-        jnews_data = jnews(responses['jnews'])
-    except Exception as e:
-        jnews_data = [{"title": "交大新闻信息获取失败，请联系管理员！", "url": ""}]
-    # try:
-    #     weather_data = weather(responses['weather'])
-    # except Exception as e:
-    #     weather_data = ["天气信息获取失败，请联系管理员！"]
-    try:
-        weibo_data = weibo(responses['weibo'])
-    except Exception as e:
-        weibo_data = [{"name": "微博信息获取失败，请联系管理员！", "url": "", "hot": ""}]
-    try:
-        zhihu_data = zhihu(responses['zhihu'])
-    except Exception as e:
-        zhihu_data = [{"name": "知乎信息获取失败，请联系管理员！", "url": ""}]
-    try:
-        bilibili_data = bilibli(responses['bilibili'])
-    except Exception as e:
-        bilibili_data = [{"title": "bilibili信息获取失败，请联系管理员！", "url": "", "view": ""}]
-    # try:
-    #     corona_data = corona(responses['corona'])
-    # except Exception as e:
-    #     corona_data = {'lastUpdateTime': '疫情数据获取失败，请联系管理员',
-    #                    'chinaTotal': {'dead': "Error", 'importedCase': "Error", 'heal': "Error", 'nowConfirm': "Error",
-    #                                   'noInfectH5': "Error", 'confirm': "Error", 'suspect': "Error"},
-    #                    'chinaAdd': {'dead': 0, 'importedCase': 0, 'heal': 0, 'nowConfirm': 0,
-    #                                   'noInfectH5': 0, 'confirm': 0, 'suspect': 0}}
-    try:
-        poem_data = poem(responses['poem'])
-    except Exception as e:
-        poem_data = {'content': "诗句信息获取失败，请联系管理员！", 'origin': '', 'author': '', 'category': ''}
-    try:
-        canteen_data = get_json(responses['canteen'])
-    except Exception as e:
-        canteen_data = "食堂信息获取失败，请联系管理员！"
-    try:
-        library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
-    except Exception as e:
-        library_data = "图书馆信息获取失败，请联系管理员！"
-    try:
-        weather_data = weather(city)
-    except Exception as e:
-        weather_data = "天气信息获取失败，请联系管理员！"
-
     locals = {
-        'jwc': jwc_data,
-        'jnews': jnews_data,
-        # 'weather': weather_data,
-        'weibo': weibo_data,
-        'zhihu': zhihu_data,
-        'bilibili': bilibili_data,
-        # 'corona': corona_data,
-        'poem': poem_data,
         'sites': sites,
         'jac': result,
         'simple_mode': simple_mode,
         "wallpaper": wallpaper,
         'task': task,
-        'canteen': canteen_data,
-        'library': library_data,
-        'weather': weather_data,
         'name': result,
         'account': jaccount
     }
-    print(locals)
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 

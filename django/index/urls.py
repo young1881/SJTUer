@@ -5,6 +5,9 @@ from . import views, ajax, visual
 urlpatterns = [
     # get请求：view.py
     path('', views.index_view, name='index'),
+    path('test', views.test_view, name='test'),
+    path('scrapy/', views.scrap_view, name='scrapy'),
+    path('weather/', views.weather_view, name='weather'),
     # post请求：ajax.py
     path('upload_img/', csrf_exempt(ajax.img_upload), name="uploda_img"),
     path('add_site/', ajax.add_site, name="add_site"),
