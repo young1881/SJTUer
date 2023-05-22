@@ -31,8 +31,12 @@
         <li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
        </ul>
     </div>
-    <div class="smallbox">
-       <h3>微博热搜</h3>
+    <div class="smallbox"> 
+      <div class="head">
+        <h3 :class="{ active: news === 'weibo' }" @click = "news='weibo'">微博热搜</h3>
+        <h3 :class="{ active: news === 'zhihu' }" @click = "news='zhihu'">知乎</h3>
+        <h3 :class="{ active: news=== 'douban' }" @click = "news='douban'">豆瓣</h3>
+      </div>
        <ul>
         <li><a href=""><span class = "col1">1</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
         <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
@@ -45,14 +49,23 @@
         <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
         <li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
        </ul>
-    </div>
+  </div>
   </div>
   </div>
 </template>
   <script>
 //import NewsBox from "./NewsBox.vue";
+import {ref} from 'vue';
 export default {
   name: "NewsColumn",
+  components: {ref},
+  setup(){
+   let news = ref('weibo');
+   return {
+    news,
+   }
+
+  }
 };
 </script>
   
@@ -88,11 +101,23 @@ export default {
   padding: 20px;
   overflow: hidden;
 }
-.smallbox h3 {
+.smallbox .head {
+  display: flex;
+}
+
+.smallbox  h3 {
   margin: 0px;
   font: 20px;
-  padding: 5px;
+  padding: 8px;
   color: black;
+}
+.smallbox .head h3{
+  color:#717171;
+  cursor: pointer;
+}
+.smallbox .head h3.active{
+  color: black;
+  cursor: pointer;
 }
 .smallbox ul {
   margin: 0px;
