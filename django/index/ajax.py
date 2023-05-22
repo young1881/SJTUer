@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
 
+
 def img_upload(request):
     jaccount = request.session['jaccount']
     file_img = request.FILES['upload_file']  # 获取文件对象
@@ -53,7 +54,7 @@ def add_site(request):
             return JsonResponse(1, safe=False)
         return JsonResponse(2, safe=False)
     elif 'sjtu' in site_url:
-        site_src = '../../../django/static/img/school.png'
+        site_src = '/dist/assets/site_icon/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
     else:
         site_src = get_icon_src(site_url)
@@ -101,7 +102,6 @@ def color_wallpaper(request):
     wallpaper.css = css
     wallpaper.save()
     return HttpResponse("已保存")
-
 
 # def refactor_countdown(request):
 #     jaccount = request.session['jaccount']
