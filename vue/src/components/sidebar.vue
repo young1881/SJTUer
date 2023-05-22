@@ -10,8 +10,8 @@
           <a v-else>{{ name }}</a>
         </li>  
         <li><a href="#" @click.prevent="ChangeComponent('websites')">网页</a></li>
-        <li><a href="#">todo</a></li>
-        <li><a href="#">资讯</a></li>
+        <li><a href="#" @click.prevent="ChangeComponent('todo')">todo</a></li>
+        <li><a href="#" @click.prevent="ChangeComponent('news')">资讯</a></li>
         <li><a href="#">天气</a></li>
         <li><a href="#" @click.prevent="ChangeComponent('charts')">人流量</a></li>
         <li><a href="http://localhost:8000/logout/" v-if = "islogin">退出</a></li>
