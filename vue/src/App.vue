@@ -85,12 +85,6 @@ export default {
 
 
 <style>
-html{
-  margin: 0 auto;
-  padding: 0;
-  height: 100%;
-}
-
 body{
   background: rgb(254, 232, 253);
   z-index: -3;
