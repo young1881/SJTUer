@@ -2,13 +2,8 @@
   <div id="app">
     <div id="head">
       <searchbox id="searchbox"></searchbox>
-<<<<<<< HEAD
       <flip-clock @click="simple =!simple"></flip-clock>
         <charts id="charts" v-if="showcomponent === 'charts' &&dataFlag" :library = "library" :canteen = "canteen"></charts>
-=======
-      <flip-clock @click=changeSimple></flip-clock>
-        <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
->>>>>>> acd06f2cfcfeaa5f4f1392bdf54ef8014ff82807
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
