@@ -8,6 +8,7 @@
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
     <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews" :weibo = "weibo" :zhihu = "zhihu" :bilibili = "bilibili"></news-column>
+    <weather v-if="showcomponent === 'weather'"></weather>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
     <poem v-if="scrapyFlag" :poem = "poem"></poem>
   </div>
@@ -24,10 +25,11 @@ import NewsColumn from './components/news/NewsColumn.vue';
 import {getview,getscrapy,getdata} from './api/api.js'
 import {ref,onMounted,watch} from 'vue'
 import poem from './components/poem.vue'
+import weather from './components/weather.vue'
 
 
 export default {
-  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem,TodoApp,NewsColumn},
+  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem, TodoApp, NewsColumn, weather},
   name: 'App',
   setup()
   {
