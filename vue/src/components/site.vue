@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .box {
   display: flex;
   flex-direction: column;
