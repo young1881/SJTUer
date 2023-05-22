@@ -65,7 +65,7 @@ export default {
 
     const ChangeComponent = (component) =>{
       showcomponent.value = component;
-      simple = false;
+      simple.value = false;
     }
 
     const printData = () => {
