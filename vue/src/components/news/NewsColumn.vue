@@ -4,31 +4,31 @@
         <div class="smallbox">
        <h3>教务信息</h3>
        <ul>
-        <li><a href=""><span class = "col1">1</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col3">3</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col4">4</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col5">5</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col6">6</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+        <li><a :href="jwc[0].url" target="_blank"><span class = "col1">1</span>{{ jwc[0].title }}</a></li>
+        <li><a :href="jwc[1].url" target="_blank"><span class = "col2">2</span>{{ jwc[1].title }}</a></li>
+        <li><a :href="jwc[2].url" target="_blank"><span class = "col3">3</span>{{ jwc[2].title }}</a></li>
+        <li><a :href="jwc[3].url" target="_blank"><span class = "col4">4</span>{{ jwc[3].title }}</a></li>
+        <li><a :href="jwc[4].url" target="_blank"><span class = "col5">5</span>{{ jwc[4].title }}</a></li>
+        <li><a :href="jwc[5].url" target="_blank"><span class = "col6">6</span>{{ jwc[5].title }}</a></li>
+        <li><a :href="jwc[6].url" target="_blank"><span class = "col7">7</span>{{ jwc[6].title }}</a></li>
+        <li><a :href="jwc[7].url" target="_blank"><span class = "col8">8</span>{{ jwc[7].title }}</a></li>
+        <li><a :href="jwc[8].url" target="_blank"><span class = "col9">9</span>{{ jwc[8].title }}</a></li>
+        <!--li><a :href="jwc[9].url" target="_blank"><span class = "col10">10</span>{{ jwc[9].title }}</a></li-->
        </ul>
     </div>
     <div class="smallbox">
        <h3>交大新闻</h3>
        <ul>
-        <li><a href=""><span class = "col1">1</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col3">3</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col4">4</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col5">5</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col6">6</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+        <li><a :href="jnews[0].url" target="_blank"><span class = "col1">1</span>{{ jnews[0].title }}</a></li>
+        <li><a :href="jnews[1].url" target="_blank"><span class = "col2">2</span>{{ jnews[1].title }}</a></li>
+        <li><a :href="jnews[2].url" target="_blank"><span class = "col3">3</span>{{ jnews[2].title }}</a></li>
+        <li><a :href="jnews[3].url" target="_blank"><span class = "col4">4</span>{{ jnews[3].title }}</a></li>
+        <li><a :href="jnews[4].url" target="_blank"><span class = "col5">5</span>{{ jnews[4].title }}</a></li>
+        <li><a :href="jnews[5].url" target="_blank"><span class = "col6">6</span>{{ jnews[5].title }}</a></li>
+        <li><a :href="jnews[6].url" target="_blank"><span class = "col7">7</span>{{ jnews[6].title }}</a></li>
+        <li><a :href="jnews[7].url" target="_blank"><span class = "col8">8</span>{{ jnews[7].title }}</a></li>
+        <li><a :href="jnews[8].url" target="_blank"><span class = "col9">9</span>{{ jnews[8].title }}</a></li>
+        <!--li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li-->
        </ul>
     </div>
     <div class="smallbox">
@@ -43,7 +43,7 @@
         <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
         <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
         <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+        <!--li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li-->
        </ul>
     </div>
   </div>
@@ -53,7 +53,17 @@
 //import NewsBox from "./NewsBox.vue";
 export default {
   name: "NewsColumn",
-};
+  props: {
+    jwc: {
+      type: Array,
+      required: true
+    },
+    jnews: {
+      type: Array,
+      required: true
+    }
+},
+}
 </script>
   
   <style>
@@ -91,7 +101,7 @@ export default {
 .smallbox h3 {
   margin: 0px;
   font: 20px;
-  padding: 5px;
+  padding: 10px;
   color: black;
 }
 .smallbox ul {
@@ -106,7 +116,7 @@ export default {
   font-size: 17px;
   border: 1px;
   overflow: hidden;
-  margin: 5px;
+  margin: 0px;
 }
 .smallbox ul li a {
   text-decoration: none;
