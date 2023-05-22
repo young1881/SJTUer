@@ -46,4 +46,8 @@ export default {
 .weather img {
     transform: scale(1.2);
 }
+
+.weather .wv-lt-refresh{
+    display: none;
+}
 </style>
