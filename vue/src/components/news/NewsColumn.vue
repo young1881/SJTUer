@@ -35,44 +35,56 @@
       <div class="head">
         <h3 :class="{ active: news === 'weibo' }" @click = "news='weibo'">微博热搜</h3>
         <h3 :class="{ active: news === 'zhihu' }" @click = "news='zhihu'">知乎</h3>
-        <h3 :class="{ active: news=== 'douban' }" @click = "news='douban'">豆瓣</h3>
+        <h3 :class="{ active: news=== 'bilibili' }" @click = "news='bilibili'">b站</h3>
       </div>
-       <ul v-if = "news==='weibo'">
-        <li><a href=""><span class = "col1">1</span>[微博]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col3">3</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col4">4</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col5">5</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col6">6</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+      <ul v-if = "news==='weibo'&& weibo.length > 1">
+        <li><a :href="weibo[0].url" target="_blank"><span class = "col1">1</span>{{ weibo[0].name }}</a></li>
+        <li><a :href="weibo[1].url" target="_blank"><span class = "col2">2</span>{{ weibo[1].name }}</a></li>
+        <li><a :href="weibo[2].url" target="_blank"><span class = "col3">3</span>{{ weibo[2].name }}</a></li>
+        <li><a :href="weibo[3].url" target="_blank"><span class = "col4">4</span>{{ weibo[3].name }}</a></li>
+        <li><a :href="weibo[4].url" target="_blank"><span class = "col5">5</span>{{ weibo[4].name }}</a></li>
+        <li><a :href="weibo[5].url" target="_blank"><span class = "col6">6</span>{{ weibo[5].name }}</a></li>
+        <li><a :href="weibo[6].url" target="_blank"><span class = "col7">7</span>{{ weibo[6].name }}</a></li>
+        <li><a :href="weibo[7].url" target="_blank"><span class = "col8">8</span>{{ weibo[7].name }}</a></li>
+        <li><a :href="weibo[8].url" target="_blank"><span class = "col9">9</span>{{ weibo[8].name }}</a></li>
         <!--li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li-->
-       </ul>
-       <ul v-if = "news==='zhihu'">
-        <li><a href=""><span class = "col1">1</span>[知乎]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col3">3</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col4">4</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col5">5</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col6">6</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+      </ul>
+      <ul v-else-if="news==='weibo'">
+        <li>{{ weibo[0].name }}</li>
+      </ul>
+
+       <ul v-if = "news==='zhihu'&& zhihu.length > 1">
+        <li><a :href="zhihu[0].url" target="_blank"><span class = "col1">1</span>{{ zhihu[0].name }}</a></li>
+        <li><a :href="zhihu[1].url" target="_blank"><span class = "col2">2</span>{{ zhihu[1].name }}</a></li>
+        <li><a :href="zhihu[2].url" target="_blank"><span class = "col3">3</span>{{ zhihu[2].name }}</a></li>
+        <li><a :href="zhihu[3].url" target="_blank"><span class = "col4">4</span>{{ zhihu[3].name }}</a></li>
+        <li><a :href="zhihu[4].url" target="_blank"><span class = "col5">5</span>{{ zhihu[4].name }}</a></li>
+        <li><a :href="zhihu[5].url" target="_blank"><span class = "col6">6</span>{{ zhihu[5].name }}</a></li>
+        <li><a :href="zhihu[6].url" target="_blank"><span class = "col7">7</span>{{ zhihu[6].name }}</a></li>
+        <li><a :href="zhihu[7].url" target="_blank"><span class = "col8">8</span>{{ zhihu[7].name }}</a></li>
+        <li><a :href="zhihu[8].url" target="_blank"><span class = "col9">9</span>{{ zhihu[8].name }}</a></li>
         <!--li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li-->
-       </ul>
-       <ul v-if = "news==='douban'">
-        <li><a href=""><span class = "col1">1</span>[豆瓣]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col2">2</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col3">3</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col4">4</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col5">5</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col6">6</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col7">7</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col8">8</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
-        <li><a href=""><span class = "col9">9</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li>
+      </ul>
+      <ul v-else-if="news==='zhihu'">
+        <li>{{ zhihu[0].name }}</li>
+      </ul>
+
+      <ul v-if = "news==='bilibili'&& bilibili.length > 1">
+        <li><a :href="bilibili[0].url" target="_blank"><span class = "col1">1</span>{{ bilibili[0].title }}</a></li>
+        <li><a :href="bilibili[1].url" target="_blank"><span class = "col2">2</span>{{ bilibili[1].title }}</a></li>
+        <li><a :href="bilibili[2].url" target="_blank"><span class = "col3">3</span>{{ bilibili[2].title }}</a></li>
+        <li><a :href="bilibili[3].url" target="_blank"><span class = "col4">4</span>{{ bilibili[3].title }}</a></li>
+        <li><a :href="bilibili[4].url" target="_blank"><span class = "col5">5</span>{{ bilibili[4].title }}</a></li>
+        <li><a :href="bilibili[5].url" target="_blank"><span class = "col6">6</span>{{ bilibili[5].title }}</a></li>
+        <li><a :href="bilibili[6].url" target="_blank"><span class = "col7">7</span>{{ bilibili[6].title }}</a></li>
+        <li><a :href="bilibili[7].url" target="_blank"><span class = "col8">8</span>{{ bilibili[7].title }}</a></li>
+        <li><a :href="bilibili[8].url" target="_blank"><span class = "col9">9</span>{{ bilibili[8].title }}</a></li>
         <!--li><a href=""><span class = "col10">10</span>[主题教育]上海交大主题教育专题读书班举办黄大年同志先进事迹报告会</a></li-->
-       </ul>
+      </ul>
+      <ul v-else-if="news==='bilibili'">
+        <li>{{ bilibili[0].title }}</li>
+      </ul>
+
   </div>
   </div>
   </div>
@@ -90,6 +102,18 @@ export default {
       required: true
     },
     jnews: {
+      type: Array,
+      required: true
+    },
+    weibo: {
+      type: Array,
+      required: true
+    },
+    zhihu: {
+      type: Array,
+      required: true
+    },
+    bilibili: {
       type: Array,
       required: true
     }},
@@ -186,5 +210,5 @@ span {
 .col3 {
   color: #ffa552;
 }
+
 </style>
-  

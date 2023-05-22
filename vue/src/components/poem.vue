@@ -9,7 +9,7 @@
     name: 'poem',
     props: {
       poem: {
-        type: Array,
+        type: Object,
         required: true
       }
     },

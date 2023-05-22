@@ -7,7 +7,7 @@
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
-    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews"></news-column>
+    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews" :weibo = "weibo" :zhihu = "zhihu" :bilibili = "bilibili"></news-column>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
     <poem v-if="scrapyFlag" :poem = "poem"></poem>
   </div>
@@ -39,6 +39,9 @@ export default {
     const canteen = ref([])
     const jwc = ref([])
     const jnews = ref([])
+    const weibo = ref([])
+    const zhihu = ref([])
+    const bilibili = ref([])
     const poem = ref([])
     const scrapyFlag = ref(false)
     const dataFlag = ref(false)
@@ -54,6 +57,9 @@ export default {
       const response = await getscrapy();
       jwc.value = response.data["jwc"]
       jnews.value = response.data["jnews"]
+      weibo.value = response.data["weibo"]
+      zhihu.value = response.data["zhihu"]
+      bilibili.value = response.data["bilibili"]
       poem.value = response.data["poem"]
       scrapyFlag.value = true
     };
@@ -111,6 +117,9 @@ export default {
       canteen,
       jwc,
       jnews,
+      weibo,
+      zhihu,
+      bilibili,
       poem,
       getView,
       getScrapy,
