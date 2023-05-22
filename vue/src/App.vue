@@ -2,7 +2,7 @@
   <div id="app">
     <div id="head">
       <searchbox id="searchbox"></searchbox>
-      <flip-clock @click="simple =!simple"></flip-clock>
+      <flip-clock @click="changeSimple"></flip-clock>
         <charts id="charts" v-if="showcomponent === 'charts' &&dataFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
@@ -65,6 +65,7 @@ export default {
 
     const ChangeComponent = (component) =>{
       showcomponent.value = component;
+      simple = false;
     }
 
     const printData = () => {
