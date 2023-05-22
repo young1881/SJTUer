@@ -277,7 +277,7 @@ def jwc(response):
     a_list = tree.xpath('//div[@class="wz"]/a')
     jwc_dic = []
     for i in range(10):
-        title = str(i + 1) + ' ' + a_list[i].xpath('./h2/text()')[0]
+        title = a_list[i].xpath('./h2/text()')[0]
         # if len(title.encode('utf-8')) > 55:
         #     title = cut_str(title, 53) + '...'
         url = 'https://jwc.sjtu.edu.cn' + a_list[i].xpath('./@href')[0][2:]
@@ -292,7 +292,7 @@ def jnews(response):
     a_list = tree.xpath('//div[@class="new-add-list  clearfix"]//ul[1]//a')
     jnews_dic = []
     for i in range(10):
-        title = str(i + 1) + ' ' + a_list[i].xpath('./text()')[0]
+        title = a_list[i].xpath('./text()')[0]
         # if len(title.encode('utf-8')) > 55:
         #     title = cut_str(title, 53) + '...'
         url = a_list[i].xpath('./@href')[0]
@@ -305,7 +305,7 @@ def bilibli(response):
     bilibili_json = get_json(response)['data']['list']
     bilibili = []
     for i in range(10):
-        dic = {'title': str(i + 1) + ' ' + bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
+        dic = {'title': bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
                'view': bilibili_json[i]['stat']['view']}
         # if len(dic['title'].encode("utf-8")) > 46:
         #     dic['title'] = cut_str(dic['title'], 44) + '...'
@@ -351,7 +351,6 @@ def weibo(response):
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[2]/a/text()')[0]
         url = 'https://s.weibo.com/weibo?q=%23' + name + "%23"
-        name = str(i + 1) + ' ' + name
         # if len(name.encode('utf-8')) > 46:
         #     name = cut_str(name, 44) + '...'
         hot = tr_list[i].xpath('./td[3]/text()')[0]
@@ -368,7 +367,6 @@ def zhihu(response):
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[@class="al"]/a/text()')[0]
         url = 'https://tophub.today' + tr_list[i].xpath('./td[@class="al"]/a/@href')[0]
-        name = str(i + 1) + ' ' + name
         # if len(name.encode('utf-8')) > 55:
         #     name = cut_str(name, 53) + "..."
         zhihu_item = {'name': name, 'url': url}
