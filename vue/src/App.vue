@@ -5,8 +5,9 @@
       <flip-clock></flip-clock>
       <charts id="charts" v-if="showcomponent === 'charts'"></charts>
     </div>
-    <websites id="websites" v-if="showcomponent === 'websites'"></websites>
+    <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
+    <poem></poem>
   </div>
 </template>
 
@@ -16,11 +17,12 @@ import Searchbox from './components/searchbox.vue'
 import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
 import charts from './components/charts.vue'
+import poem from './components/poem.vue'
 import {getview} from './api/api.js'
 import {ref,onMounted} from 'vue'
 
 export default {
-  components: { FlipClock, websites, Searchbox, Sidebar, charts},
+  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem},
   name: 'App',
   setup()
   {
@@ -28,7 +30,7 @@ export default {
     const showcomponent = ref('websites');
 
     const getView = async() => {
-      const response = await getView();
+      const response = await getview();
       sites.value = response.data["sites"];
       sessionStorage.setItem("name", response.data['name']);
       sessionStorage.setItem("jaccount", response.data['account']);

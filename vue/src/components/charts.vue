@@ -172,7 +172,7 @@
     width: 80%;
     margin-left:10%;
     margin-top: 7%;
-    height: 450px;
+    height: 400px;
     margin-bottom: 7%;
     background-color: rgba(255, 255, 255, 0.304);
     border-radius: 30px;
@@ -183,7 +183,7 @@
     width: 50%;
     height: 400px;
     border-radius: 30px;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-left: 3%;
     display: inline-block;
     align-content: center;
@@ -191,7 +191,7 @@
   .canteen{
     width: 50%;
     height: 400px;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-right: 3%;
     display: inline-block; 
     border-radius: 30px;

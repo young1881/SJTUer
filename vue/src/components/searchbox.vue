@@ -28,7 +28,7 @@ export default {
 <style scoped>
 #searchbox {
     position: absolute;
-    top: 230px;
+    top: 27%;
     left: 50%;
     transform: translate(-50%, -50%);
     height: 50px;
@@ -40,7 +40,7 @@ export default {
     top: 60px;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     padding: 15px 0 0 15px;
     border-radius: 30px;
     box-shadow: 0px 5px 20px 0px #d8d7d7;
