@@ -9,7 +9,7 @@
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
     <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews"></news-column>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
-    <poem></poem>
+    <poem v-if="scrapyFlag" :poem = "poem"></poem>
   </div>
 </template>
 
@@ -39,6 +39,7 @@ export default {
     const canteen = ref([])
     const jwc = ref([])
     const jnews = ref([])
+    const poem = ref([])
     const scrapyFlag = ref(false)
     const dataFlag = ref(false)
 
@@ -53,8 +54,8 @@ export default {
       const response = await getscrapy();
       jwc.value = response.data["jwc"]
       jnews.value = response.data["jnews"]
+      poem.value = response.data["poem"]
       scrapyFlag.value = true
-      console.log(response.data["jwc"])
     };
 
     const getData = async() => {
@@ -90,6 +91,7 @@ export default {
     onMounted(() => {
       getView();
       printData();
+      getScrapy();
     } 
     );
 
@@ -109,6 +111,7 @@ export default {
       canteen,
       jwc,
       jnews,
+      poem,
       getView,
       getScrapy,
       getData,

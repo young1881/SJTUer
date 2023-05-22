@@ -77,7 +77,8 @@
   </div>
   </div>
 </template>
-  <script>
+
+<script>
 //import NewsBox from "./NewsBox.vue";
 import {ref} from 'vue';
 export default {
