@@ -6,15 +6,23 @@
 </template>
   
 <script setup>
-    import { ref, computed,toRefs } from 'vue';
+    import { ref, computed, toRefs, watch } from 'vue';
     import { defineProps } from 'vue';
 
     const props = defineProps({
-        library: Array
+        library :{
+            type: Array,
+            required: true,
+        },
+        canteen :{
+            type: Array,
+            required: true,
+        }
     });
 
-    const { library } = toRefs(props);
-    console.log('library.value');
+    const { library,canteen } = toRefs(props);
+
+    console.log(library.value[0]);
 
     const CanteenData = ref([
         { value1: 0, value2: 0, name: '一餐' },
@@ -29,41 +37,13 @@
     ]);
 
     const LibraryData = ref([
-        { value1: 0, value2: 0, name: '图书馆主馆' },
-        { value1: 0, value2: 0, name: '李政道图书馆' },
-        { value1: 0, value2: 0, name: '包玉刚图书馆' },
-        { value1: 0, value2: 0, name: '徐汇社科馆' },
+        { value1: library.value[0].inCounter, value2: library.value[0].max - library.value[0].inCounter, name: '图书馆主馆' },
+        { value1: library.value[1].inCounter, value2: library.value[1].max - library.value[1].inCounter, name: '李政道图书馆' },
+        { value1: library.value[2].inCounter, value2: library.value[2].max - library.value[2].inCounter, name: '包玉刚图书馆' },
+        { value1: library.value[3].inCounter, value2: library.value[3].max - library.value[3].inCounter, name: '徐汇社科馆' },
     ]);
 
-    setInterval(() => {
-        CanteenData.value = CanteenData.value.map(item => ({
-        ...item,
-        value1: 100,
-        }));
-    }, 5000);
     
-    setInterval(() => {
-        CanteenData.value = CanteenData.value.map(item => ({
-        ...item,
-        value2: Math.random() * 100,
-        }));
-    }, 5000);
-
-    setInterval(() => {
-        LibraryData.value = LibraryData.value.map(item => ({
-        ...item,
-        value1: Math.random() * 100,
-        }));
-    }, 5000);
-
-    setInterval(() => {
-        LibraryData.value = LibraryData.value.map(item => ({
-        ...item,
-        value2: Math.random() * 100,
-        }));
-    }, 5000);
-
-
     const liboption = computed(() => {
         return {
             color: [

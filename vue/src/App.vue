@@ -3,7 +3,7 @@
     <div id="head">
       <searchbox id="searchbox"></searchbox>
       <flip-clock></flip-clock>
-      <charts id="charts" v-if="showcomponent === 'charts'" @library = "library"></charts>
+        <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
@@ -30,6 +30,8 @@ export default {
     const sites = ref([]);
     const showcomponent = ref('websites');
     const library = ref([])
+    const canteen = ref([])
+    const scrapyFlag = ref(false)
 
     const getView = async() => {
       const response = await getview();
@@ -42,8 +44,8 @@ export default {
       const response = await getscrapy();
       console.log("response")
       library.value = response.data["library"]
-      console.log(library.value)
-      console.log(library.value[0].inCounter)
+      canteen.value = response.data["canteen"]
+      scrapyFlag.value = true
     };
 
     const ChangeComponent = (component) =>{
@@ -70,10 +72,12 @@ export default {
     return{
       sites,
       library,
+      canteen,
       getView,
       printData,
       showcomponent,
-      ChangeComponent
+      ChangeComponent,
+      scrapyFlag
     };
   },
 }
