@@ -1,7 +1,6 @@
 <template>
-    <div class="poem" id="poem">
-        <p class="sentence" id="sentence">「 {{ content }} 」</p>
-        <p class="sentence" id="author">——《{{ origin }}》 {{ author }}</p>
+    <div class="poem">
+        <p class="sentence">{{`「 ${content} 」 ——《${origin}》 ${author}`}}</p>
     </div>
   </template>
   
@@ -20,19 +19,13 @@
 <style scoped>
 .poem {
     position: absolute;
-    top: 94%;
+    top: 96%;
     left: 50%;
+    width:700px;
     transform : translate(-50%,-50%);
-    height :30px;
-    font-size: 10px;
-    background-color: brown;
+    font-size: 15px;
     color: dimgrey;
     text-shadow: 1px 1px lightgrey;
     text-align:center;
 }
-
-#sentence{
-    background-color: blue;
-}
-
 </style>

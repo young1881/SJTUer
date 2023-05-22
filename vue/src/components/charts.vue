@@ -6,7 +6,16 @@
 </template>
   
 <script setup>
-    import { ref, computed } from 'vue';
+    import { ref, computed,toRefs } from 'vue';
+    import { defineProps } from 'vue';
+
+    const props = defineProps({
+        library: Array
+    });
+
+    const { library } = toRefs(props);
+    console.log('library.value');
+
     const CanteenData = ref([
         { value1: 0, value2: 0, name: '一餐' },
         { value1: 0, value2: 0, name: '一餐清真' },

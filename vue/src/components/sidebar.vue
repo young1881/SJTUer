@@ -60,43 +60,6 @@ export default {
       ChangeComponent
     }
   }
-  /*
-  data () {
-    return {
-      isSidebarShown: false,
-      islogin: false,
-      name: null,
-    }
-  },
-  props:{
-    show:{
-      type:String,
-      required:true
-    }
-  },
-
-  methods: {
-    // 鼠标移入显示侧边栏
-    showSidebar () {
-      this.isSidebarShown = true
-      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
-      else 
-      {
-        this.islogin = true
-        this.name = sessionStorage.getItem("name")
-      }
-    },
-    // 鼠标移出隐藏侧边栏
-    hideSidebar () {
-      this.isSidebarShown = false
-    },
-    changeComponent (currentname) {
-      this.show = currentname
-      this.$emit('change-component', currentname)
-      console.log(this.show)
-    }
-  }
-  */
 }
 </script>
 
@@ -106,7 +69,7 @@ export default {
   top: 2%;
   left:2%;
   width: 60px;
-  height: 70%;
+  height: 650px;
 }
 
 #logo{
@@ -119,9 +82,7 @@ export default {
 .sidebar-box {
   position: absolute;
   top:15%;
-  /*left: 0px;  隐藏侧边栏 */
   width: 100%;
-  height: 100%;
   background-color:rgba(254, 232, 253);
   border-radius: 20px;
   overflow: hidden;
@@ -137,7 +98,6 @@ export default {
   margin: 0;
   padding: 0;
   flex-direction: column;
-  height: 100%;
   justify-content: space-around;
 }
 
@@ -146,7 +106,7 @@ export default {
   align-items: center;
   justify-content: center;
   color: #333;
-  height: 90px;
+  height: 70px;
   font-size: large;
   text-decoration: none;
 }
