@@ -3,7 +3,7 @@
     <div id="head">
       <searchbox id="searchbox"></searchbox>
       <flip-clock @click="simple =!simple"></flip-clock>
-        <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
+        <charts id="charts" v-if="showcomponent === 'charts' &&dataFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'" ></todo-app>
@@ -21,7 +21,7 @@ import websites from './components/websites.vue'
 import charts from './components/charts.vue'
 import TodoApp from './components/todolist/TodoApp.vue';
 import NewsColumn from './components/news/NewsColumn.vue';
-import {getview,getscrapy} from './api/api.js'
+import {getview,getscrapy,getdata} from './api/api.js'
 import {ref,onMounted,watch} from 'vue'
 import poem from './components/poem.vue'
 
@@ -36,7 +36,9 @@ export default {
     const showcomponent = ref('websites');
     const library = ref([])
     const canteen = ref([])
+    const news = ref([])
     const scrapyFlag = ref(false)
+    const dataFlag = ref(false)
 
     const getView = async() => {
       const response = await getview();
@@ -48,14 +50,20 @@ export default {
     const getScrapy = async() => {
       const response = await getscrapy();
       console.log("response")
+      news.value = response.data["news"]
+      scrapyFlag.value = true
+    };
+
+    const getData = async() => {
+      const response = await getdata();
+      console.log("response")
       library.value = response.data["library"]
       canteen.value = response.data["canteen"]
-      scrapyFlag.value = true
+      dataFlag.value = true
     };
 
     const ChangeComponent = (component) =>{
       showcomponent.value = component;
-      console.log(component)
     }
 
     const printData = () => {
@@ -70,7 +78,7 @@ export default {
 
     watch(() => showcomponent.value, (newVal, oldVal) => {
       if (newVal === 'charts') {
-        getScrapy();
+        getData();
       }
     });
 
@@ -79,11 +87,15 @@ export default {
       sites,
       library,
       canteen,
+      news,
       getView,
+      getScrapy,
+      getData,
       printData,
       showcomponent,
       ChangeComponent,
       scrapyFlag,
+      dataFlag,
       TodoApp,
       NewsColumn,
     };
