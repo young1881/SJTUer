@@ -2,6 +2,14 @@
   <div class="websites">
     <div class = "sitebox">
         <site v-for="item in sites" :key="item.site_name" :siteUrl="item.site_url" :siteSrc="item.site_src" :siteName="item.site_name"></site>
+        <div class="sitesmallbox">
+          <a href="#" target="_blank" >
+          <div class="img">
+            <img :src="'http://127.0.0.1:8000/index/test'">
+          </div>
+          </a>
+        <p>新增收藏网站</p>
+      </div>
     </div>
   </div>
 </template>
