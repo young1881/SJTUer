@@ -25,15 +25,14 @@
     console.log(library.value[0]);
 
     const CanteenData = ref([
-        { value1: 0, value2: 0, name: '一餐' },
-        { value1: 0, value2: 0, name: '一餐清真' },
-        { value1: 0, value2: 0, name: '二餐' },
-        { value1: 0, value2: 0, name: '三餐' },
-        { value1: 0, value2: 0, name: '三餐清真' },
-        { value1: 0, value2: 0, name: '四餐' },
-        { value1: 0, value2: 0, name: '五餐' },
-        { value1: 0, value2: 0, name: '哈乐' },
-        { value1: 0, value2: 0, name: '玉兰苑' },
+        { value1: canteen.value[0].Seat_u, value2: canteen.value[0].Seat_r, name: '一餐' },
+        { value1: canteen.value[1].Seat_u, value2: canteen.value[1].Seat_r, name: '二餐' },
+        { value1: canteen.value[2].Seat_u, value2: canteen.value[2].Seat_r, name: '三餐' },
+        { value1: canteen.value[3].Seat_u, value2: canteen.value[3].Seat_r, name: '四餐' },
+        { value1: canteen.value[4].Seat_u, value2: canteen.value[4].Seat_r, name: '五餐' },
+        { value1: canteen.value[5].Seat_u, value2: canteen.value[5].Seat_r, name: '六餐' },
+        { value1: canteen.value[6].Seat_u, value2: canteen.value[6].Seat_r, name: '七餐' },
+        { value1: canteen.value[7].Seat_u, value2: canteen.value[7].Seat_r, name: '哈乐' },
     ]);
 
     const LibraryData = ref([
@@ -160,7 +159,7 @@
   .charts {
     width: 80%;
     margin-left:10%;
-    margin-top: 7%;
+    margin-top: 9%;
     height: 400px;
     margin-bottom: 7%;
     background-color: rgba(255, 255, 255, 0.304);

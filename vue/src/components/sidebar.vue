@@ -66,10 +66,10 @@ export default {
 <style scoped>
 .sidebar {
   position: fixed;
-  top: 2%;
+  top: 5%;
   left:2%;
   width: 60px;
-  height: 650px;
+  height: 600px;
 }
 
 #logo{

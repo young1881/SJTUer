@@ -93,6 +93,12 @@ export default {
 
 
 <style>
+html{
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+}
+
 body{
   background: rgb(254, 232, 253);
   z-index: -3;
@@ -101,10 +107,14 @@ body{
   bottom: 0;
   left: 0;
   right: 0;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
 }
 
 #head{
-  margin-top: 5%;
+  margin-top: 4%;
+  background-color: rgba(165, 42, 42, 0);
 }
 
 </style>
