@@ -7,7 +7,7 @@
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
-    <news-column v-if="showcomponent === 'news'"></news-column>
+    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews"></news-column>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
     <poem></poem>
   </div>
@@ -37,7 +37,8 @@ export default {
     let lastcomponent = ref('websites');
     const library = ref([])
     const canteen = ref([])
-    const news = ref([])
+    const jwc = ref([])
+    const jnews = ref([])
     const scrapyFlag = ref(false)
     const dataFlag = ref(false)
 
@@ -50,14 +51,14 @@ export default {
 
     const getScrapy = async() => {
       const response = await getscrapy();
-      console.log("response")
-      news.value = response.data["news"]
+      jwc.value = response.data["jwc"]
+      jnews.value = response.data["jnews"]
       scrapyFlag.value = true
+      console.log(response.data["jwc"])
     };
 
     const getData = async() => {
       const response = await getdata();
-      console.log("response")
       library.value = response.data["library"]
       canteen.value = response.data["canteen"]
       dataFlag.value = true
@@ -96,6 +97,9 @@ export default {
       if (newVal === 'charts') {
         getData();
       }
+      if (newVal === 'news') {
+        getScrapy();
+      }
     });
 
     return{
@@ -103,7 +107,8 @@ export default {
       sites,
       library,
       canteen,
-      news,
+      jwc,
+      jnews,
       getView,
       getScrapy,
       getData,

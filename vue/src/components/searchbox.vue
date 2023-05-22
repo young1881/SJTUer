@@ -42,22 +42,21 @@ export default {
     const isSearchEngineShown = ref(false)
     const search = {
       data: [
-        { name: '百度', img: 'https://www.baidu.com/favicon.ico', url: 'https://www.baidu.com/s?wd=' },
-        { name: '谷歌', img: 'https://files.codelife.cc/itab/search/google.svg', url: 'https://www.google.com/search?q=' },
-        { name: '必应', img: 'https://files.codelife.cc/itab/search/bing.svg', url: 'https://cn.bing.com/search?q=' },
-        { name: '搜狗', img: 'https://files.codelife.cc/itab/search/sougou.svg', url: 'https://www.sogou.com/web?query=' },
-        { name: '360', img: 'https://files.codelife.cc/itab/search/360.svg', url: 'https://www.so.com/s?q=' },
-        { name: '知乎', img: 'https://files.codelife.cc/itab/search/zhihu.svg', url: 'https://www.zhihu.com/search?q=' },
-        { name: '有道', img: 'https://dict.youdao.com/favicon.ico', url: 'https://dict.youdao.com/w/eng/' },
-        { name: 'CSDN', img: 'https://so.csdn.net/favicon.ico', url: 'https://so.csdn.net/so/search/s.do?q=' },
-        { name: 'Github', img: 'https://files.codelife.cc/itab/search/github.svg', url: 'https://github.com/search?q=' },
-        { name: 'bilibili', img: 'https://files.codelife.cc/itab/search/bilibili.svg', url: 'https://search.bilibili.com/all?keyword=' },
+        { name: '百度', url: 'https://www.baidu.com/s?wd=' },
+        { name: '谷歌', url: 'https://www.google.com/search?q=' },
+        { name: '必应', url: 'https://cn.bing.com/search?q=' },
+        { name: '搜狗', url: 'https://www.sogou.com/web?query=' },
+        { name: '360', url: 'https://www.so.com/s?q=' },
+        { name: '知乎', url: 'https://www.zhihu.com/search?q=' },
+        { name: '有道', url: 'https://dict.youdao.com/w/eng/' },
+        { name: 'CSDN', url: 'https://so.csdn.net/so/search/s.do?q=' },
+        { name: 'Github', url: 'https://github.com/search?q=' },
+        { name: 'bilibili', url: 'https://search.bilibili.com/all?keyword=' },
       ]
     };
 
     function showSearchEngine() {
       isSearchEngineShown.value = true
-      console.log(isSearchEngineShown.value)
       var thisSearch = 'https://www.baidu.com/s?wd=';
       var thisImg = 'https://www.baidu.com/favicon.ico';
       var searchEngineList = document.querySelectorAll('.search-engine-list li');
@@ -70,7 +69,6 @@ export default {
           hideSearchEngine();
         });
       });
-      console.log(thisSearch)
       document.querySelector('#search-btn').addEventListener('click', function () {
         var textValue = document.querySelector('#search-text').value;
         textValue = textValue.replace(/\%/g, "%25");
@@ -130,8 +128,9 @@ export default {
 
 .search-engine-list li {
     float: left;
-    width: 20%;
-    margin: 0 15px 15px 0;
+    width: 22%;
+    margin: 10px 15px 10px 0;
+    padding: 10px;
     background: #f9f9f9;
     color: #999999;
     cursor: pointer;
@@ -153,8 +152,6 @@ export default {
     height: 20px;
     border-radius: 15px;
     float: left;
-    margin-left: 10px;
-    margin-top: 14px;
     max-width: 100%;
     border: 0;
 }
