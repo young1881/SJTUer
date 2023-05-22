@@ -44,5 +44,5 @@ def logout(request):
 
 def logged_out(request):
     # redir_uri = request.build_absolute_uri('/index')
-    redir_uri = "http://localhost:8080/#/"  # 部署时需要改（？）
+    redir_uri = "http://localhost:5173/"  # 部署时需要改（？）
     return HttpResponseRedirect(redir_uri)
