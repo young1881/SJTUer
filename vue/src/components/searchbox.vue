@@ -1,27 +1,97 @@
 <template>
-    <div class="search-box" id="search-box">
-        <div class="search-form">
-            <div class='engine-box'>
-                <img class="engine" src="https://files.codelife.cc/itab/search/baidu.svg" alt="加载中">
-                <i class="fa-solid fa-caret-down" style="font-size:12px; display:flex; padding: 3px 3px;"></i>
-            </div>
-            <input class="search-txt" id="search-text" name="search_msg" placeholder="输入文本搜索，左侧切换引擎" onkeydown="if(event.keyCode==13) document.getElementById('search-btn').click()">
-            <div class='search-btn-box' id='search-btn'>
-                <i class="fa-solid fa-magnifying-glass" id='search-btn-font'></i>
-            </div>
-        </div>
-        <div class="search-engine" style="display: none;">
-            <div class="search-engine-head">
-                <div class="search-engine-tit">点击选择搜索引擎：</div>
-            </div>
-            <ul class="search-engine-list"></ul>
-        </div>
+  <div class="search-box" id="search-box">
+    <!-- 搜索框 -->
+    <div class="search-form">
+      <!-- 搜索引擎 -->
+      <div class='engine-box' @mouseover="showSearchEngine">
+        <img class="engine" src="https://files.codelife.cc/itab/search/baidu.svg" alt="加载中">
+        <i class="fa-solid fa-caret-down" style="font-size:12px; display:flex; padding: 3px 3px;"></i>
+      </div>
+      <!-- 输入框 -->
+      <input class="search-txt" id="search-text" name="search_msg" placeholder="输入文本搜索，左侧切换引擎" onkeydown="if(event.keyCode==13) document.getElementById('search-btn').click()">
+      <div class='search-btn-box' id='search-btn'>
+        <div class="fa-solid fa-magnifying-glass" id='search-btn-font'>Go</div>
+      </div>
     </div>
+    <div class="search-engine" v-show="isSearchEngineShown" @mouseleave="hideSearchEngine">
+      <div class="search-engine-head">
+        <div class="search-engine-tit">点击选择搜索引擎：</div>
+      </div>
+      <ul class="search-engine-list">
+        <li id="search-engine-0"><img src="https://www.baidu.com/favicon.ico"/><p>百度</p></li>
+        <li id="search-engine-1"><img src="https://files.codelife.cc/itab/search/google.svg"/><p>谷歌</p></li>
+        <li id="search-engine-2"><img src="https://files.codelife.cc/itab/search/bing.svg"/><p>必应</p></li>
+        <li id="search-engine-3"><img src="https://files.codelife.cc/itab/search/sougou.svg"/><p>搜狗</p></li>
+        <li id="search-engine-4"><img src="https://files.codelife.cc/itab/search/360.svg"/><p>360</p></li>
+        <li id="search-engine-5"><img src="https://files.codelife.cc/itab/search/zhihu.svg"/><p>知乎</p></li>
+        <li id="search-engine-6"><img src="https://dict.youdao.com/favicon.ico"/><p>有道</p></li>
+        <li id="search-engine-7"><img src="https://so.csdn.net/favicon.ico"/><p>CSDN</p></li>
+        <li id="search-engine-8"><img src="https://files.codelife.cc/itab/search/github.svg"/><p>Github</p></li>
+        <li id="search-engine-9"><img src="https://files.codelife.cc/itab/search/bilibili.svg"/><p>bilibili</p></li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-  name: 'searchbox'
+  name: 'searchbox',
+  setup(props, context) {
+    const isSearchEngineShown = ref(false)
+    const search = {
+      data: [
+        { name: '百度', img: 'https://www.baidu.com/favicon.ico', url: 'https://www.baidu.com/s?wd=' },
+        { name: '谷歌', img: 'https://files.codelife.cc/itab/search/google.svg', url: 'https://www.google.com/search?q=' },
+        { name: '必应', img: 'https://files.codelife.cc/itab/search/bing.svg', url: 'https://cn.bing.com/search?q=' },
+        { name: '搜狗', img: 'https://files.codelife.cc/itab/search/sougou.svg', url: 'https://www.sogou.com/web?query=' },
+        { name: '360', img: 'https://files.codelife.cc/itab/search/360.svg', url: 'https://www.so.com/s?q=' },
+        { name: '知乎', img: 'https://files.codelife.cc/itab/search/zhihu.svg', url: 'https://www.zhihu.com/search?q=' },
+        { name: '有道', img: 'https://dict.youdao.com/favicon.ico', url: 'https://dict.youdao.com/w/eng/' },
+        { name: 'CSDN', img: 'https://so.csdn.net/favicon.ico', url: 'https://so.csdn.net/so/search/s.do?q=' },
+        { name: 'Github', img: 'https://files.codelife.cc/itab/search/github.svg', url: 'https://github.com/search?q=' },
+        { name: 'bilibili', img: 'https://files.codelife.cc/itab/search/bilibili.svg', url: 'https://search.bilibili.com/all?keyword=' },
+      ]
+    };
+
+    function showSearchEngine() {
+      isSearchEngineShown.value = true
+      console.log(isSearchEngineShown.value)
+      var thisSearch = 'https://www.baidu.com/s?wd=';
+      var thisImg = 'https://www.baidu.com/favicon.ico';
+      var searchEngineList = document.querySelectorAll('.search-engine-list li');
+      searchEngineList.forEach(function (li) {
+        li.addEventListener('click', function () {
+          var _index = this.id.split('-')[2];
+          thisImg = this.querySelector('img').getAttribute('src');
+          document.querySelector('.engine').setAttribute('src', thisImg);
+          thisSearch = search.data[_index].url;
+          hideSearchEngine();
+        });
+      });
+      console.log(thisSearch)
+      document.querySelector('#search-btn').addEventListener('click', function () {
+        var textValue = document.querySelector('#search-text').value;
+        textValue = textValue.replace(/\%/g, "%25");
+        textValue = textValue.replace(/\+/g, "%2B");
+        textValue = textValue.replace(/\//g, "%2F");
+        textValue = textValue.replace(/\?/g, "%3F");
+        textValue = textValue.replace(/\&/g, "%26");
+        textValue = textValue.replace(/\=/g, "%3D");
+        textValue = textValue.replace(/\#/g, "%23");
+        window.open(thisSearch + textValue, thisSearch + textValue);
+      });
+    }
+    function hideSearchEngine() {
+      isSearchEngineShown.value = false
+    }
+    return {
+      isSearchEngineShown,
+      showSearchEngine,
+      hideSearchEngine
+    }
+  }
 }
 </script>
 
@@ -45,7 +115,6 @@ export default {
     border-radius: 30px;
     box-shadow: 0px 5px 20px 0px #d8d7d7;
     transition: all 0.3s;
-    display: none;
     z-index: 999;
     box-sizing: border-box;
 }
@@ -61,9 +130,7 @@ export default {
 
 .search-engine-list li {
     float: left;
-    width: 10%;
-    line-height: 30px;
-    padding: 5px 10px 5px 10px;
+    width: 20%;
     margin: 0 15px 15px 0;
     background: #f9f9f9;
     color: #999999;
@@ -86,8 +153,8 @@ export default {
     height: 20px;
     border-radius: 15px;
     float: left;
-    margin-right: 5px;
-    margin-top: 2.5px;
+    margin-left: 10px;
+    margin-top: 14px;
     max-width: 100%;
     border: 0;
 }
