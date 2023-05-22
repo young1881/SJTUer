@@ -6,7 +6,6 @@ import requests
 import asyncio
 import aiohttp
 import json
-import os
 
 from lxml import etree
 from urllib.parse import quote, urlparse
@@ -41,7 +40,7 @@ def scrap_view(request):
         'bilibili',
         # 'corona',
         'poem',
-        # 'canteen',
+        'canteen',
         'library'
     ]
     urls = [
@@ -55,7 +54,7 @@ def scrap_view(request):
         'https://api.bilibili.com/x/web-interface/popular?ps=5&pn=1',
         # 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf',
         'https://v1.jinrishici.com/all.json',
-        # 'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
+        'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
         'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
     ]
     urls_names = dict(zip(urls, names))
@@ -119,7 +118,16 @@ def scrap_view(request):
     try:
         canteen_data = get_json(responses['canteen'])
     except Exception as e:
-        canteen_data = "食堂信息获取失败，请联系管理员！"
+        canteen_data = [{"Id": 100, "Name": "闵行第一餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 1},
+                        {"Id": 200, "Name": "闵行第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 5},
+                        {"Id": 300, "Name": "闵行第三餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 12},
+                        {"Id": 400, "Name": "闵行第四餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 16},
+                        {"Id": 500, "Name": "闵行第五餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 20},
+                        {"Id": 600, "Name": "闵行第六餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 25},
+                        {"Id": 700, "Name": "闵行第七餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 28},
+                        {"Id": 800, "Name": "闵行哈乐餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 31},
+                        {"Id": 1000, "Name": "徐汇第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 35},
+                        {"Id": 1200, "Name": "张江李所餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 50}]
     try:
         library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
     except Exception as e:
