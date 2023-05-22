@@ -25,7 +25,7 @@ def authorize(request):
     request.session['user'] = claims
     # redir_uri = request.build_absolute_uri('/index')
 
-    redir_uri = f"http://localhost:8080/#/"  # 部署时需要改（？）
+    redir_uri = f"http://localhost:5173/"  # 部署时需要改（？）
     return redirect(redir_uri)
 
 

@@ -3,9 +3,9 @@
     <div id="head">
       <searchbox id="searchbox"></searchbox>
       <flip-clock></flip-clock>
-      <charts id="charts" v-if="showcomponent === 'charts'"></charts>
+      <charts id="charts" v-if="showcomponent === 'charts'" @library = "library"></charts>
     </div>
-    <websites id="websites" v-if="showcomponent === 'websites'"></websites>
+    <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
   </div>
 </template>
@@ -16,8 +16,8 @@ import Searchbox from './components/searchbox.vue'
 import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
 import charts from './components/charts.vue'
-import {getview} from './api/api.js'
-import {ref,onMounted} from 'vue'
+import {getview,getscrapy} from './api/api.js'
+import {ref,onMounted,watch} from 'vue'
 
 export default {
   components: { FlipClock, websites, Searchbox, Sidebar, charts},
@@ -26,12 +26,21 @@ export default {
   {
     const sites = ref([]);
     const showcomponent = ref('websites');
+    const library = ref([])
 
     const getView = async() => {
-      const response = await getView();
+      const response = await getview();
       sites.value = response.data["sites"];
       sessionStorage.setItem("name", response.data['name']);
       sessionStorage.setItem("jaccount", response.data['account']);
+    };
+
+    const getScrapy = async() => {
+      const response = await getscrapy();
+      console.log("response")
+      library.value = response.data["library"]
+      console.log(library.value)
+      console.log(library.value[0].inCounter)
     };
 
     const ChangeComponent = (component) =>{
@@ -49,42 +58,21 @@ export default {
     } 
     );
 
+    watch(() => showcomponent.value, (newVal, oldVal) => {
+      if (newVal === 'charts') {
+        getScrapy();
+      }
+    });
+
     return{
       sites,
+      library,
       getView,
       printData,
       showcomponent,
       ChangeComponent
     };
   },
-  /*
-  data () {
-    return {
-      sites: [], // 初始化空数组
-      show:'websites'
-    }
-  },
-  created () { // 在创建实例时一次性获取数据
-    this.getView()
-  },
-  methods: {
-    changeComponent(currentname){
-      this.show = currentname
-    },
-
-    getView () {
-      console.log(this.show)
-      getview().then(response => {
-        this.sites = response.data["sites"]
-        // document.getElementById('response').innerHTML = response.data['sites']
-        // 将name和jaccount存入session
-        sessionStorage.setItem("name", response.data['name'])
-        sessionStorage.setItem("jaccount", response.data['account'])
-        console.log(this.show)
-      })
-    },
-  }
-  */
 }
 </script>
 
