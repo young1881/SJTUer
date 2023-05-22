@@ -36,10 +36,9 @@ export default {
 
 }
 .sitebox{
-  margin: 10%;
+  margin-top: 8%;
   padding: 10px;
   width: 70%;
-  background-color: rgb(255,255,255,0);
   border-radius: 30px;
   display: flex;
   flex-wrap: wrap;

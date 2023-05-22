@@ -1,11 +1,11 @@
 <template>
   <div class="box">
-    <a :href="siteUrl" target="_blank">
+    <a :href="siteUrl" target="_blank" >
       <div class="img">
         <img :src="siteSrc">
       </div>
-      <p>{{ siteName }}</p>
     </a>
+    <p >{{ siteName }}</p>
   </div>
 </template>
 
@@ -52,10 +52,12 @@ export default {
 }
 
 .box p {
+  text-decoration: none;
   margin-top: 10px;
   color: dimgrey;
   text-shadow: 1px 1px lightgrey;
-  font-size: 9px;
+  font-size: 13px;
+  align-content: center;
 }
 
 .box .img:hover {
@@ -70,4 +72,5 @@ export default {
   width: 40px;
   transition: width 0.2s ease-out;
 }
+
 </style>

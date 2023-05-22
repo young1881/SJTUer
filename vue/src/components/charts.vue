@@ -160,7 +160,7 @@
   .charts {
     width: 80%;
     margin-left:10%;
-    margin-top: 7%;
+    margin-top: 9%;
     height: 400px;
     margin-bottom: 7%;
     background-color: rgba(255, 255, 255, 0.304);
