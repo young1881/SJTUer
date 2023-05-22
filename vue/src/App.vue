@@ -2,11 +2,11 @@
   <div id="app">
     <div id="head">
       <searchbox id="searchbox"></searchbox>
-      <flip-clock @click="simple =!simple"></flip-clock>
+      <flip-clock @click=changeSimple></flip-clock>
         <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
-    <todo-app :simple = "simple" v-if="showcomponent === 'todo'" ></todo-app>
+    <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
     <news-column v-if="showcomponent === 'news'"></news-column>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
     <poem></poem>
@@ -31,9 +31,10 @@ export default {
   name: 'App',
   setup()
   {
-    const simple = ref(true);
+    let simple = ref(true);
     const sites = ref([]);
-    const showcomponent = ref('websites');
+    let showcomponent = ref('websites');
+    let lastcomponent = ref('websites');
     const library = ref([])
     const canteen = ref([])
     const scrapyFlag = ref(false)
@@ -61,6 +62,20 @@ export default {
     const printData = () => {
       //console.log(this.show)
     };
+    const changeSimple = () =>{
+      if(showcomponent.value==='simpletodo')
+      {
+        showcomponent.value=lastcomponent.value;
+        simple.value = false;
+      }  
+      else 
+      {
+        lastcomponent.value = showcomponent.value;
+        showcomponent.value ='simpletodo';
+        simple.value = true;
+      }
+      //console.log(simple.value);
+    }
 
     onMounted(() => {
       getView();
@@ -86,6 +101,8 @@ export default {
       scrapyFlag,
       TodoApp,
       NewsColumn,
+      changeSimple,
+      lastcomponent,
     };
   },
 }

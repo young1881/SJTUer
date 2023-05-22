@@ -1,5 +1,6 @@
 <template>
-  <div class="container" v-if="issimple">
+  <simple-mode v-if="issimple" :todos="simpleTodos.slice(0, 1)"></simple-mode>
+  <div class="container"  v-else>
     <div class="todolist" >
       <new-todo @new-todo="newTodo" />
       <done-filter :selected="filter" @change="filter = $event"></done-filter>
@@ -11,7 +12,7 @@
       ></todo-list>
     </div>
   </div>
-  <simple-mode v-else :todos="simpleTodos.slice(0, 1)"></simple-mode>
+ 
 </template>
 
 
@@ -46,6 +47,7 @@ export default {
     /*与NewTodo.vue组件相关代码*/
     const newTodo = (todo) => {
       todos.value.push(todo);
+      console.log(issimple);
     };
 
     /*与DoneFilter.vue组件相关代码*/
