@@ -2,10 +2,12 @@
   <div id="app">
     <div id="head">
       <searchbox id="searchbox"></searchbox>
-      <flip-clock></flip-clock>
+      <flip-clock @click="simple =!simple"></flip-clock>
         <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
+    <todo-app :simple = "simple" v-if="showcomponent === 'todo'" ></todo-app>
+    <news-column v-if="showcomponent === 'news'"></news-column>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
     <poem></poem>
   </div>
@@ -17,16 +19,19 @@ import Searchbox from './components/searchbox.vue'
 import Sidebar from './components/sidebar.vue'
 import websites from './components/websites.vue'
 import charts from './components/charts.vue'
+import TodoApp from './components/todolist/TodoApp.vue';
+import NewsColumn from './components/news/NewsColumn.vue';
 import {getview,getscrapy} from './api/api.js'
 import {ref,onMounted,watch} from 'vue'
 import poem from './components/poem.vue'
 
 
 export default {
-  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem},
+  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem,TodoApp,NewsColumn},
   name: 'App',
   setup()
   {
+    const simple = ref(true);
     const sites = ref([]);
     const showcomponent = ref('websites');
     const library = ref([])
@@ -70,6 +75,7 @@ export default {
     });
 
     return{
+      simple,
       sites,
       library,
       canteen,
@@ -77,7 +83,9 @@ export default {
       printData,
       showcomponent,
       ChangeComponent,
-      scrapyFlag
+      scrapyFlag,
+      TodoApp,
+      NewsColumn,
     };
   },
 }
