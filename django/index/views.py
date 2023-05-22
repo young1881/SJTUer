@@ -184,7 +184,7 @@ def index_view(request):
                      'photo_name': wallpaper_flag.photo_name,
                      'css': wallpaper_flag.css}
 
-        tasks_flag = [Task.objects.filter(user=jaccount)]
+        tasks_flag = [Task.objects.filter(user=jaccount)[0]]
         task = task_json(result, tasks_flag)
 
     except:
