@@ -130,7 +130,7 @@ export default {
       //myname.value = localStorage.getItem("myname") || "";
       //todos.value = JSON.parse(localStorage.getItem("tasks")) || [];
       todos.value = JSON.parse(localStorage.getItem("todos") )|| [];
-      //todos.value = todos.value.filter((todo) => todo.is_active === true)
+      todos.value = todos.value.filter((todo) => todo.is_active === true)
       //console.log(JSON.stringify(todos));
     });
 
