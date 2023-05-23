@@ -84,11 +84,11 @@ export default {
 
       var that = this
       var params = new URLSearchParams()
-      var jaccount = sessionStorage.getItem("jaccount");
+      var jaccount = sessionStorage.getItem("jaccount")
       // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
-      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
-      params.append('site_name', siteName || '');  // 需要改成传入的siteName
-      params.append('site_url', siteUrl || '');  // 需要改成传入的siteUrl
+      params.append('jaccount', jaccount),  // jaccount也需要传递到后端
+      params.append('site_name', siteName || ''), // 需要改成传入的siteName
+      params.append('site_url', siteUrl || ''),  // 需要改成传入的siteUrl
 
       // 发送POST请求
       axios
@@ -96,10 +96,13 @@ export default {
       .then(function(response){
         console.log(response.data['key'])
         if((response.data['key']==1)||(response.data['key']==2)){
-          location.reload()
+          if(response.data['key']==1){
+            that.showMessage("网站添加成功！")
+          }
           if(response.data['key']==2){
             that.showMessage("该网址已存在，已将其重命名！")
           }
+          location.reload()
         }
         if((response.data['key']==0)){
           that.showMessage("超出添加上限，请删除不需要的网址后再添加！")
@@ -123,8 +126,10 @@ export default {
 
       this.addName = ''
       this.addUrl = ''
-    }
+    },
   }
+}
+
 </script>
 
 <style scoped>
@@ -133,7 +138,6 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 100;
-
   }
 
   .sitebox {
@@ -148,7 +152,6 @@ export default {
     align-items: flex-start;
   }
 
-  /* 如果需要添加间距，在这里设置margin或padding即可 */
   .sitebox site {
     margin-right: 0px;
     margin-bottom: 0px;

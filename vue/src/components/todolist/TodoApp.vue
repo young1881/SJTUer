@@ -19,7 +19,6 @@ import NewTodo from "./NewTodo.vue";
 import DoneFilter from "./DoneFilter.vue";
 import OptionFilter from "./OptionFilter.vue";
 import TodoList from "./TodoList.vue";
-//import { defineProps } from "vue";
 //import TodoItem from "./TodoItem.vue";
 import SimpleMode from "./SimpleMode.vue";
 import axios from "axios";

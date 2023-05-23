@@ -5,15 +5,7 @@
         <img :src="siteSrc">
       </div>
     </a>
-<<<<<<< HEAD
     <p >{{ siteName }}</p>
-=======
-    <p>{{ siteName }}</p>
-    <!-- 用于调试修改/删除/添加的按钮，实际实现中需要移到右键菜单里，或者是末尾的“添加网址”按钮上 -->
-    <!-- <button @click="refactor_site()" type="button" class="btn btn-primary"> test_refactor </button>
-    <button @click="delete_site()" type="button" class="btn btn-primary"> test_delete </button>
-    <button @click="add_site()" type="button" class="btn btn-primary"> test_add </button> -->
->>>>>>> 915db1a18b802317587b0ead3caf28cc425495c2
   </div>
 </template>
 
@@ -51,6 +43,7 @@
         console.log(error)
       })
     }
+  }
   }
 </script>
 
