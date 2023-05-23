@@ -1,6 +1,6 @@
 <template>
   <div class="newtodo">
-    <input type="text" class="name" v-model="todoName" placeholder="e.g Homework" />
+    <input type="text" class="name" v-model="todoName"  placeholder="e.g Homework" />
     <div class="optionline">
       <!--
       <input type="text" class="option" placeholder="priority" />
@@ -85,17 +85,6 @@ export default {
     const TimesliceValue = Timeslice[0].value;
 
     const submitNewtodo = () => {
-      /*
-      const todo = {
-        id: -1,
-        uesrname: todoName.value,
-        priority: Prio,
-        category: Cate,
-        timeslice: Time,
-        done: todoDone,
-        is_active: true,
-      };
-      */
       const todo = {
         id: -1,
         name: todoName.value,
