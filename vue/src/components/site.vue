@@ -7,10 +7,28 @@
     </a>
     <p >{{ siteName }}</p>
     <div class="del_site" v-if="delSite">
-      <div class="delbox" @click="onEdit">修改</div>
+      <div class="delbox" @click="addBox">修改</div>
       <div class="delbox" @click="onDelete">删除</div>
     </div>
   </div>
+  <div class="addSiteBox" v-if="siteFlag">
+      <h1>修改网站名称</h1>
+        <div class = "box_form">
+          <div class = "item">
+            <input type="text" placeholder="网站名称" id="site_name" name="site_name" required="required" v-model="addName">
+          </div>
+          <a class = "button1" @click="refactor_site">
+            <input type="submit" value="完 成" id="site_submit"/>
+          </a>
+          <div class = "button2" @click="closeSite">
+            <img src="../assets/close.png">
+          </div>
+        </div>
+    </div>
+
+    <div class="massagebox" v-if="massageFlag">
+      {{noPermission}}
+    </div>
 </template>
 
 <script>
@@ -24,7 +42,10 @@
     },
     data () {
     return {
-      delSite: false
+      delSite: false,
+      siteFlag: false,
+      massageFlag: false,
+      noPermission: '',
     }
   },
     methods: {
@@ -43,21 +64,43 @@
         document.removeEventListener('click', this.hidebox)
       }
     },
+
+    addBox () {
+      this.siteFlag = true
+      this.delSite = false
+    },
+    showMessage (text) {
+      this.noPermission = text
+      this.massageFlag = true
+      setTimeout(() => {
+        this.massageFlag = false
+      }, 2000)
+    },
+    closeSite () {
+      this.siteFlag = false
+      this.addName = ''
+      this.addUrl = ''
+    },
       // 修改site信息
     refactor_site() {
+      const siteName = this.addName
       var that = this
       var params = new URLSearchParams()
       var jaccount = sessionStorage.getItem("jaccount");
       // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
       params.append('jaccount', jaccount);  // jaccount也需要传递到后端
-      params.append('refactor_site_name', that.siteName);  // 此处需要改成传入的siteName
-      params.append('refactor_site_url', that.siteUrl);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
+      params.append('refactor_site_name', siteName||'');  // 此处需要改成传入的siteName
+      params.append('refactor_site_url', that.siteSrc);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
 
       // 发送POST请求
       axios
         .post('http://localhost:8000/index/refactor_site/', params)
         .then(function (response) {
           console.log(response.data['key'])
+          if(response.data['key']==1){
+            that.showMessage("网站修改成功！")
+            location.reload()
+          }
           // 如果后端修改成功，则返回response.data['key'] = 1；否则返回0
           // 需要重新加载整个页面才能获取更新后的值
 
@@ -66,7 +109,27 @@
       // 报错处理
       console.log(error)
     })
-    }
+    },
+    delete_site(){
+      var that=this
+      var params = new URLSearchParams()
+      var jaccount = sessionStorage.getItem("jaccount");
+      // 需要传递的参数写到下方的第二个参数位置（siteName就是当前组件存储的siteName，因此不需要传入其他参数，下面两行都不用改）
+      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
+      params.append('delete_site_name', that.siteName);
+      // 发送POST请求
+      axios
+      .post('http://localhost:8000/index/delete_site/',params)
+      .then(function(response){
+        console.log(response.data['key'])
+        // 如果后端删除成功，则返回response.data['key'] = 1；否则返回0
+        // 删除可以不用整体刷新，直接修改前端的元素，让site不可见就行
+      })
+      .catch(function(error){
+        // 报错处理
+        console.log(error)
+      })
+    },
   }
   }
 </script>
@@ -127,18 +190,129 @@
 
   .del_site{
     position: absolute;
-    top: 40%;
-    right: 10%;
+    top: 30%;
+    right: 5%;
     z-index: 999;
-    background-color: rgba(255, 255, 255, 0.94);
     color: black;
     border-radius: 10px;
   }
 
   .delbox{
     padding: 10px;
+    background-color: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgb(169, 169, 169);
+    border-radius: 15px;
   }
+  
   .delbox a{
     font-size: 14px;
   }
+
+  
+  .addSiteBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform : translate(-50%,-50%);
+    width: 30%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    z-index: 2000;
+    overflow: auto;
+    text-align: center;
+    border-radius: 20px;
+  }
+
+  .addSiteBox h1 {
+    font-size: 30px;
+    letter-spacing: 2px;
+    font-family: Microsoft Yahei;
+    color: #161718;
+  }
+
+  .addSiteBox h4 {
+    color: #111111;
+  }
+
+  .addSiteBox .box_form {
+    margin-top: 30px;
+  }
+
+  .addSiteBox .box_form .item {
+    margin-top: 15px;
+  }
+
+  .addSiteBox .box_form .item input {
+    width: 200px;
+    font-size: 18px;
+    border: 0;
+    border-bottom: 4px solid #000;
+    padding: 5px 10px;
+    background: #ffffff00;
+    color: #000;
+  }
+
+  .addSiteBox .box_form .item input::placeholder {
+    color: #00000099;
+  }
+
+  .addSiteBox .box_form .button1 input {
+    margin: 0px auto;
+    margin-top: 35px;
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 0;
+    background-color: rgb(255, 255, 255, 0.5);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    transition: box-shadow 0.2s ease-out;
+    position: relative;
+
+  }
+
+  .addSiteBox .box_form .button1 input:hover {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
+      0px 0px 0px rgba(255, 255, 255, 0.1),
+      inset 4px 4px 4px rgba(0, 0, 0, 0.1),
+      inset -4px -4px 4px rgba(255, 255, 255, 1);
+    transition: box-shadow 0.2s ease-out;
+  }
+
+  .addSiteBox .box_form .button2 {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+  }
+
+.addSiteBox .box_form .button2 img{
+  width: 30px;
+}
+
+.addSiteBox .box_form .date_list{
+    margin-top: 20px;
+    opacity: 1;
+  }
+
+  .addSiteBox .box_form .date_list select {
+    background: #000000;
+    opacity: 1;
+}
+
+.massagebox{
+  background: rgba(255, 255, 255, 0.94);
+  border-radius:20px;
+  color: #000000;
+  position: absolute;
+  z-Index: 1000;
+  padding: 10px 100px;
+  left: 50%;
+  transform : translate(-50%,-50%);
+  top: 50%;
+  text-align: center;
+  font-size: 20px;
+
+}
 </style>
