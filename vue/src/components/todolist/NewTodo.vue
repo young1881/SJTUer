@@ -38,6 +38,7 @@
 <script>
 import { ref } from "vue";
 import SelectData from "./SelectData.vue";
+import axios from "axios";
 export default {
   components: { SelectData },
   name: "NewTodo",
@@ -95,7 +96,7 @@ export default {
           value:5,
         },
       ];
-    const todoDone = ref < Boolean > "false";
+    const todoDone = ref < Boolean > "False";
     let Prio = {name:"Low",value:1};
     let Cate = {name:"School",value:1};
     let Time = {name:"5min",value:1};
@@ -105,7 +106,7 @@ export default {
 
     const submitNewtodo = () => {
       const todo = {
-        /*id: props.tid,*/
+        id: -1,
         name: todoName.value,
         priority: Prio,
         category: Cate,
@@ -114,7 +115,35 @@ export default {
       };
       context.emit("new-todo", todo);
       //console.log(todoName);
-    
+
+      var params = new URLSearchParams()
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      params.append('jaccount', jaccount);
+      params.append('name', todoName.value);
+      params.append('priority', Prio['value']);
+      params.append('category', Cate['value']);
+      params.append('timeslice', Time['value']);
+      params.append('done', todoDone);
+
+      axios
+      .post('http://localhost:8000/index/add_task/',params)
+      .then(function(response){
+        console.log("add task:")
+        console.log(response.data['key'])
+        // 如果后端添加成功，则返回response.data['key'] = id；否则返回-1
+        // 把id添加到todo结构体中
+        if (response.data['key'] != -1)
+        {
+          todo.id = response.data['key']
+        }
+
+      })
+      .catch(function(error){
+        // 报错处理
+        console.log(error)
+      })
+
     };
     const getPrio = (name,value,index) => {
       Prio = {name,value};

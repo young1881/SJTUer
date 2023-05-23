@@ -26,6 +26,7 @@ import TodoList from "./TodoList.vue";
 //import { defineProps } from "vue";
 //import TodoItem from "./TodoItem.vue";
 import SimpleMode from "./SimpleMode.vue";
+import axios from "axios";
 export default {
   name: "App",
   components: {
@@ -139,6 +140,26 @@ export default {
     /*与TodoList.vue相关代码*/
     const RemoveTodo = (todo) => {
       todos.value = todos.value.filter((t) => t != todo);
+      
+      var params = new URLSearchParams()
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      console.log("id:")
+      console.log(todo.id)
+      params.append('jaccount', jaccount);
+      params.append('task_id', todo.id);
+
+      axios
+      .post('http://localhost:8000/index/delete_task/',params)
+      .then(function(response){
+        // 如果后端删除成功，则返回response.data['key'] = 1；否则返回-1
+        console.log("delete task:")
+        console.log(response.data['key'])
+      })
+      .catch(function(error){
+        // 报错处理
+        console.log(error)
+      })
     };
 
     return {

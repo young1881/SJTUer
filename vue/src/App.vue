@@ -51,6 +51,8 @@ export default {
     const getView = async() => {
       const response = await getview();
       sites.value = response.data["sites"];
+      // 从后端数据库获取的todolist数据，直接存到本地
+      localStorage.setItem("tasks", response.data['task'])
       sessionStorage.setItem("name", response.data['name']);
       sessionStorage.setItem("jaccount", response.data['account']);
     };
