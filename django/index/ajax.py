@@ -9,7 +9,7 @@ def img_upload(request):
     # jaccount = request.session['jaccount']
 
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': 1}
 
     file_img = request.FILES['upload_file']  # 获取文件对象
@@ -28,7 +28,8 @@ def img_upload(request):
     except Exception as e:
         print(e)
         return JsonResponse(0, safe=False)
-    
+
+
 def color_wallpaper(request):
     # jaccount = request.session['jaccount']
 
@@ -141,7 +142,6 @@ def simple_mode(request):
     this_simple_mode.save()
     return HttpResponse("已保存")
 
-<<<<<<< HEAD
 
 def color_wallpaper(request):
     jaccount = request.session['jaccount']
@@ -152,8 +152,6 @@ def color_wallpaper(request):
     return HttpResponse("已保存")
 
 
-=======
->>>>>>> 56cf046b58acc9e9ffadb135a4dc1b55f94f9281
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
