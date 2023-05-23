@@ -16,14 +16,16 @@
 </template>
 
 <script>
-  export default {
-    name: "TodoItem",
-    props: ["listItem"],
-    setup(props, context) {
-      const deleteToDo = () => {
-        context.emit("item-deleted");
-        //console.log(1)
-      };
+export default {
+  name: "TodoItem",
+  props: ["listItem"],
+  setup(props, context) {
+    // console.log(listItem)
+
+    const deleteToDo = () => {
+      context.emit("item-deleted");
+      // console.log(1)
+    };
 
       return {
         deleteToDo,

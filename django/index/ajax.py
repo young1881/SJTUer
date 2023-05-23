@@ -134,24 +134,74 @@ def color_wallpaper(request):
     wallpaper.save()
     return HttpResponse("已保存")
 
-# def refactor_countdown(request):
-#     jaccount = request.session['jaccount']
-#     date_name = request.POST.get('refactor_date_name').strip()
-#
-#     if date_name == "":
-#         return JsonResponse(0, safe=False)
-#
-#     year = request.POST.get('year')
-#     month = request.POST.get('month')
-#     day = request.POST.get('day')
-#     countdown = Countdown.objects.filter(user=jaccount)[0]
-#     countdown.date_name = date_name
-#     countdown.year = int(year)
-#     countdown.month = int(month)
-#     countdown.day = int(day)
-#     countdown.save()
-#
-#     this_simple_mode = SimpleMode.objects.get(user=jaccount)
-#     this_simple_mode.is_active = True
-#     this_simple_mode.save()
-#     return JsonResponse(1, safe=False)
+def delete_task(request):
+    # jaccount = request.session['jaccount']
+    jaccount = request.POST.get('jaccount').strip()
+    task_id = request.POST.get('task_id').strip()
+
+    # 如果删除成功，则返回1；否则返回-1
+    res = {'key': 1}
+    try:
+        for task in Task.objects.filter(user=jaccount, id=task_id):
+            task.is_active = False
+            task.save()
+    except:
+        res['key'] = -1
+    return HttpResponse(json.dumps(res), content_type="application/json")
+
+def done_task(request):
+    # jaccount = request.session['jaccount']
+    jaccount = request.POST.get('jaccount').strip()
+    task_id = request.POST.get('task_id').strip()
+    task_done = request.POST.get('task_done').strip()
+    if task_done == "true" or task_done == "True":
+        task_done = True
+    else:
+        task_done = False
+
+    # 如果修改成功，则返回1；否则返回-1
+    res = {'key': 1}
+    try:
+        for task in Task.objects.filter(user=jaccount, id=task_id):
+            task.done = task_done
+            task.save()
+    except:
+        res['key'] = -1
+    return HttpResponse(json.dumps(res), content_type="application/json")
+
+
+
+def add_task(request):
+
+    jaccount = request.POST.get('jaccount').strip()
+    
+    res = {'key': -1}
+
+    user = User.objects.filter(jaccount=jaccount)[0]
+
+    task_name = request.POST.get('name').strip()
+    task_prio = request.POST.get('priority').strip()
+    task_cate = request.POST.get('category').strip()
+    task_time = request.POST.get('timeslice').strip()
+    task_done = request.POST.get('done').strip()
+    
+    if task_done == "true" or task_done == "True":
+        task_done = True
+    else:
+        task_done = False
+
+    print(f"\ndone:{task_done}\n")
+
+    taskObj = Task.objects.create(user=user, 
+                        username=jaccount, 
+                        name=task_name,
+                        priority=task_prio, 
+                        category=task_cate,
+                        timeslice=task_time,
+                        done=task_done)
+    try:
+        id = taskObj.id
+    except:
+        pass
+    res['key'] = id
+    return HttpResponse(json.dumps(res), content_type="application/json")

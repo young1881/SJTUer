@@ -227,7 +227,6 @@ def index_view(request):
 
     locals = {
         'sites': sites,
-        'jac': result,
         'simple_mode': simple_mode,
         "wallpaper": wallpaper,
         'task': task,
