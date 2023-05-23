@@ -30,6 +30,38 @@ def weather_view(request):
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 
+def data_view(request):
+    data = {"library": lib(), "canteen": canteen()}
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def canteen():
+    url = 'https://canteen.sjtu.edu.cn/CARD/Ajax/Place'
+    session = requests.session()
+    response = session.get(url=url, headers=headers).text
+    try:
+        return get_json(response)
+    except:
+        return [{"Id": 100, "Name": "闵行第一餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 1},
+                {"Id": 200, "Name": "闵行第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 5},
+                {"Id": 300, "Name": "闵行第三餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 12},
+                {"Id": 400, "Name": "闵行第四餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 16},
+                {"Id": 500, "Name": "闵行第五餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 20},
+                {"Id": 600, "Name": "闵行第六餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 25},
+                {"Id": 700, "Name": "闵行第七餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 28},
+                {"Id": 800, "Name": "闵行哈乐餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 31},
+                {"Id": 1000, "Name": "徐汇第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 35},
+                {"Id": 1200, "Name": "张江李所餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 50}]
+
+
+def lib():
+    url = 'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
+    session = requests.session()
+    response = session.get(url=url, headers=headers).text
+    data = json.loads(response[12:-2], strict=False)['numbers']
+    return data
+
+
 def scrap_view(request):
     names = [
         'jwc',
@@ -40,8 +72,6 @@ def scrap_view(request):
         'bilibili',
         # 'corona',
         'poem',
-        'canteen',
-        'library'
     ]
     urls = [
         'https://jwc.sjtu.edu.cn/xwtg/tztg.htm',
@@ -54,8 +84,6 @@ def scrap_view(request):
         'https://api.bilibili.com/x/web-interface/popular?ps=5&pn=1',
         # 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf',
         'https://v1.jinrishici.com/all.json',
-        'https://canteen.sjtu.edu.cn/CARD/Ajax/Place',
-        'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
     ]
     urls_names = dict(zip(urls, names))
     responses = {}
@@ -142,8 +170,6 @@ def scrap_view(request):
         'bilibili': bilibili_data,
         # 'corona': corona_data,
         'poem': poem_data,
-        'canteen': canteen_data,
-        'library': library_data,
     }
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
@@ -251,7 +277,7 @@ def jwc(response):
     a_list = tree.xpath('//div[@class="wz"]/a')
     jwc_dic = []
     for i in range(10):
-        title = str(i + 1) + ' ' + a_list[i].xpath('./h2/text()')[0]
+        title = a_list[i].xpath('./h2/text()')[0]
         # if len(title.encode('utf-8')) > 55:
         #     title = cut_str(title, 53) + '...'
         url = 'https://jwc.sjtu.edu.cn' + a_list[i].xpath('./@href')[0][2:]
@@ -266,7 +292,7 @@ def jnews(response):
     a_list = tree.xpath('//div[@class="new-add-list  clearfix"]//ul[1]//a')
     jnews_dic = []
     for i in range(10):
-        title = str(i + 1) + ' ' + a_list[i].xpath('./text()')[0]
+        title = a_list[i].xpath('./text()')[0]
         # if len(title.encode('utf-8')) > 55:
         #     title = cut_str(title, 53) + '...'
         url = a_list[i].xpath('./@href')[0]
@@ -279,7 +305,7 @@ def bilibli(response):
     bilibili_json = get_json(response)['data']['list']
     bilibili = []
     for i in range(10):
-        dic = {'title': str(i + 1) + ' ' + bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
+        dic = {'title': bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
                'view': bilibili_json[i]['stat']['view']}
         # if len(dic['title'].encode("utf-8")) > 46:
         #     dic['title'] = cut_str(dic['title'], 44) + '...'
@@ -325,7 +351,6 @@ def weibo(response):
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[2]/a/text()')[0]
         url = 'https://s.weibo.com/weibo?q=%23' + name + "%23"
-        name = str(i + 1) + ' ' + name
         # if len(name.encode('utf-8')) > 46:
         #     name = cut_str(name, 44) + '...'
         hot = tr_list[i].xpath('./td[3]/text()')[0]
@@ -342,7 +367,6 @@ def zhihu(response):
     for i in range(len(tr_list)):
         name = tr_list[i].xpath('./td[@class="al"]/a/text()')[0]
         url = 'https://tophub.today' + tr_list[i].xpath('./td[@class="al"]/a/@href')[0]
-        name = str(i + 1) + ' ' + name
         # if len(name.encode('utf-8')) > 55:
         #     name = cut_str(name, 53) + "..."
         zhihu_item = {'name': name, 'url': url}

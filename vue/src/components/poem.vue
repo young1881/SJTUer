@@ -1,20 +1,21 @@
 <template>
     <div class="poem">
-        <p class="sentence">{{`「 ${content} 」 ——《${origin}》 ${author}`}}</p>
+        <p class="sentence">{{`「 ${poem.content} 」 ——《${poem.origin}》 ${poem.author}`}}</p>
     </div>
   </template>
   
   <script>
   export default {
-    data() {
-      return {
-        content: "梨花自寒食，进节只愁余。",
-        origin:"寒食上冢",
-        author:"杨万里",
-      };
+    name: 'poem',
+    props: {
+      poem: {
+        type: Object,
+        required: true
+      }
     },
-  };
+  }
   </script>
+
 
 <style scoped>
 .poem {

@@ -2,14 +2,15 @@
   <div id="app">
     <div id="head">
       <searchbox id="searchbox"></searchbox>
-      <flip-clock @click="simple =!simple"></flip-clock>
-        <charts id="charts" v-if="showcomponent === 'charts' &&scrapyFlag" :library = "library" :canteen = "canteen"></charts>
+      <flip-clock @click="changeSimple"></flip-clock>
+        <charts id="charts" v-if="showcomponent === 'charts' &&dataFlag" :library = "library" :canteen = "canteen"></charts>
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
-    <todo-app :simple = "simple" v-if="showcomponent === 'todo'" ></todo-app>
-    <news-column v-if="showcomponent === 'news'"></news-column>
+    <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
+    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews" :weibo = "weibo" :zhihu = "zhihu" :bilibili = "bilibili"></news-column>
+    <weather v-if="showcomponent === 'weather'"></weather>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
-    <poem></poem>
+    <poem v-if="scrapyFlag" :poem = "poem"></poem>
   </div>
 </template>
 
@@ -21,22 +22,31 @@ import websites from './components/websites.vue'
 import charts from './components/charts.vue'
 import TodoApp from './components/todolist/TodoApp.vue';
 import NewsColumn from './components/news/NewsColumn.vue';
-import {getview,getscrapy} from './api/api.js'
+import {getview,getscrapy,getdata} from './api/api.js'
 import {ref,onMounted,watch} from 'vue'
 import poem from './components/poem.vue'
+import weather from './components/weather.vue'
 
 
 export default {
-  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem,TodoApp,NewsColumn},
+  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem, TodoApp, NewsColumn, weather},
   name: 'App',
   setup()
   {
-    const simple = ref(true);
+    let simple = ref(true);
     const sites = ref([]);
-    const showcomponent = ref('websites');
+    let showcomponent = ref('websites');
+    let lastcomponent = ref('websites');
     const library = ref([])
     const canteen = ref([])
+    const jwc = ref([])
+    const jnews = ref([])
+    const weibo = ref([])
+    const zhihu = ref([])
+    const bilibili = ref([])
+    const poem = ref([])
     const scrapyFlag = ref(false)
+    const dataFlag = ref(false)
 
     const getView = async() => {
       const response = await getview();
@@ -47,29 +57,57 @@ export default {
 
     const getScrapy = async() => {
       const response = await getscrapy();
-      console.log("response")
+      jwc.value = response.data["jwc"]
+      jnews.value = response.data["jnews"]
+      weibo.value = response.data["weibo"]
+      zhihu.value = response.data["zhihu"]
+      bilibili.value = response.data["bilibili"]
+      poem.value = response.data["poem"]
+      scrapyFlag.value = true
+    };
+
+    const getData = async() => {
+      const response = await getdata();
       library.value = response.data["library"]
       canteen.value = response.data["canteen"]
-      scrapyFlag.value = true
+      dataFlag.value = true
     };
 
     const ChangeComponent = (component) =>{
       showcomponent.value = component;
-      console.log(component)
+      simple.value = false;
     }
 
     const printData = () => {
       //console.log(this.show)
     };
+    const changeSimple = () =>{
+      if(showcomponent.value==='simpletodo')
+      {
+        showcomponent.value=lastcomponent.value;
+        simple.value = false;
+      }  
+      else 
+      {
+        lastcomponent.value = showcomponent.value;
+        showcomponent.value ='simpletodo';
+        simple.value = true;
+      }
+      //console.log(simple.value);
+    }
 
     onMounted(() => {
       getView();
       printData();
+      getScrapy();
     } 
     );
 
     watch(() => showcomponent.value, (newVal, oldVal) => {
       if (newVal === 'charts') {
+        getData();
+      }
+      if (newVal === 'news') {
         getScrapy();
       }
     });
@@ -79,13 +117,24 @@ export default {
       sites,
       library,
       canteen,
+      jwc,
+      jnews,
+      weibo,
+      zhihu,
+      bilibili,
+      poem,
       getView,
+      getScrapy,
+      getData,
       printData,
       showcomponent,
       ChangeComponent,
       scrapyFlag,
+      dataFlag,
       TodoApp,
       NewsColumn,
+      changeSimple,
+      lastcomponent,
     };
   },
 }

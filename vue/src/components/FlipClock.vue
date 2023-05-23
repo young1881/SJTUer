@@ -123,5 +123,6 @@ export default {
     font-size: 56px;
     font-style: normal;
     vertical-align: top;
+    color:black;
 }
 </style>

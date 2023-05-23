@@ -5,7 +5,7 @@
         <div class="sitesmallbox">
           <a href="#" target="_blank" >
           <div class="img">
-            <img :src="'http://127.0.0.1:8000/index/test'">
+            <img :src="'#'">
           </div>
           </a>
         <p>新增收藏网站</p>
