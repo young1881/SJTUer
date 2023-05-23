@@ -5,7 +5,7 @@
         <p>Your Todos</p>
         <div v-if="todos.length">
           <simple-todo v-for="todo in todos" :key="todo.name" :listItem="todo"
-            @statuschange="todo.done = $event.target.checked"></simple-todo>
+            @statuschange="doneChange(todo)"></simple-todo>
         </div>
         <div class="finish" v-else>
           <h2>Congrats! You've finished all tasks</h2>
@@ -17,10 +17,39 @@
 
 <script>
   import SimpleTodo from "./SimpleTodo.vue";
+  import axios from "axios";
   export default {
     name: "SimpleMode",
     components: { SimpleTodo },
     props: ["todos"],
+    setup(){
+    const doneChange = (todo) =>{
+      todo.done = !todo.done;
+      var params = new URLSearchParams()
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      console.log(todo.id)
+      params.append('jaccount', jaccount);
+      params.append('task_id', todo.id);
+      params.append('task_done', todo.done);
+
+      axios
+      .post('http://localhost:8000/index/done_task/',params)
+      .then(function(response){
+        // 如果后端添加成功，则返回response.data['key'] = 1；否则返回-1
+        console.log("Done task:")
+        console.log(response.data['key'])
+        
+      })
+      .catch(function(error){
+        // 报错处理
+        console.log(error)
+      })
+    };
+    return{
+      doneChange,
+    };
+  },
   };
 </script>
 
