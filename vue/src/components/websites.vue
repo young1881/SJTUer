@@ -5,10 +5,9 @@
         <div class="sitesmallbox">
           <a @click="addBox">
           <div class="img">
-            <img :src="'#'">
+            <img src="../assets/add.png">
           </div>
         </a>
-        <p>新增收藏网站</p>
       </div>
     </div>
 
