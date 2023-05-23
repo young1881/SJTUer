@@ -7,9 +7,10 @@
     </div>
     <websites id="websites" v-if="showcomponent === 'websites'" :sites = "sites"></websites>
     <todo-app :simple = "simple" v-if="showcomponent === 'todo'||showcomponent === 'simpletodo'" ></todo-app>
-    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews"></news-column>
+    <news-column v-if="showcomponent === 'news' && scrapyFlag" :jwc = "jwc" :jnews="jnews" :weibo = "weibo" :zhihu = "zhihu" :bilibili = "bilibili"></news-column>
+    <weather v-if="showcomponent === 'weather'"></weather>
     <sidebar @ChangeComponent="ChangeComponent" ></sidebar>
-    <poem></poem>
+    <poem v-if="scrapyFlag" :poem = "poem"></poem>
   </div>
 </template>
 
@@ -24,10 +25,11 @@ import NewsColumn from './components/news/NewsColumn.vue';
 import {getview,getscrapy,getdata} from './api/api.js'
 import {ref,onMounted,watch} from 'vue'
 import poem from './components/poem.vue'
+import weather from './components/weather.vue'
 
 
 export default {
-  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem,TodoApp,NewsColumn},
+  components: { FlipClock, websites, Searchbox, Sidebar, charts, poem, TodoApp, NewsColumn, weather},
   name: 'App',
   setup()
   {
@@ -39,6 +41,10 @@ export default {
     const canteen = ref([])
     const jwc = ref([])
     const jnews = ref([])
+    const weibo = ref([])
+    const zhihu = ref([])
+    const bilibili = ref([])
+    const poem = ref([])
     const scrapyFlag = ref(false)
     const dataFlag = ref(false)
 
@@ -53,8 +59,11 @@ export default {
       const response = await getscrapy();
       jwc.value = response.data["jwc"]
       jnews.value = response.data["jnews"]
+      weibo.value = response.data["weibo"]
+      zhihu.value = response.data["zhihu"]
+      bilibili.value = response.data["bilibili"]
+      poem.value = response.data["poem"]
       scrapyFlag.value = true
-      console.log(response.data["jwc"])
     };
 
     const getData = async() => {
@@ -90,6 +99,7 @@ export default {
     onMounted(() => {
       getView();
       printData();
+      getScrapy();
     } 
     );
 
@@ -109,6 +119,10 @@ export default {
       canteen,
       jwc,
       jnews,
+      weibo,
+      zhihu,
+      bilibili,
+      poem,
       getView,
       getScrapy,
       getData,
