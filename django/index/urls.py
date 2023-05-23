@@ -8,7 +8,7 @@ urlpatterns = [
     path('test/', views.test_view, name='test'),
     path('scrapy/', views.scrap_view, name='scrapy'),
     path('data/', views.data_view, name="data"),
-    path('weather/', views.weather_view, name='weather'),
+    # path('weather/', views.weather_view, name='weather'),
     # post请求：ajax.py
     path('upload_img/', csrf_exempt(ajax.img_upload), name="uploda_img"),
     path('add_site/', ajax.add_site, name="add_site"),
