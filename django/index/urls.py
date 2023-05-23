@@ -18,6 +18,7 @@ urlpatterns = [
     path('simple_mode/', ajax.simple_mode, name="simple_mode"),
     path('add_task/', ajax.add_task, name="add_task"),
     path('delete_task/', ajax.delete_task, name="delete_task"),
+    path('done_task/', ajax.done_task, name="done_task"),
     # 可视化子页面：visual.py
     path('bar', visual.ChartViewCanteen.as_view(), name='can_bar'),
     path('can_index', visual.IndexViewCanteen.as_view(), name='can_index'),
