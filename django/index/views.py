@@ -403,6 +403,7 @@ def task_json(result, tasks):
         tmp['name'] = task.name
         tmp['priority'] = {"name": priority_arr[priority_val - 1], "value": priority_val}
         tmp['timeslice'] = {"name": timeslice_arr[timeslice_val - 1], "value": timeslice_val}
+        tmp['is_active'] = task.is_active
         res.append(tmp)
     return res
 
