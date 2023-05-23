@@ -85,17 +85,28 @@ export default {
     const TimesliceValue = Timeslice[0].value;
 
     const submitNewtodo = () => {
+      /*
       const todo = {
         id: -1,
-        name: todoName.value,
+        uesrname: todoName.value,
         priority: Prio,
         category: Cate,
         timeslice: Time,
         done: todoDone,
+        is_active: true,
       };
-      context.emit("new-todo", todo);
+      */
+      const todo = {
+        id: -1,
+        name: todoName.value,
+        category: Cate,
+        done: todoDone,
+        priority: Prio,
+        timeslice: Time,
+        is_active: true,
+      };
+      //context.emit("new-todo", todo);
       //console.log(todoName);
-
       var params = new URLSearchParams()
       var jaccount = sessionStorage.getItem("jaccount");
 
@@ -117,6 +128,7 @@ export default {
         {
           todo.id = response.data['key']
         }
+        context.emit("new-todo", todo);
 
       })
       .catch(function(error){
