@@ -47,7 +47,7 @@ export default {
     /*与NewTodo.vue组件相关代码*/
     const newTodo = (todo) => {
       todos.value.push(todo);
-      console.log(issimple);
+      console.log(JSON.stringify(todo));
     };
 
     /*与DoneFilter.vue组件相关代码*/
@@ -139,6 +139,7 @@ export default {
     /*与TodoList.vue相关代码*/
     const RemoveTodo = (todo) => {
       todos.value = todos.value.filter((t) => t != todo);
+      console.log(JSON.stringify(todo));
     };
 
     return {
@@ -195,3 +196,4 @@ button {
   overflow-y: auto;
 }
 </style>
+ 

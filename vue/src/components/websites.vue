@@ -8,8 +8,8 @@
             <img :src="'#'">
           </div>
           </a>
-        <p>新增收藏网站</p>
-      </div>
+          <p>新增收藏网站</p>
+        </div>
     </div>
 
     <div class="addSiteBox" v-if="siteFlag">
