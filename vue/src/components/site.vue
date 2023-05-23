@@ -1,5 +1,5 @@
 <template>
-  <div class="sitesmallbox" ref="box">
+  <div class="sitesmallbox" ref="box" v-if="showsite">
     <a :href="siteUrl" target="_blank" @contextmenu.prevent="showbox" ref="delSite">
       <div class="img">
         <img :src="siteSrc">
@@ -8,7 +8,7 @@
     <p >{{ siteName }}</p>
     <div class="del_site" v-if="delSite">
       <div class="delbox" @click="addBox">修改</div>
-      <div class="delbox" @click="onDelete">删除</div>
+      <div class="delbox" @click="delete_site">删除</div>
     </div>
   </div>
   <div class="addSiteBox" v-if="siteFlag">
@@ -42,6 +42,7 @@
     },
     data () {
     return {
+      showsite: true,
       delSite: false,
       siteFlag: false,
       massageFlag: false,
@@ -84,13 +85,14 @@
       // 修改site信息
     refactor_site() {
       const siteName = this.addName
+      this.siteFlag = false
       var that = this
       var params = new URLSearchParams()
       var jaccount = sessionStorage.getItem("jaccount");
-      // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
+
       params.append('jaccount', jaccount);  // jaccount也需要传递到后端
       params.append('refactor_site_name', siteName||'');  // 此处需要改成传入的siteName
-      params.append('refactor_site_url', that.siteSrc);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
+      params.append('refactor_site_url', that.siteUrl);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
 
       // 发送POST请求
       axios
@@ -101,8 +103,9 @@
             that.showMessage("网站修改成功！")
             location.reload()
           }
-          // 如果后端修改成功，则返回response.data['key'] = 1；否则返回0
-          // 需要重新加载整个页面才能获取更新后的值
+          if(response.data['key']==0){
+            that.showMessage("没有检测到您的输入！")
+          }
 
     })
     .catch(function(error){
@@ -110,11 +113,12 @@
       console.log(error)
     })
     },
+    
     delete_site(){
+      this.showbox = false
       var that=this
       var params = new URLSearchParams()
       var jaccount = sessionStorage.getItem("jaccount");
-      // 需要传递的参数写到下方的第二个参数位置（siteName就是当前组件存储的siteName，因此不需要传入其他参数，下面两行都不用改）
       params.append('jaccount', jaccount);  // jaccount也需要传递到后端
       params.append('delete_site_name', that.siteName);
       // 发送POST请求
@@ -122,13 +126,15 @@
       .post('http://localhost:8000/index/delete_site/',params)
       .then(function(response){
         console.log(response.data['key'])
-        // 如果后端删除成功，则返回response.data['key'] = 1；否则返回0
-        // 删除可以不用整体刷新，直接修改前端的元素，让site不可见就行
+        if(response.data['key']==1){
+            that.showsite = false
+          }
       })
       .catch(function(error){
         // 报错处理
         console.log(error)
       })
+      this.addName = ''
     },
   }
   }
