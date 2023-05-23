@@ -6,10 +6,6 @@
       </div>
     </a>
     <p >{{ siteName }}</p>
-    <!-- 用于调试修改/删除/添加的按钮，实际实现中需要移到右键菜单里，或者是末尾的“添加网址”按钮上 -->
-    <!-- <button @click="refactor_site()" type="button" class="btn btn-primary"> test_refactor </button>
-    <button @click="delete_site()" type="button" class="btn btn-primary"> test_delete </button>
-    <button @click="add_site()" type="button" class="btn btn-primary"> test_add </button> -->
   </div>
 </template>
 
@@ -62,34 +58,6 @@ export default {
         console.log(response.data['key'])
         // 如果后端删除成功，则返回response.data['key'] = 1；否则返回0
         // 删除可以不用整体刷新，直接修改前端的元素，让site不可见就行
-
-      })
-      .catch(function(error){
-        // 报错处理
-        console.log(error)
-      })
-    },
-    add_site(){
-      var that=this
-      var params = new URLSearchParams()
-      var jaccount = sessionStorage.getItem("jaccount");
-      // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
-      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
-      params.append('site_name', that.siteName);  // 需要改成传入的siteName
-      params.append('site_url', that.siteUrl);  // 需要改成传入的siteUrl
-
-      // 发送POST请求
-      axios
-      .post('http://localhost:8000/index/add_site/',params)
-      .then(function(response){
-        console.log(response.data['key'])
-        // 如果后端修改成功，则返回response.data['key'] = 1
-        // 否则以下需要弹窗警告
-        // 返回0表示：超出添加上限，请删除不需要的网址后再添加！
-        // 返回2表示：该网址已存在，已将其重命名！
-        // 返回3表示：没有检测到您的输入！
-
-        // 若返回1，需要重新加载整个页面才能获取更新后的值
 
       })
       .catch(function(error){

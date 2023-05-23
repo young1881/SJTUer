@@ -149,7 +149,7 @@ html{
 }
 
 body{
-  background: rgb(254, 232, 253);
+  background: rgb(214, 207, 247);
   z-index: -3;
   position: absolute;
   top: 0;

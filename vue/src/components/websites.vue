@@ -3,7 +3,7 @@
     <div class = "sitebox">
         <site v-for="item in sites" :key="item.site_name" :siteUrl="item.site_url" :siteSrc="item.site_src" :siteName="item.site_name"></site>
         <div class="sitesmallbox">
-          <a @click="addSite">
+          <a @click="addBox">
           <div class="img">
             <img :src="'#'">
           </div>
@@ -14,29 +14,31 @@
 
     <div class="addSiteBox" v-if="siteFlag">
       <h1>添加网站收藏</h1>
-        <form>
           <div class = "box_form">
             <div class = "item">
-              <input type="text" placeholder="网站名称" id="site_name" name="site_name" required="required">
+              <input type="text" placeholder="网站名称" id="site_name" name="site_name" required="required" v-model="addName">
             </div>
             <div class = "item">
-              <input type="text" placeholder="网址" id="site_url" name="site_url" required="required" >
+              <input type="text" placeholder="网址" id="site_url" name="site_url" required="required" v-model="addUrl">
             </div>
-            <a class = "button1" @click="closeSite">
+            <a class = "button1" @click="addSite">
               <input type="submit" value="完 成" id="site_submit"/>
             </a>
             <div class = "button2" @click="closeSite">
-              <a> 取 消</a>
+              <img src="../assets/close.png">
             </div>
           </div>
-        </form>
     </div>
 
+    <div class="massagebox" v-if="massageFlag">
+      {{noPermission}}
+    </div>
   </div>
 </template>
 
 <script>
 import site from './site.vue'
+import axios from "axios";
 export default {
   components: { site },
   name: 'websites',
@@ -49,6 +51,8 @@ export default {
   data () {
     return {
       siteFlag: false,
+      massageFlag: false,
+      noPermission: '111',
     }
   },
   created () { // 在创建实例时一次性获取数据
@@ -58,11 +62,67 @@ export default {
     getSite () {
       console.log(this.site)
     },
+    addBox () {
+      this.siteFlag = true
+    },
+    showMessage (text) {
+      this.noPermission = text
+      this.massageFlag = true
+      setTimeout(() => {
+        this.massageFlag = false
+      }, 2000)
+    },
     closeSite () {
       this.siteFlag = false
+      this.addName = ''
+      this.addUrl = ''
     },
-    addSite (){
-      this.siteFlag = true
+    addSite(){
+      this.siteFlag = false
+      const siteName = this.addName
+      const siteUrl = this.addUrl
+
+      var that = this
+      var params = new URLSearchParams()
+      var jaccount = sessionStorage.getItem("jaccount");
+      // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
+      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
+      params.append('site_name', siteName || '');  // 需要改成传入的siteName
+      params.append('site_url', siteUrl || '');  // 需要改成传入的siteUrl
+
+      // 发送POST请求
+      axios
+      .post('http://localhost:8000/index/add_site/',params)
+      .then(function(response){
+        console.log(response.data['key'])
+        if((response.data['key']==1)||(response.data['key']==2)){
+          location.reload()
+          if(response.data['key']==2){
+            that.showMessage("该网址已存在，已将其重命名！")
+          }
+        }
+        if((response.data['key']==0)){
+          that.showMessage("超出添加上限，请删除不需要的网址后再添加！")
+        }
+        if((response.data['key']==3)){
+          that.showMessage("没有检测到您的输入！")
+        }
+        // 如果后端修改成功，则返回response.data['key'] = 1
+        // 否则以下需要弹窗警告
+        // 返回0表示：超出添加上限，请删除不需要的网址后再添加！
+        // 返回2表示：该网址已存在，已将其重命名！
+        // 返回3表示：没有检测到您的输入！
+
+        // 若返回1，需要重新加载整个页面才能获取更新后的值
+
+      })
+      .catch(function(error){
+        // 报错处理
+        console.log(error)
+      })
+
+      this.addName = ''
+      this.addUrl = ''
     }
   }
 }
@@ -174,6 +234,10 @@ export default {
     color:#00000099;
 }
 
+.addSiteBox .box_form .button2 img{
+  width: 30px;
+}
+
 .addSiteBox .box_form .date_list{
     margin-top: 20px;
     opacity: 1;
@@ -182,5 +246,20 @@ export default {
 .addSiteBox .box_form .date_list select{
     background: #000000;
     opacity: 1;
+}
+
+.massagebox{
+  background: rgba(255, 255, 255, 0.94);
+  border-radius:20px;
+  color: #000000;
+  position: absolute;
+  z-Index: 1000;
+  padding: 10px 100px;
+  left: 50%;
+  transform : translate(-50%,-50%);
+  top: 50%;
+  text-align: center;
+  font-size: 20px;
+
 }
 </style>
