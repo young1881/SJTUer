@@ -62,6 +62,7 @@ class Wallpaper(models.Model):
 
 
 class Task(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, to_field='jaccount', on_delete=models.CASCADE, default='000')
     username = models.CharField(max_length=64, default='visitor')
     category = models.IntegerField(default=1)
