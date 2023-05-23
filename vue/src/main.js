@@ -10,8 +10,8 @@ Object.defineProperty(Vue.prototype, 'flag', {
 */
 
 createApp(App)
-    .component('ECharts', ECharts)
-    .mount('#app');
+  .component('ECharts', ECharts)
+  .mount('#app');
 
 
 

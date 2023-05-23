@@ -1,35 +1,15 @@
 <template>
   <div class="newtodo">
-    <input
-      type="text"
-      class="name"
-      v-model="todoName"
-      placeholder="e.g Homework"
-    />
+    <input type="text" class="name" v-model="todoName" placeholder="e.g Homework" />
     <div class="optionline">
       <!--
       <input type="text" class="option" placeholder="priority" />
       <input type="text" class="option" placeholder="category" />
       <input type="text" class="option" placeholder="timeslice" />
       !-->
-      <select-data
-        :selectData="Priority"
-        :selValue="PriorityValue"
-        color='green'
-        @getValue="getPrio"
-      />
-      <select-data
-        :selectData="Category"
-        :selValue="CategoryValue"
-        color='green'
-        @getValue="getCate"
-      />
-      <select-data
-        :selectData="Timeslice"
-        :selValue="TimesliceValue"
-        color='green'
-        @getValue="getTime"
-      />
+      <select-data :selectData="Priority" :selValue="PriorityValue" color='green' @getValue="getPrio" />
+      <select-data :selectData="Category" :selValue="CategoryValue" color='green' @getValue="getCate" />
+      <select-data :selectData="Timeslice" :selValue="TimesliceValue" color='green' @getValue="getTime" />
       <input type="submit" value="Add Todo" @click="submitNewtodo" />
     </div>
   </div>
@@ -43,14 +23,14 @@ export default {
   components: { SelectData },
   name: "NewTodo",
 
-  setup(props, context) {
-    /*
-    const todoPriority = ref("LOW");
-    const todoCategory = ref("HOME");
-    const todoTimeslice = ref("5MIN");
-    */
-    const todoName = ref("");
-    const Priority =  [
+    setup(props, context) {
+      /*
+      const todoPriority = ref("LOW");
+      const todoCategory = ref("HOME");
+      const todoTimeslice = ref("5MIN");
+      */
+      const todoName = ref("");
+      const Priority = [
         {
           name: "Low",
           value: 1,
@@ -64,7 +44,7 @@ export default {
           value: 3,
         },
       ];
-      const Category= [
+      const Category = [
         {
           name: "School",
           value: 1,
@@ -74,7 +54,7 @@ export default {
           value: 2,
         },
       ];
-      const Timeslice=[
+      const Timeslice = [
         {
           name: "5min",
           value: 1,
@@ -93,7 +73,7 @@ export default {
         },
         {
           name: ">2h",
-          value:5,
+          value: 5,
         },
       ];
     const todoDone = ref < Boolean > "False";
@@ -158,59 +138,59 @@ export default {
       console.log("item:", name, value, index);
     };
 
-    return {
-      submitNewtodo,
+      return {
+        submitNewtodo,
 
-      Priority,
-      Category,
-      Timeslice,
-      PriorityValue,
-      CategoryValue,
-      TimesliceValue,
-      todoName,
-      getPrio,
-      getCate,
-      getTime
-    };
-  },
-};
+        Priority,
+        Category,
+        Timeslice,
+        PriorityValue,
+        CategoryValue,
+        TimesliceValue,
+        todoName,
+        getPrio,
+        getCate,
+        getTime
+      };
+    },
+  };
 </script>
 
 <style>
-.newtodo input[class="name"] {
-  display: block;
-  width: 100%;
-  font-size: 20px;
-  padding: 16px 24px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  box-shadow: 0px 0px 24px rgba(230, 230, 250, 0.1);
-  background-color: white;
-}
+  .newtodo input[class="name"] {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0px 0px 24px rgba(230, 230, 250, 0.1);
+    background-color: white;
+  }
 
-.newtodo .optionline {
-  display: grid;
-  grid-template-columns: 120px 120px 120px auto;
-  grid-gap: 18px;
-  margin-bottom: 24px;
-}
+  .newtodo .optionline {
+    display: grid;
+    grid-template-columns: 120px 120px 120px auto;
+    grid-gap: 18px;
+    margin-bottom: 24px;
+  }
 
 
-.newtodo input[type="submit"] {
-  appearance: none;
-  border: none;
-  outline: none;
-  display: flex;
-  margin-left: auto;
-  height: 40px;
-  width: 150px;
-  font-size: 16px;
-  padding: 8px 16px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-weight: 700;
-  background-color: #AED581;
-}
+  .newtodo input[type="submit"] {
+    appearance: none;
+    border: none;
+    outline: none;
+    display: flex;
+    margin-left: auto;
+    height: 40px;
+    width: 150px;
+    font-size: 16px;
+    padding: 8px 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 700;
+    background-color: #AED581;
+  }
 </style>

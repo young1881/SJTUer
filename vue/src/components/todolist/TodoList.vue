@@ -1,12 +1,7 @@
 <template>
-  <div class="todolist"  v-if ="todos">
-    <todo-item
-      v-for="todo in todos"
-      :key="todo.name"
-      :listItem= "todo"
-      @statuschange="todo.done = $event.target.checked"
-      @item-deleted="deleteToDo(todo)"
-    ></todo-item>
+  <div class="todolist" v-if="todos">
+    <todo-item v-for="todo in todos" :key="todo.name" :listItem="todo" @statuschange="todo.done = $event.target.checked"
+      @item-deleted="deleteToDo(todo)"></todo-item>
   </div>
 </template>
 
@@ -56,8 +51,8 @@ export default {
 </script>
 
 <style>
-.todolist {
-  display: grid;
-  row-gap: 14px;
-}
+  .todolist {
+    display: grid;
+    row-gap: 14px;
+  }
 </style>
