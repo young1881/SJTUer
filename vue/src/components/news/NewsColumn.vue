@@ -33,7 +33,7 @@
       </div>
       <div class="smallbox">
         <div class="head">
-          <h3 :class="{ active: news === 'weibo' }" @click="news='weibo'">微博热搜</h3>
+          <h3 :class="{ active: news === 'weibo' }" @click="news='weibo'">微博</h3>
           <h3 :class="{ active: news === 'zhihu' }" @click="news='zhihu'">知乎</h3>
           <h3 :class="{ active: news=== 'bilibili' }" @click="news='bilibili'">b站</h3>
         </div>

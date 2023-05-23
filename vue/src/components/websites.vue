@@ -142,7 +142,7 @@ export default {
   .sitebox {
     margin-top: 8%;
     padding: 10px;
-    width: 70%;
+    width: 68%;
     border-radius: 30px;
     z-index: 200;
     display: flex;
