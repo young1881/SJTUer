@@ -29,7 +29,7 @@ def add_site(request):
     # jaccount = request.session['jaccount']
 
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': 1}
 
     user = User.objects.filter(jaccount=jaccount)[0]
@@ -63,7 +63,7 @@ def add_site(request):
             return HttpResponse(json.dumps(res), content_type="application/json")
         res['key'] = 2
         return HttpResponse(json.dumps(res), content_type="application/json")
-    
+
     elif 'sjtu' in site_url:
         site_src = '/dist/assets/site_icon/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
@@ -134,6 +134,7 @@ def color_wallpaper(request):
     wallpaper.save()
     return HttpResponse("已保存")
 
+
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -148,6 +149,7 @@ def delete_task(request):
     except:
         res['key'] = -1
     return HttpResponse(json.dumps(res), content_type="application/json")
+
 
 def done_task(request):
     # jaccount = request.session['jaccount']
@@ -170,11 +172,9 @@ def done_task(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
-
 def add_task(request):
-
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': -1}
 
     user = User.objects.filter(jaccount=jaccount)[0]
@@ -184,7 +184,7 @@ def add_task(request):
     task_cate = request.POST.get('category').strip()
     task_time = request.POST.get('timeslice').strip()
     task_done = request.POST.get('done').strip()
-    
+
     if task_done == "true" or task_done == "True":
         task_done = True
     else:
@@ -192,16 +192,13 @@ def add_task(request):
 
     print(f"\ndone:{task_done}\n")
 
-    taskObj = Task.objects.create(user=user, 
-                        username=jaccount, 
-                        name=task_name,
-                        priority=task_prio, 
-                        category=task_cate,
-                        timeslice=task_time,
-                        done=task_done)
-    try:
-        id = taskObj.id
-    except:
-        pass
+    taskObj = Task.objects.create(user=user,
+                                  username=jaccount,
+                                  name=task_name,
+                                  priority=task_prio,
+                                  category=task_cate,
+                                  timeslice=task_time,
+                                  done=task_done)
+    id = taskObj.id
     res['key'] = id
     return HttpResponse(json.dumps(res), content_type="application/json")

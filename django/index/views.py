@@ -193,15 +193,15 @@ def index_view(request):
                                     is_active=site.is_active)
 
         user = User.objects.filter(jaccount=jaccount)[0]
-        simple_mode_flag = SimpleMode.objects.filter(user=jaccount)[0]
+        simple_mode_flag = SimpleMode.objects.filter(user=user)[0]
         simple_mode = {'username': result, 'is_active': simple_mode_flag.is_active}
-        wallpaper_flag = Wallpaper.objects.filter(user=jaccount)[0]
+        wallpaper_flag = Wallpaper.objects.filter(user=user)[0]
         wallpaper = {'username': result,
                      'photo_url': '../media/wallpaper/' + wallpaper_flag.photo_name,
                      'photo_name': wallpaper_flag.photo_name,
                      'css': wallpaper_flag.css}
 
-        tasks_flag = [Task.objects.filter(user=jaccount)[0]]
+        tasks_flag = Task.objects.filter(user=user)
         task = task_json(result, tasks_flag)
 
     except:
@@ -229,9 +229,9 @@ def index_view(request):
         'sites': sites,
         'simple_mode': simple_mode,
         "wallpaper": wallpaper,
-        'task': task,
         'name': result,
-        'account': jaccount
+        'account': jaccount,
+        'task': task,
     }
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
