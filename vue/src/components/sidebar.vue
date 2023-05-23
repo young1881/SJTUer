@@ -83,7 +83,7 @@
     position: absolute;
     top: 15%;
     width: 100%;
-    background-color: rgba(254, 232, 253);
+    background-color: rgba(255, 255, 255, 0.253);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -112,6 +112,6 @@
   }
 
   .sidebar-box li a:hover {
-    background-color: rgb(236, 209, 234);
+    background-color: rgba(255, 255, 255, 0.517);
   }
 </style>
