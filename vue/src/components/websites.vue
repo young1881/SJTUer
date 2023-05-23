@@ -5,10 +5,9 @@
         <div class="sitesmallbox">
           <a @click="addBox">
           <div class="img">
-            <img :src="'#'">
+            <img src="../assets/add.png">
           </div>
         </a>
-        <p>新增收藏网站</p>
       </div>
     </div>
 
@@ -157,109 +156,4 @@ export default {
     margin-bottom: 0px;
   }
 
-  .addSiteBox {
-    position: absolute;
-    top: 36%;
-    left: 35%;
-    width: 30%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background: rgba(255, 255, 255, 0.94);
-    z-index: 2000;
-    overflow: auto;
-    text-align: center;
-    border-radius: 20px;
-  }
-
-  .addSiteBox h1 {
-    font-size: 30px;
-    letter-spacing: 2px;
-    font-family: Microsoft Yahei;
-    color: #161718;
-  }
-
-  .addSiteBox h4 {
-    color: #111111;
-  }
-
-  .addSiteBox .box_form {
-    margin-top: 30px;
-  }
-
-  .addSiteBox .box_form .item {
-    margin-top: 15px;
-  }
-
-  .addSiteBox .box_form .item input {
-    width: 200px;
-    font-size: 18px;
-    border: 0;
-    border-bottom: 4px solid #000;
-    padding: 5px 10px;
-    background: #ffffff00;
-    color: #000;
-  }
-
-  .addSiteBox .box_form .item input::placeholder {
-    color: #00000099;
-  }
-
-  .addSiteBox .box_form .button1 input {
-    margin: 0px auto;
-    margin-top: 35px;
-    width: 120px;
-    height: 40px;
-    font-size: 20px;
-    font-weight: 600;
-    border: 0;
-    background-color: rgb(255, 255, 255, 0.5);
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    transition: box-shadow 0.2s ease-out;
-    position: relative;
-
-  }
-
-  .addSiteBox .box_form .button1 input:hover {
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
-      0px 0px 0px rgba(255, 255, 255, 0.1),
-      inset 4px 4px 4px rgba(0, 0, 0, 0.1),
-      inset -4px -4px 4px rgba(255, 255, 255, 1);
-    transition: box-shadow 0.2s ease-out;
-  }
-
-  .addSiteBox .box_form .button2 {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-  }
-
-.addSiteBox .box_form .button2 img{
-  width: 30px;
-}
-
-.addSiteBox .box_form .date_list{
-    margin-top: 20px;
-    opacity: 1;
-  }
-
-  .addSiteBox .box_form .date_list select {
-    background: #000000;
-    opacity: 1;
-}
-
-.massagebox{
-  background: rgba(255, 255, 255, 0.94);
-  border-radius:20px;
-  color: #000000;
-  position: absolute;
-  z-Index: 1000;
-  padding: 10px 100px;
-  left: 50%;
-  transform : translate(-50%,-50%);
-  top: 50%;
-  text-align: center;
-  font-size: 20px;
-
-}
 </style>

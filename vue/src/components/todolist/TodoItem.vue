@@ -1,7 +1,7 @@
 <template>
   <div class="todoitem" v-if="listItem">
     <label>
-      <input type="checkbox" :checked="listItem.done" @click="$emit('statuschange', $event)" />
+      <input type="checkbox" :checked="listItem.done" @click="$emit('statuschange', listItem)" />
       {{ listItem.name }}
       <span class="bubble"></span>
     </label>

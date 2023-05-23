@@ -6,7 +6,12 @@ from .views import get_icon_src
 
 
 def img_upload(request):
-    jaccount = request.session['jaccount']
+    # jaccount = request.session['jaccount']
+
+    jaccount = request.POST.get('jaccount').strip()
+    
+    res = {'key': 1}
+
     file_img = request.FILES['upload_file']  # 获取文件对象
     file_name = request.FILES['upload_file'].name.strip()
     print(file_name)
@@ -23,6 +28,17 @@ def img_upload(request):
     except Exception as e:
         print(e)
         return JsonResponse(0, safe=False)
+    
+def color_wallpaper(request):
+    # jaccount = request.session['jaccount']
+
+    jaccount = request.POST.get('jaccount').strip()
+    res = {'key': 1}
+    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
+    css = request.POST.get('css')
+    wallpaper.css = css
+    wallpaper.save()
+    return HttpResponse("已保存")
 
 
 def add_site(request):
@@ -125,6 +141,7 @@ def simple_mode(request):
     this_simple_mode.save()
     return HttpResponse("已保存")
 
+<<<<<<< HEAD
 
 def color_wallpaper(request):
     jaccount = request.session['jaccount']
@@ -135,6 +152,8 @@ def color_wallpaper(request):
     return HttpResponse("已保存")
 
 
+=======
+>>>>>>> 56cf046b58acc9e9ffadb135a4dc1b55f94f9281
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()

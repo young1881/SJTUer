@@ -233,6 +233,8 @@ def index_view(request):
         'account': jaccount,
         'task': task,
     }
+    print(f"task:{type(task)}\n")
+    print(f"task:{type(sites)}\n")
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 

@@ -1,6 +1,6 @@
 <template>
   <div class="todolist" v-if="todos">
-    <todo-item v-for="todo in todos" :key="todo.name" :listItem="todo" @statuschange="todo.done = $event.target.checked"
+    <todo-item v-for="todo in todos" :key="todo.name" :listItem="todo" @statuschange="doneChange(todo)"
       @item-deleted="deleteToDo(todo)"></todo-item>
   </div>
 </template>
@@ -16,15 +16,9 @@ export default {
     const deleteToDo = (todo) => {
       context.emit("delete-todo",todo);
       //console.log(todo.name);
-    };
-    return{
-      deleteToDo,
-    };
-  },
-  methods:
-  {
-    // 暂且把Done传递到后端数据库的函数写在这里
-    Donetask(){
+    }
+    const doneChange = (todo) =>{
+      todo.done = !todo.done;
       var params = new URLSearchParams()
       var jaccount = sessionStorage.getItem("jaccount");
 
@@ -34,7 +28,7 @@ export default {
       params.append('task_done', todo.done);
 
       axios
-      .post('http://localhost:8000/index/delete_task/',params)
+      .post('http://localhost:8000/index/done_task/',params)
       .then(function(response){
         // 如果后端添加成功，则返回response.data['key'] = 1；否则返回-1
         console.log("Done task:")
@@ -45,8 +39,13 @@ export default {
         // 报错处理
         console.log(error)
       })
-    }
-  }
+    };
+    return{
+      deleteToDo,
+      doneChange,
+    };
+  },
+  
 };
 </script>
 
