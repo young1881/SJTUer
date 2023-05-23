@@ -1,5 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
+import json
 from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
 
@@ -25,17 +26,24 @@ def img_upload(request):
 
 
 def add_site(request):
-    jaccount = request.session['jaccount']
+    # jaccount = request.session['jaccount']
+
+    jaccount = request.POST.get('jaccount').strip()
+    
+    res = {'key': 1}
+
     user = User.objects.filter(jaccount=jaccount)[0]
     site_count = len(Site.objects.filter(user=jaccount, is_active=True))
     if site_count >= 28:
-        return JsonResponse(0, safe=False)
+        res['key'] = 0
+        return HttpResponse(json.dumps(res), content_type="application/json")
 
     site_name = request.POST.get('site_name').strip()
     site_url = request.POST.get('site_url').strip()
 
     if site_name == "" or site_url == "":
-        return JsonResponse(3, safe=False)
+        res['key'] = 3
+        return HttpResponse(json.dumps(res), content_type="application/json")
 
     if not site_url.startswith("http"):
         site_url = "https://" + site_url
@@ -43,46 +51,69 @@ def add_site(request):
         site_url = site_url + "/"
     site = Site.objects.filter(site_url=site_url, user=jaccount)
     # 取主域名
-    res = urlparse(site_url)
-    site_url_main = "https://" + str(res.netloc) + "/"
+    resp = urlparse(site_url)
+    site_url_main = "https://" + str(resp.netloc) + "/"
     if site:
         site[0].site_name = site_name
         site[0].save()
         if not site[0].is_active:
             site[0].is_active = True
             site[0].save()
-            return JsonResponse(1, safe=False)
-        return JsonResponse(2, safe=False)
+            res['key'] = 2
+            return HttpResponse(json.dumps(res), content_type="application/json")
+        res['key'] = 2
+        return HttpResponse(json.dumps(res), content_type="application/json")
+    
     elif 'sjtu' in site_url:
         site_src = '/dist/assets/site_icon/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
     else:
         site_src = get_icon_src(site_url)
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
-    return JsonResponse(1, safe=False)
+
+    res['key'] = 1
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def refactor_site(request):
-    jaccount = request.session['jaccount']
+    # jaccount = request.session['account']
+    # 从前端发来的请求中拿到jaccount
+    jaccount = request.POST.get('jaccount').strip()
+    # print(f"\njaccount:{jaccount}\n")
     site_name = request.POST.get('refactor_site_name').strip()
     site_url = request.POST.get('refactor_site_url').strip()
 
-    if site_name == "" or site_url == "":
-        return JsonResponse(0, safe=False)
+    # 如果修改成功，则返回1；否则返回0
+    res = {'key': 1}
 
-    for site in Site.objects.filter(user=jaccount, site_url=site_url):
-        site.site_name = site_name
-        site.save()
-    return JsonResponse(1, safe=False)
+    if site_name == "" or site_url == "":
+        res['key'] = 0
+    else:
+        try:
+            for site in Site.objects.filter(user=jaccount, site_url=site_url):
+                site.site_name = site_name
+                site.save()
+        except:
+            res['key'] = 0
+
+    return HttpResponse(json.dumps(res), content_type="application/json")
+    # return JsonResponse(1, safe=False)
 
 
 def delete_site(request):
-    jaccount = request.session['jaccount']
-    delete_site_name = request.POST.get('delete_site_name')
-    for site in Site.objects.filter(user=jaccount, site_name=delete_site_name):
-        site.is_active = False
-        site.save()
-    return HttpResponse("删除成功")
+    # jaccount = request.session['jaccount']
+    jaccount = request.POST.get('jaccount').strip()
+    delete_site_name = request.POST.get('delete_site_name').strip()
+
+    # 如果删除成功，则返回1；否则返回0
+    res = {'key': 1}
+    try:
+        for site in Site.objects.filter(user=jaccount, site_name=delete_site_name):
+            site.is_active = False
+            site.save()
+    except:
+        res['key'] = 0
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def simple_mode(request):
