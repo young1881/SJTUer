@@ -8,7 +8,7 @@ import aiohttp
 import json
 
 from lxml import etree
-from urllib.parse import quote, urlparse
+from urllib.parse import urlparse
 from asyncio.proactor_events import _ProactorBasePipeTransport
 from functools import wraps
 
@@ -18,16 +18,16 @@ headers = {
 }
 
 
-def weather_view(request):
-    city = get_city(request)
-    try:
-        weather_data = weather(city)
-    except Exception as e:
-        weather_data = "天气信息获取失败，请联系管理员！"
-    locals = {
-        'weather': weather_data,
-    }
-    return HttpResponse(json.dumps(locals), content_type="application/json")
+# def weather_view(request):
+#     city = get_city(request)
+#     try:
+#         weather_data = weather(city)
+#     except Exception as e:
+#         weather_data = "天气信息获取失败，请联系管理员！"
+#     locals = {
+#         'weather': weather_data,
+#     }
+#     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 
 def data_view(request):
@@ -81,7 +81,7 @@ def scrap_view(request):
         # 'https://tenapi.cn/zhihuresou/',
         'https://tophub.today/n/KqndgxeLl9',
         'https://tophub.today/n/mproPpoq6O',
-        'https://api.bilibili.com/x/web-interface/popular?ps=5&pn=1',
+        'https://api.bilibili.com/x/web-interface/popular?ps=10&pn=1',
         # 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail,diseaseh5Shelf',
         'https://v1.jinrishici.com/all.json',
     ]
@@ -143,23 +143,6 @@ def scrap_view(request):
         poem_data = poem(responses['poem'])
     except Exception as e:
         poem_data = {'content': "诗句信息获取失败，请联系管理员！", 'origin': '', 'author': '', 'category': ''}
-    try:
-        canteen_data = get_json(responses['canteen'])
-    except Exception as e:
-        canteen_data = [{"Id": 100, "Name": "闵行第一餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 1},
-                        {"Id": 200, "Name": "闵行第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 5},
-                        {"Id": 300, "Name": "闵行第三餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 12},
-                        {"Id": 400, "Name": "闵行第四餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 16},
-                        {"Id": 500, "Name": "闵行第五餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 20},
-                        {"Id": 600, "Name": "闵行第六餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 25},
-                        {"Id": 700, "Name": "闵行第七餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 28},
-                        {"Id": 800, "Name": "闵行哈乐餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 31},
-                        {"Id": 1000, "Name": "徐汇第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 35},
-                        {"Id": 1200, "Name": "张江李所餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 50}]
-    try:
-        library_data = json.loads(responses['library'][12:-2], strict=False)['numbers']
-    except Exception as e:
-        library_data = "图书馆信息获取失败，请联系管理员！"
 
     locals = {
         'jwc': jwc_data,
@@ -305,7 +288,7 @@ def bilibli(response):
     bilibili_json = get_json(response)['data']['list']
     bilibili = []
     for i in range(10):
-        dic = {'title': bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link'],
+        dic = {'title': bilibili_json[i]['title'], 'url': bilibili_json[i]['short_link_v2'],
                'view': bilibili_json[i]['stat']['view']}
         # if len(dic['title'].encode("utf-8")) > 46:
         #     dic['title'] = cut_str(dic['title'], 44) + '...'
@@ -344,8 +327,8 @@ def bilibli(response):
 
 # 代理网站爬取的函数
 def weibo(response):
-    html = get_html(response)
-    tree = etree.HTML(html)
+    tree = etree.HTML(response)
+
     tr_list = tree.xpath('//table/tbody/tr')[:10]
     weibo_dict = []
     for i in range(len(tr_list)):
@@ -353,15 +336,17 @@ def weibo(response):
         url = 'https://s.weibo.com/weibo?q=%23' + name + "%23"
         # if len(name.encode('utf-8')) > 46:
         #     name = cut_str(name, 44) + '...'
-        hot = tr_list[i].xpath('./td[3]/text()')[0]
+        try:
+            hot = tr_list[i].xpath('./td[3]/text()')[0]
+        except:
+            hot = ""
         weibo_item = {'name': name, 'url': url, 'hot': hot}
         weibo_dict.append(weibo_item)
     return weibo_dict
 
 
 def zhihu(response):
-    html = get_html(response)
-    tree = etree.HTML(html)
+    tree = etree.HTML(response)
     tr_list = tree.xpath('//tbody/tr')[:10]
     zhihu_dict = []
     for i in range(len(tr_list)):
@@ -380,15 +365,15 @@ def zhihu(response):
 #     del data["areaTree"]
 #     return data
 
-def weather(city):
-    city_code_url = "https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=339c9d989bcc444d870c470dd01b520b"
-    city_code = requests.get(city_code_url).json()['location'][0]['id']
-    current_weather_url = "https://devapi.qweather.com/v7/weather/now?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
-    current_weather = requests.get(current_weather_url).json()['now']
-    forecast_weather_url = "https://devapi.qweather.com/v7/weather/7d?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
-    forecast_weather = requests.get(forecast_weather_url).json()['daily']
-
-    return {"current_weather": current_weather, 'forecast_weather': forecast_weather}
+# def weather(city):
+#     city_code_url = "https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=339c9d989bcc444d870c470dd01b520b"
+#     city_code = requests.get(city_code_url).json()['location'][0]['id']
+#     current_weather_url = "https://devapi.qweather.com/v7/weather/now?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
+#     current_weather = requests.get(current_weather_url).json()['now']
+#     forecast_weather_url = "https://devapi.qweather.com/v7/weather/7d?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
+#     forecast_weather = requests.get(forecast_weather_url).json()['daily']
+#
+#     return {"current_weather": current_weather, 'forecast_weather': forecast_weather}
 
 
 def poem(response):
@@ -409,7 +394,7 @@ def task_json(result, tasks):
     category_arr = ["School", "Home"]
     timeslice_arr = ["5min", "25min", "1h", "2h", ">2h"]
     for task in tasks:
-        tmp = {'username': result}
+        tmp = {"id": task.id, 'username': result}
         category_val = task.category
         priority_val = task.priority
         timeslice_val = task.timeslice
@@ -418,6 +403,7 @@ def task_json(result, tasks):
         tmp['name'] = task.name
         tmp['priority'] = {"name": priority_arr[priority_val - 1], "value": priority_val}
         tmp['timeslice'] = {"name": timeslice_arr[timeslice_val - 1], "value": timeslice_val}
+        tmp['is_active'] = task.is_active
         res.append(tmp)
     return res
 

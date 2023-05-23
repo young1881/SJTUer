@@ -1,63 +1,49 @@
 <template>
   <div class="sitesmallbox">
-    <a :href="siteUrl" target="_blank" >
+    <a :href="siteUrl" target="_blank">
       <div class="img">
         <img :src="siteSrc">
       </div>
     </a>
+<<<<<<< HEAD
     <p >{{ siteName }}</p>
+=======
+    <p>{{ siteName }}</p>
+    <!-- 用于调试修改/删除/添加的按钮，实际实现中需要移到右键菜单里，或者是末尾的“添加网址”按钮上 -->
+    <!-- <button @click="refactor_site()" type="button" class="btn btn-primary"> test_refactor </button>
+    <button @click="delete_site()" type="button" class="btn btn-primary"> test_delete </button>
+    <button @click="add_site()" type="button" class="btn btn-primary"> test_add </button> -->
+>>>>>>> 915db1a18b802317587b0ead3caf28cc425495c2
   </div>
 </template>
 
 <script>
-import axios from "axios";
-export default {
-  name: 'site',
-  props: {
-    siteUrl: String,
-    siteSrc: String,
-    siteName: String
-  },
-  methods:{
-    // 修改site信息
-    refactor_site(){
-      var that=this
-      var params = new URLSearchParams()
-      var jaccount = sessionStorage.getItem("jaccount");
-      // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
-      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
-      params.append('refactor_site_name', that.siteName);  // 此处需要改成传入的siteName
-      params.append('refactor_site_url', that.siteUrl);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
-
-      // 发送POST请求
-      axios
-      .post('http://localhost:8000/index/refactor_site/',params)
-      .then(function(response){
-        console.log(response.data['key'])
-        // 如果后端修改成功，则返回response.data['key'] = 1；否则返回0
-        // 需要重新加载整个页面才能获取更新后的值
-
-      })
-      .catch(function(error){
-        // 报错处理
-        console.log(error)
-      })
+  import axios from "axios";
+  export default {
+    name: 'site',
+    props: {
+      siteUrl: String,
+      siteSrc: String,
+      siteName: String
     },
-    delete_site(){
-      var that=this
-      var params = new URLSearchParams()
-      var jaccount = sessionStorage.getItem("jaccount");
-      // 需要传递的参数写到下方的第二个参数位置（siteName就是当前组件存储的siteName，因此不需要传入其他参数，下面两行都不用改）
-      params.append('jaccount', jaccount);  // jaccount也需要传递到后端
-      params.append('delete_site_name', that.siteName);
+    methods: {
+      // 修改site信息
+      refactor_site() {
+        var that = this
+        var params = new URLSearchParams()
+        var jaccount = sessionStorage.getItem("jaccount");
+        // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
+        params.append('jaccount', jaccount);  // jaccount也需要传递到后端
+        params.append('refactor_site_name', that.siteName);  // 此处需要改成传入的siteName
+        params.append('refactor_site_url', that.siteUrl);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
 
-      // 发送POST请求
-      axios
-      .post('http://localhost:8000/index/delete_site/',params)
-      .then(function(response){
-        console.log(response.data['key'])
-        // 如果后端删除成功，则返回response.data['key'] = 1；否则返回0
-        // 删除可以不用整体刷新，直接修改前端的元素，让site不可见就行
+        // 发送POST请求
+        axios
+          .post('http://localhost:8000/index/refactor_site/', params)
+          .then(function (response) {
+            console.log(response.data['key'])
+            // 如果后端修改成功，则返回response.data['key'] = 1；否则返回0
+            // 需要重新加载整个页面才能获取更新后的值
 
       })
       .catch(function(error){
@@ -66,60 +52,58 @@ export default {
       })
     }
   }
-}
 </script>
 
 <style>
-.sitesmallbox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-  width: 80px;
-  height: 100px;
-  margin: 10px 20px;
-}
+  .sitesmallbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 80px;
+    height: 100px;
+    margin: 10px 20px;
+  }
 
-.sitesmallbox .img {
-  width: 70px;
-  height: 70px;
-  background-color: rgb(255, 255, 255,0.5);
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: box-shadow 0.2s ease-out;
-  position: relative;
-  backdrop-filter: blur(10px);
-}
+  .sitesmallbox .img {
+    width: 70px;
+    height: 70px;
+    background-color: rgb(255, 255, 255, 0.5);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s ease-out;
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
 
-.sitesmallbox .img img {
-  width: 45px;
-  border-radius: 10px;
-  transition: width 0.2s ease-out;
-}
+  .sitesmallbox .img img {
+    width: 45px;
+    border-radius: 10px;
+    transition: width 0.2s ease-out;
+  }
 
-.sitesmallbox p {
-  text-decoration: none;
-  margin-top: 10px;
-  color: dimgrey;
-  text-shadow: 1px 1px lightgrey;
-  font-size: 13px;
-  align-content: center;
-}
+  .sitesmallbox p {
+    text-decoration: none;
+    margin-top: 10px;
+    color: dimgrey;
+    text-shadow: 1px 1px lightgrey;
+    font-size: 13px;
+    align-content: center;
+  }
 
-.sitesmallbox .img:hover {
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
-    0px 0px 0px rgba(255, 255, 255, 0.1),
-    inset 4px 4px 4px rgba(0, 0, 0, 0.1),
-    inset -4px -4px 4px rgba(255, 255, 255, 1);
-  transition: box-shadow 0.2s ease-out;
-}
+  .sitesmallbox .img:hover {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
+      0px 0px 0px rgba(255, 255, 255, 0.1),
+      inset 4px 4px 4px rgba(0, 0, 0, 0.1),
+      inset -4px -4px 4px rgba(255, 255, 255, 1);
+    transition: box-shadow 0.2s ease-out;
+  }
 
-.sitesmallbox .img:hover img {
-  width: 40px;
-  transition: width 0.2s ease-out;
-}
-
+  .sitesmallbox .img:hover img {
+    width: 40px;
+    transition: width 0.2s ease-out;
+  }
 </style>
