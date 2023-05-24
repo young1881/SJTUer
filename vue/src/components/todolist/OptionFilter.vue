@@ -3,23 +3,23 @@
     <select-data
       :selectData="Priority"
       :selValue="PriorityValue"
-      color='green'
+      color="green"
       @getValue="getPrio"
     />
     <select-data
       :selectData="Category"
       :selValue="CategoryValue"
-      color='green'
+      color="green"
       @getValue="getCate"
     />
     <select-data
       :selectData="Timeslice"
       :selValue="TimesliceValue"
-      color='green'
+      color="green"
       @getValue="getTime"
     />
     <!--input  class="filt" type="submit" value="Filt" @click="optionfilt" -->
-    <button class="filt"  @click="optionfilt">Filt</button>
+    <button class="filt" @click="optionfilt">Filt</button>
   </div>
 </template>
 
@@ -29,70 +29,70 @@ import SelectData from "./SelectData.vue";
 export default {
   name: "OptionFilter",
   components: { SelectData },
-  setup(props,context) {
-    const Priority =  [
-        {
-          name: "All",
-          value: "All",
-        },
-        {
-          name: "Low",
-          value: "Low",
-        },
-        {
-          name: "Medium",
-          value: "Medium",
-        },
-        {
-          name: "High",
-          value: "High",
-        },
-      ];
-      const Category= [
-        {
-          name: "All",
-          value: "All",
-        },
-        {
-          name: "School",
-          value: "School",
-        },
-        {
-          name: "Home",
-          value: "Home",
-        },
-      ];
-      const Timeslice=[
-        {
-          name: "All",
-          value: "All",
-        },
-        {
-          name: "5min",
-          value: "5min",
-        },
-        {
-          name: "25min",
-          value: "25min",
-        },
-        {
-          name: "1h",
-          value: "1h",
-        },
-        {
-          name: "2h",
-          value: "2h",
-        },
-        {
-          name: ">2h",
-          value:">2h",
-        },
-      ];
-      
+  setup(props, context) {
+    const Priority = [
+      {
+        name: "All",
+        value: "All",
+      },
+      {
+        name: "Low",
+        value: "Low",
+      },
+      {
+        name: "Medium",
+        value: "Medium",
+      },
+      {
+        name: "High",
+        value: "High",
+      },
+    ];
+    const Category = [
+      {
+        name: "All",
+        value: "All",
+      },
+      {
+        name: "School",
+        value: "School",
+      },
+      {
+        name: "Home",
+        value: "Home",
+      },
+    ];
+    const Timeslice = [
+      {
+        name: "All",
+        value: "All",
+      },
+      {
+        name: "5min",
+        value: "5min",
+      },
+      {
+        name: "25min",
+        value: "25min",
+      },
+      {
+        name: "1h",
+        value: "1h",
+      },
+      {
+        name: "2h",
+        value: "2h",
+      },
+      {
+        name: ">2h",
+        value: ">2h",
+      },
+    ];
+
     let Prio = "All";
     let Cate = "All";
     let Time = "All";
-    
+
     const PriorityValue = Priority[0].value;
     const CategoryValue = Category[0].value;
     const TimesliceValue = Timeslice[0].value;
@@ -108,12 +108,11 @@ export default {
       Time = name;
     };
     const optionfilt = () => {
-      
       console.log(Prio);
       console.log(Cate);
       console.log(Time);
-    
-      context.emit("option-filt",Prio,Cate,Time);
+
+      context.emit("option-filt", Prio, Cate, Time);
     };
     return {
       Priority,
@@ -125,7 +124,7 @@ export default {
       getPrio,
       getCate,
       getTime,
-      optionfilt
+      optionfilt,
     };
   },
 };
@@ -155,9 +154,10 @@ export default {
   justify-content: center;
   border-radius: 8px;
   font-weight: 700;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
 }
-.optionfilter .filt:hover{
+
+.optionfilter .filt:hover {
   background-color: rgba(227, 227, 227, 0.8);
   cursor: pointer;
 }

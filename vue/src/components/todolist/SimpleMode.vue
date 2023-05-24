@@ -1,4 +1,3 @@
-
 <template>
   <div class="contain">
     <div class="simplebox">
@@ -9,11 +8,11 @@
             v-for="todo in todos"
             :key="todo.name"
             :listItem="todo"
-            @statuschange="todo.done = $event.target.checked"
+            @statuschange="doneChange(todo)"
           ></simple-todo>
         </div>
-        <div class ="finish" v-else>
-            <h2>Congrats! You've finished all tasks</h2>
+        <div class="finish" v-else>
+          <h2>Congrats! You've finished all tasks</h2>
         </div>
       </div>
     </div>
@@ -22,10 +21,38 @@
 
 <script>
 import SimpleTodo from "./SimpleTodo.vue";
+import axios from "axios";
 export default {
   name: "SimpleMode",
   components: { SimpleTodo },
   props: ["todos"],
+  setup() {
+    const doneChange = (todo) => {
+      todo.done = !todo.done;
+      var params = new URLSearchParams();
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      console.log(todo.id);
+      params.append("jaccount", jaccount);
+      params.append("task_id", todo.id);
+      params.append("task_done", todo.done);
+
+      axios
+        .post("http://localhost:8000/index/done_task/", params)
+        .then(function (response) {
+          // 如果后端添加成功，则返回response.data['key'] = 1；否则返回-1
+          console.log("Done task:");
+          console.log(response.data["key"]);
+        })
+        .catch(function (error) {
+          // 报错处理
+          console.log(error);
+        });
+    };
+    return {
+      doneChange,
+    };
+  },
 };
 </script>
 
@@ -38,6 +65,7 @@ export default {
   margin-top: 150px;
   background: none;
 }
+
 .simplebox {
   display: flex;
   text-align: center;
@@ -71,6 +99,7 @@ export default {
       30px -30px 0 -3px var(--background), 30px -30px var(--orange),
       40px -40px 0 -3px var(--background), 40px -40px var(--red);
   }
+
   20% {
     border: 3px solid var(--red);
     box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--primary),
@@ -78,6 +107,7 @@ export default {
       30px -30px 0 -3px var(--background), 30px -30px var(--yellow),
       40px -40px 0 -3px var(--background), 40px -40px var(--orange);
   }
+
   40% {
     border: 3px solid var(--orange);
     box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--red),
@@ -85,6 +115,7 @@ export default {
       30px -30px 0 -3px var(--background), 30px -30px var(--green),
       40px -40px 0 -3px var(--background), 40px -40px var(--yellow);
   }
+
   60% {
     border: 3px solid var(--yellow);
     box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--orange),
@@ -92,6 +123,7 @@ export default {
       30px -30px 0 -3px var(--background), 30px -30px var(--primary),
       40px -40px 0 -3px var(--background), 40px -40px var(--green);
   }
+
   80% {
     border: 3px solid var(--green);
     box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--yellow),
@@ -99,6 +131,7 @@ export default {
       30px -30px 0 -3px var(--background), 30px -30px var(--red),
       40px -40px 0 -3px var(--background), 40px -40px var(--primary);
   }
+
   100% {
     border: 3px solid var(--primary);
     box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--green),
@@ -139,14 +172,16 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 5px;
-  margin-top:15px;
-  font-weight:bold;
+  margin-top: 15px;
+  font-weight: bold;
 }
- .finish{
-    display: grid;
-    margin-top:15px;
+
+.finish {
+  display: grid;
+  margin-top: 15px;
 }
- h2 {
+
+h2 {
   font-size: 20px;
   font-family: "Archivo Black", "Archivo", sans-serif;
   font-weight: bold;

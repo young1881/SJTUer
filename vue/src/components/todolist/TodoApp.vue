@@ -1,7 +1,7 @@
 <template>
   <simple-mode v-if="issimple" :todos="simpleTodos.slice(0, 1)"></simple-mode>
-  <div class="container"  v-else>
-    <div class="todolist" >
+  <div class="container" v-else>
+    <div class="todolist">
       <new-todo @new-todo="newTodo" />
       <done-filter :selected="filter" @change="filter = $event"></done-filter>
       <option-filter @option-filt="updatefilter"></option-filter>
@@ -12,20 +12,19 @@
       ></todo-list>
     </div>
   </div>
- 
 </template>
 
 
- 
+
 <script>
 import { ref, onMounted, computed, watch, toRef } from "vue";
 import NewTodo from "./NewTodo.vue";
 import DoneFilter from "./DoneFilter.vue";
 import OptionFilter from "./OptionFilter.vue";
 import TodoList from "./TodoList.vue";
-//import { defineProps } from "vue";
 //import TodoItem from "./TodoItem.vue";
 import SimpleMode from "./SimpleMode.vue";
+import axios from "axios";
 export default {
   name: "App",
   components: {
@@ -41,13 +40,13 @@ export default {
   setup(props) {
     const todos = ref([]);
 
-    const issimple = computed(()=>{
+    const issimple = computed(() => {
       return props.simple;
     });
     /*与NewTodo.vue组件相关代码*/
     const newTodo = (todo) => {
       todos.value.push(todo);
-      console.log(issimple);
+      console.log(JSON.stringify(todo));
     };
 
     /*与DoneFilter.vue组件相关代码*/
@@ -130,15 +129,37 @@ export default {
         deep: true,
       }
     );
-
     onMounted(() => {
-      myname.value = localStorage.getItem("myname") || "";
+      //myname.value = localStorage.getItem("myname") || "";
+      //todos.value = JSON.parse(localStorage.getItem("tasks")) || [];
       todos.value = JSON.parse(localStorage.getItem("todos")) || [];
+      todos.value = todos.value.filter((todo) => todo.is_active === true);
+      //console.log(JSON.stringify(todos));
     });
 
     /*与TodoList.vue相关代码*/
     const RemoveTodo = (todo) => {
       todos.value = todos.value.filter((t) => t != todo);
+
+      var params = new URLSearchParams();
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      console.log("id:");
+      console.log(todo.id);
+      params.append("jaccount", jaccount);
+      params.append("task_id", todo.id);
+
+      axios
+        .post("http://localhost:8000/index/delete_task/", params)
+        .then(function (response) {
+          // 如果后端删除成功，则返回response.data['key'] = 1；否则返回-1
+          console.log("delete task:");
+          console.log(response.data["key"]);
+        })
+        .catch(function (error) {
+          // 报错处理
+          console.log(error);
+        });
     };
 
     return {
@@ -164,6 +185,7 @@ export default {
   padding: 0;
   font-family: Arial;
 }
+
 .container {
   width: 80%;
   display: grid;
@@ -175,10 +197,12 @@ export default {
   padding: 50px 30px;
   background-color: rgb(255, 255, 255, 0.5);
 }
+
 h1 {
   margin: 24px 0;
   font-size: 30px;
 }
+
 input[type="text"],
 button {
   appearance: none;

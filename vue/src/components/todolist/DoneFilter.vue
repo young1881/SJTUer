@@ -4,16 +4,17 @@
       v-for="filter in filters"
       :key="filter.value"
       class="filter"
-      :class="{ active: selected === filter.value}"
+      :class="{ active: selected === filter.value }"
       @click="$emit('change', filter.value)"
-    >{{filter.label}}</span>
+      >{{ filter.label }}</span
+    >
   </div>
 </template>
 
 <script>
 export default {
   name: "DoneFilter",
-  props:["selected"],
+  props: ["selected"],
   setup() {
     const filters = [
       { label: "All", value: "all" },
@@ -41,11 +42,12 @@ export default {
   margin-left: 14px;
   transition: 0.4s;
 }
-.statusfilter .filter:hover{
+
+.statusfilter .filter:hover {
   cursor: pointer;
 }
+
 .statusfilter .filter.active {
   color: #6b729c;
 }
-
 </style>

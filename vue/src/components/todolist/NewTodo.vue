@@ -15,19 +15,19 @@
       <select-data
         :selectData="Priority"
         :selValue="PriorityValue"
-        color='green'
+        color="green"
         @getValue="getPrio"
       />
       <select-data
         :selectData="Category"
         :selValue="CategoryValue"
-        color='green'
+        color="green"
         @getValue="getCate"
       />
       <select-data
         :selectData="Timeslice"
         :selValue="TimesliceValue"
-        color='green'
+        color="green"
         @getValue="getTime"
       />
       <input type="submit" value="Add Todo" @click="submitNewtodo" />
@@ -38,94 +38,121 @@
 <script>
 import { ref } from "vue";
 import SelectData from "./SelectData.vue";
+import axios from "axios";
 export default {
   components: { SelectData },
   name: "NewTodo",
 
   setup(props, context) {
     /*
-    const todoPriority = ref("LOW");
-    const todoCategory = ref("HOME");
-    const todoTimeslice = ref("5MIN");
-    */
+      const todoPriority = ref("LOW");
+      const todoCategory = ref("HOME");
+      const todoTimeslice = ref("5MIN");
+      */
     const todoName = ref("");
-    const Priority =  [
-        {
-          name: "Low",
-          value: 1,
-        },
-        {
-          name: "Medium",
-          value: 2,
-        },
-        {
-          name: "High",
-          value: 3,
-        },
-      ];
-      const Category= [
-        {
-          name: "School",
-          value: 1,
-        },
-        {
-          name: "Home",
-          value: 2,
-        },
-      ];
-      const Timeslice=[
-        {
-          name: "5min",
-          value: 1,
-        },
-        {
-          name: "25min",
-          value: 2,
-        },
-        {
-          name: "1h",
-          value: 3,
-        },
-        {
-          name: "2h",
-          value: 4,
-        },
-        {
-          name: ">2h",
-          value:5,
-        },
-      ];
-    const todoDone = ref < Boolean > "false";
-    let Prio = {name:"Low",value:1};
-    let Cate = {name:"School",value:1};
-    let Time = {name:"5min",value:1};
+    const Priority = [
+      {
+        name: "Low",
+        value: 1,
+      },
+      {
+        name: "Medium",
+        value: 2,
+      },
+      {
+        name: "High",
+        value: 3,
+      },
+    ];
+    const Category = [
+      {
+        name: "School",
+        value: 1,
+      },
+      {
+        name: "Home",
+        value: 2,
+      },
+    ];
+    const Timeslice = [
+      {
+        name: "5min",
+        value: 1,
+      },
+      {
+        name: "25min",
+        value: 2,
+      },
+      {
+        name: "1h",
+        value: 3,
+      },
+      {
+        name: "2h",
+        value: 4,
+      },
+      {
+        name: ">2h",
+        value: 5,
+      },
+    ];
+    const todoDone = ref < Boolean > "False";
+    let Prio = { name: "Low", value: 1 };
+    let Cate = { name: "School", value: 1 };
+    let Time = { name: "5min", value: 1 };
     const PriorityValue = Priority[0].value;
     const CategoryValue = Category[0].value;
     const TimesliceValue = Timeslice[0].value;
 
     const submitNewtodo = () => {
       const todo = {
-        /*id: props.tid,*/
+        id: -1,
         name: todoName.value,
-        priority: Prio,
         category: Cate,
-        timeslice: Time,
         done: todoDone,
+        priority: Prio,
+        timeslice: Time,
+        is_active: true,
       };
-      context.emit("new-todo", todo);
+      //context.emit("new-todo", todo);
       //console.log(todoName);
-    
+      var params = new URLSearchParams();
+      var jaccount = sessionStorage.getItem("jaccount");
+
+      params.append("jaccount", jaccount);
+      params.append("name", todoName.value);
+      params.append("priority", Prio["value"]);
+      params.append("category", Cate["value"]);
+      params.append("timeslice", Time["value"]);
+      params.append("done", todoDone);
+
+      axios
+        .post("http://localhost:8000/index/add_task/", params)
+        .then(function (response) {
+          console.log("add task:");
+          console.log(response.data["key"]);
+          // 如果后端添加成功，则返回response.data['key'] = id；否则返回-1
+          // 把id添加到todo结构体中
+          if (response.data["key"] != -1) {
+            todo.id = response.data["key"];
+          }
+          context.emit("new-todo", todo);
+        })
+        .catch(function (error) {
+          // 报错处理
+          console.log(error);
+        });
     };
-    const getPrio = (name,value,index) => {
-      Prio = {name,value};
+    const getPrio = (name, value, index) => {
+      Prio = { name, value };
       console.log("item:", name, value, index);
     };
-    const getCate = (name,value,index) => {
-      Cate = {name,value};
+    const getCate = (name, value, index) => {
+      Cate = { name, value };
       console.log("item:", name, value, index);
     };
-    const getTime = (name,value,index) => {
-      Time = {name,value};
+    const getTime = (name, value, index) => {
+      Time = { name, value };
       console.log("item:", name, value, index);
     };
 
@@ -141,7 +168,7 @@ export default {
       todoName,
       getPrio,
       getCate,
-      getTime
+      getTime,
     };
   },
 };
@@ -166,7 +193,6 @@ export default {
   margin-bottom: 24px;
 }
 
-
 .newtodo input[type="submit"] {
   appearance: none;
   border: none;
@@ -182,6 +208,6 @@ export default {
   justify-content: center;
   border-radius: 8px;
   font-weight: 700;
-  background-color: #AED581;
+  background-color: #aed581;
 }
 </style>

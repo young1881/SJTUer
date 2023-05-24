@@ -1,26 +1,25 @@
-
 <template>
   <div class="incard">
     <label>
       <input
         type="checkbox"
         :checked="listItem.done"
-        @click="$emit('statuschange', $event)"
+        @click="$emit('statuschange', listItem)"
       />
       {{ listItem.name }}
       <span class="bubble"></span>
     </label>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   name: "SimpleTodo",
   props: ["listItem"],
 };
 </script>
-  
-  <style>
+
+<style>
 .incard {
   display: flex;
   align-items: center;
@@ -28,6 +27,7 @@ export default {
   border-radius: 8px;
   min-width: 200px;
 }
+
 .incard label {
   display: flex;
   position: relative;
@@ -37,8 +37,8 @@ export default {
   text-align: center;
   overflow: hidden;
   text-align: left;
-  font-size:20px;
-  
+  font-size: 20px;
+
   /*
   display: flex;
   position: relative;
@@ -52,6 +52,7 @@ export default {
   position: absolute;
   top: 0;
 }
+
 .incard label span.bubble::before,
 .incard label span.bubble::after {
   content: "";
@@ -77,6 +78,7 @@ export default {
   transition: 0.2s ease-in-out;
   box-shadow: 0px 0px 24px rgba(156, 204, 101, 0.1);
 }
+
 input[type="checkbox"] {
   display: flex;
   margin-left: 30px;
@@ -88,5 +90,4 @@ input[type="checkbox"] {
   height: 10px;
   opacity: 1;
 }
-
 </style>

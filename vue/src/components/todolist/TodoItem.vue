@@ -4,7 +4,7 @@
       <input
         type="checkbox"
         :checked="listItem.done"
-        @click="$emit('statuschange', $event)"
+        @click="$emit('statuschange', listItem)"
       />
       {{ listItem.name }}
       <span class="bubble"></span>
@@ -24,9 +24,11 @@ export default {
   name: "TodoItem",
   props: ["listItem"],
   setup(props, context) {
+    // console.log(listItem)
+
     const deleteToDo = () => {
       context.emit("item-deleted");
-      //console.log(1)
+      // console.log(1)
     };
 
     return {
@@ -57,7 +59,7 @@ export default {
   font: 20px;
   text-align: center;
   overflow: hidden;
-  
+
   /*
   display: flex;
   position: relative;
@@ -71,6 +73,7 @@ export default {
   position: absolute;
   top: 0;
 }
+
 .todoitem label span.bubble::before,
 .todoitem label span.bubble::after {
   content: "";
@@ -96,6 +99,7 @@ export default {
   transition: 0.2s ease-in-out;
   box-shadow: 0px 0px 24px rgba(156, 204, 101, 0.1);
 }
+
 input[type="checkbox"] {
   display: flex;
   margin-left: 22px;
@@ -127,9 +131,11 @@ input[type="checkbox"] {
   border-radius: 5px;
   margin-left: 50px;
 }
+
 .todoitem .delete button:hover {
   opacity: 0.75;
 }
+
 .bubble {
   display: flex;
   align-items: center;
@@ -139,6 +145,7 @@ input[type="checkbox"] {
   border-radius: 50%;
   border: 2px solid;
 }
+
 .todoitem .delete {
   display: flex;
   height: 40px;
@@ -153,7 +160,8 @@ input[type="checkbox"] {
   font-weight: 700;
   background-color: #dcedc8;
 }
-.todoitem .delete:hover{
+
+.todoitem .delete:hover {
   background-color: #ceeaae;
   cursor: pointer;
 }

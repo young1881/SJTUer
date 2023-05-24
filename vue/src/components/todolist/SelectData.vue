@@ -98,6 +98,7 @@ export default {
   height: 40px;
   line-height: 40px;
   position: relative;
+
   .u-select-input {
     width: 105px;
     background: #3a79ee;
@@ -111,12 +112,14 @@ export default {
     border: none;
     font-size: 16px;
   }
+
   .m-options-panel {
-    position:absolute;
-    z-index:10;
+    position: absolute;
+    z-index: 10;
   }
+
   .green-color {
-    background: rgb(255,255,255,0.5);
+    background: rgb(255, 255, 255, 0.5);
     color: #4f544a;
   }
 
@@ -132,9 +135,11 @@ export default {
     right: 40px;
     transition: transform 0.3s ease-in-out;
   }
+
   .rotate {
     transform: rotate(180deg);
   }
+
   .m-options-panel {
     position: absolute;
     background: #ffffff;
@@ -145,18 +150,22 @@ export default {
     left: 0;
     color: #404040;
     font-size: 16px;
+
     .u-option {
       padding: 0 15px;
       cursor: pointer;
     }
+
     .u-option:hover {
-      color: rgb(255,255,255,0.5);
+      color: rgb(255, 255, 255, 0.5);
       background: #eef1fa;
     }
   }
+
   .show {
     display: block;
   }
+
   .hidden {
     display: none;
   }
