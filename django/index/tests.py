@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Site, SimpleMode, User, Wallpaper, Countdown
+from .models import Site, SimpleMode, User, Wallpaper
 
 
 class TestModels(TestCase):
@@ -16,7 +16,6 @@ class TestModels(TestCase):
             is_active=True)
         self.simple_mode = SimpleMode.objects.create(user=self.user)
         self.wallpaper = Wallpaper.objects.create(user=self.user)
-        self.countdown = Countdown.objects.create(user=self.user)
 
     def test_user_model(self):
         self.assertEqual(self.user.jaccount, 'test_jaccount')
@@ -54,7 +53,6 @@ class TestAjaxPost(TestCase):
             is_active=True)
         self.simple_mode = SimpleMode.objects.create(user=self.user)
         self.wallpaper = Wallpaper.objects.create(user=self.user)
-        self.countdown = Countdown.objects.create(user=self.user)
         session = self.client.session
         session['jaccount'] = 'test_jaccount'
         session.save()

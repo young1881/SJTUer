@@ -12,15 +12,16 @@ config = Config(
     region_id='cn-shanghai'
 )
 
+
 def get_res(id):
     get_async_job_result_request = GetAsyncJobResultRequest(
-            job_id=id
+        job_id=id
     )
     runtime = RuntimeOptions()
     try:
         client = Client(config)
         response = client.get_async_job_result_with_options(
-                get_async_job_result_request, runtime)
+            get_async_job_result_request, runtime)
         return response.status_code, response.body
     except Exception as error:
         return error.code, error.message

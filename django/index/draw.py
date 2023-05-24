@@ -1,15 +1,13 @@
-from img_generate import img_gen
-from get_result import get_res
-from super_res import super_res
+from .img_generate import img_gen
+from .get_result import get_res
+from .super_res import super_res
+
 from urllib.request import urlretrieve
+
 import cv2
 import json
 import time
 
-# 从控制台输入参数
-prompt = input("请输入prompt：")
-prompt += ", wallpaper, masterpiece, 8k, best quality, highres, ultra detailed"
-page_size = (1920, 1080)
 
 # 找最接近的预设尺寸
 def find_best_size(page_size):
@@ -21,7 +19,7 @@ def find_best_size(page_size):
     scale = []
     for s in draw_scale:
         scale.append(abs(page_scale - s))
-    best_size = draw_size[scale.index(min(scale))]    
+    best_size = draw_size[scale.index(min(scale))]
     return f"{best_size[0]}*{best_size[1]}"
 
 
@@ -56,14 +54,14 @@ def high_res(url_init):
         return url_init
 
 
-def ai_draw(prompt, page_size, need_highres = False):
+def ai_draw(prompt, page_size, need_highres=False):
     # 获取当前日期和时间
     now = time.strftime("%Y%m%d%H%M", time.localtime())
     # 找最接近的预设尺寸
     size = find_best_size(page_size)
     # 设置图片保存路径
-    bg_origin_path = 'django/static/img/aibg/bg_' + now + '_origin.png'
-    bg_resize_path = 'django/static/img/aibg/bg_' + now + '_resize.png'
+    bg_origin_path = 'media/bg_' + now + '_origin.png'
+    bg_resize_path = 'media/bg_' + now + '_resize.png'
     # 调用img_gen函数生成图片
     status_gen, response_gen = img_gen(prompt, size, 1)
     if status_gen == 200:
@@ -83,5 +81,8 @@ def ai_draw(prompt, page_size, need_highres = False):
         print("Error code:", status_gen)
         return "Error"
 
-
-ai_draw(prompt, page_size, True)
+# 【调试使用】从控制台输入参数
+# prompt = input("请输入prompt：")
+# prompt += ", wallpaper, masterpiece, 8k, best quality, highres, ultra detailed"
+# page_size = (1920, 1080)
+# ai_draw(prompt, page_size, False)

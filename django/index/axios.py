@@ -1,13 +1,40 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
-import json
+
 from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
+from .draw import ai_draw
+
+import json
+
+
+def aidraw(request):
+    prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
+    # page_size理论上应该是二元元组，但是json不能传输元组，只能传输列表
+    # 所以这里加一步转换，也就是前端向后端传输列表[x,y]，这里要转成元组(x,y)
+    # ！！！前端传过来的二元数组要是整型数，不然还要再加一次转换
+    page_size = tuple(request.POST.get('page_size'))
+    need_highres = request.POST.get('need_highres')  # 是否要高质量的按钮按了没有
+
+    jaccount = request.POST.get('jaccount').strip()
+    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
+
+    try:
+        bg_path = ai_draw(prompt, page_size, need_highres)
+        res = {'key': bg_path}
+        wallpaper.photo = bg_path
+        wallpaper.photo_name = bg_path.split('/')[-1]
+        wallpaper.css = ""
+        wallpaper.save()
+    except Exception as e:
+        print(e)
+        res = {'key': -1}
+    # 这里返回了一个地址，前端添加壁纸只需要写src=127.0.0.1:8000/ + 这个地址即可
+    # res['key']形式为：media/bg_202305241829_origin.png
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def img_upload(request):
-    # jaccount = request.session['jaccount']
-
     jaccount = request.POST.get('jaccount').strip()
 
     res = {'key': 1}
@@ -31,8 +58,6 @@ def img_upload(request):
 
 
 def color_wallpaper(request):
-    # jaccount = request.session['jaccount']
-
     jaccount = request.POST.get('jaccount').strip()
     res = {'key': 1}
     wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
@@ -43,8 +68,6 @@ def color_wallpaper(request):
 
 
 def add_site(request):
-    # jaccount = request.session['jaccount']
-
     jaccount = request.POST.get('jaccount').strip()
 
     res = {'key': 1}
@@ -93,7 +116,6 @@ def add_site(request):
 
 
 def refactor_site(request):
-    # jaccount = request.session['account']
     # 从前端发来的请求中拿到jaccount
     jaccount = request.POST.get('jaccount').strip()
     # print(f"\njaccount:{jaccount}\n")

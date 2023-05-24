@@ -1,6 +1,5 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Site, SimpleMode, User, Wallpaper, Task
-import urllib.request
 
 import requests
 import asyncio
@@ -18,48 +17,9 @@ headers = {
 }
 
 
-# def weather_view(request):
-#     city = get_city(request)
-#     try:
-#         weather_data = weather(city)
-#     except Exception as e:
-#         weather_data = "天气信息获取失败，请联系管理员！"
-#     locals = {
-#         'weather': weather_data,
-#     }
-#     return HttpResponse(json.dumps(locals), content_type="application/json")
-
-
 def data_view(request):
     data = {"library": lib(), "canteen": canteen()}
     return HttpResponse(json.dumps(data), content_type="application/json")
-
-
-def canteen():
-    url = 'https://canteen.sjtu.edu.cn/CARD/Ajax/Place'
-    session = requests.session()
-    response = session.get(url=url, headers=headers).text
-    try:
-        return get_json(response)
-    except:
-        return [{"Id": 100, "Name": "闵行第一餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 1},
-                {"Id": 200, "Name": "闵行第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 5},
-                {"Id": 300, "Name": "闵行第三餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 12},
-                {"Id": 400, "Name": "闵行第四餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 16},
-                {"Id": 500, "Name": "闵行第五餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 20},
-                {"Id": 600, "Name": "闵行第六餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 25},
-                {"Id": 700, "Name": "闵行第七餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 28},
-                {"Id": 800, "Name": "闵行哈乐餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 31},
-                {"Id": 1000, "Name": "徐汇第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 35},
-                {"Id": 1200, "Name": "张江李所餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 50}]
-
-
-def lib():
-    url = 'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
-    session = requests.session()
-    response = session.get(url=url, headers=headers).text
-    data = json.loads(response[12:-2], strict=False)['numbers']
-    return data
 
 
 def scrap_view(request):
@@ -157,11 +117,6 @@ def scrap_view(request):
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 
-def test_view(request):
-    image_data = open("static/img/wz.png", 'rb').read()
-    return HttpResponse(image_data, content_type="image/png")
-
-
 def index_view(request):
     # 初始化default用户
     jaccount_default_flag = User.objects.filter(jaccount='0000')
@@ -197,7 +152,7 @@ def index_view(request):
         simple_mode = {'username': result, 'is_active': simple_mode_flag.is_active}
         wallpaper_flag = Wallpaper.objects.filter(user=user)[0]
         wallpaper = {'username': result,
-                     'photo_url': '../media/wallpaper/' + wallpaper_flag.photo_name,
+                     'photo_url': 'media/' + wallpaper_flag.photo_name,
                      'photo_name': wallpaper_flag.photo_name,
                      'css': wallpaper_flag.css}
 
@@ -210,7 +165,7 @@ def index_view(request):
         user = User.objects.filter(jaccount='0000')[0]
         simple_mode = {'username': 'visitor', 'is_active': False}
         wallpaper = {'username': "visitor",
-                     'photo_url': '../media/wallpaper/visitor.jpg',
+                     'photo_url': 'media/visitor.jpg',
                      'photo_name': 'visitor.jpg',
                      "css": "linear-gradient(90deg, #70e1f5 0%, #ffd194 100%)"}
         task = task_json("visitor", [Task.objects.create(user=user)])
@@ -233,9 +188,12 @@ def index_view(request):
         'account': jaccount,
         'task': task,
     }
-    print(f"task:{type(task)}\n")
-    print(f"task:{type(sites)}\n")
     return HttpResponse(json.dumps(locals), content_type="application/json")
+
+
+def test_view(request):
+    image_data = open("media/4.jpg", 'rb').read()
+    return HttpResponse(image_data, content_type="image/png")
 
 
 # 按字符实际长度截取，一个汉字长度为2，一个字母/数字长度为1
@@ -360,23 +318,6 @@ def zhihu(response):
     return zhihu_dict
 
 
-#
-# def corona(response):
-#     data = get_json(response)['data']["diseaseh5Shelf"]
-#     del data["areaTree"]
-#     return data
-
-# def weather(city):
-#     city_code_url = "https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=339c9d989bcc444d870c470dd01b520b"
-#     city_code = requests.get(city_code_url).json()['location'][0]['id']
-#     current_weather_url = "https://devapi.qweather.com/v7/weather/now?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
-#     current_weather = requests.get(current_weather_url).json()['now']
-#     forecast_weather_url = "https://devapi.qweather.com/v7/weather/7d?location=" + city_code + "&key=339c9d989bcc444d870c470dd01b520b"
-#     forecast_weather = requests.get(forecast_weather_url).json()['daily']
-#
-#     return {"current_weather": current_weather, 'forecast_weather': forecast_weather}
-
-
 def poem(response):
     return get_json(response)
 
@@ -409,20 +350,31 @@ def task_json(result, tasks):
     return res
 
 
-def get_city(request):
-    if 'HTTP_X_FORWARDED_FOR' in request.META:
-        user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
-    else:
-        user_ip = request.META.get('REMOTE_ADDR')
-    url = 'http://ip-api.com/json/' + user_ip + '?lang=zh-CN&fields=city'
-    print(url)
-    response = urllib.request.urlopen(url)
-    html = json.loads(response.read())
+def canteen():
+    url = 'https://canteen.sjtu.edu.cn/CARD/Ajax/Place'
+    session = requests.session()
+    response = session.get(url=url, headers=headers).text
     try:
-        city = html["city"]
-    except Exception as e:
-        city = '闵行'
-    return city
+        return get_json(response)
+    except:
+        return [{"Id": 100, "Name": "闵行第一餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 1},
+                {"Id": 200, "Name": "闵行第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 5},
+                {"Id": 300, "Name": "闵行第三餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 12},
+                {"Id": 400, "Name": "闵行第四餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 16},
+                {"Id": 500, "Name": "闵行第五餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 20},
+                {"Id": 600, "Name": "闵行第六餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 25},
+                {"Id": 700, "Name": "闵行第七餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 28},
+                {"Id": 800, "Name": "闵行哈乐餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 31},
+                {"Id": 1000, "Name": "徐汇第二餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 35},
+                {"Id": 1200, "Name": "张江李所餐厅", "Seat_s": 0, "Seat_u": 0, "Seat_r": 0, "Px": 50}]
+
+
+def lib():
+    url = 'https://zgrstj.lib.sjtu.edu.cn/cp?callback=CountPerson'
+    session = requests.session()
+    response = session.get(url=url, headers=headers).text
+    data = json.loads(response[12:-2], strict=False)['numbers']
+    return data
 
 
 def initialize_site(user):

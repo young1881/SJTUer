@@ -138,8 +138,6 @@
     z-index: 700;
   
   }
-   
-
 
   .search-engine {
     position: absolute;
