@@ -61,7 +61,7 @@ npm run build
 
 ### 贡献者
 感谢以下参与项目的人：
-[herfst77](https://github.com/young1881/herfst77), [joyiee](https://github.com/young1881/joyiee), [zhanzh0331](https://github.com/young1881/zhanzh0331), [Suvanka](https://github.com/young1881/Suvanka), [Zhangky11](https://github.com/young1881/Zhangky11), [young1881](https://github.com/young1881/young1881),
+[herfst77](https://github.com/herfst77), [joyiee](https://github.com/joyiee), [zhanzh0331](https://github.com/zhanzh0331), [Suvanka](https://github.com/Suvanka), [Zhangky11](https://github.com/Zhangky11), [young1881](https://github.com/young1881)
 
 ## 协议
 [MIT](LICENSE) &copy; Wortox Young
