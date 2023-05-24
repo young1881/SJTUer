@@ -90,7 +90,7 @@
       // 需要传递的参数写到下方的第二个参数位置（此处用that.siteName来作展示，实际上应该是需要修改成传入的siteName）
       params.append('jaccount', jaccount);  // jaccount也需要传递到后端
       params.append('refactor_site_name', siteName||'');  // 此处需要改成传入的siteName
-      params.append('refactor_site_url', that.siteSrc);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
+      params.append('refactor_site_url', that.siteUrl);  // 我们的功能是根据siteUrl来索引并修改siteName，因此that.siteUrl不用改
 
       // 发送POST请求
       axios
