@@ -202,6 +202,6 @@ body {
 }
 
 .active {
- margin-top:8%; 
+  margin-top: 8%;
 }
 </style>
