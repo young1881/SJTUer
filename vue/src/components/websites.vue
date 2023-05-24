@@ -2,7 +2,7 @@
   <div class="websites">
     <div class = "sitebox">
         <site v-for="item in sites" :key="item.site_name" :siteUrl="item.site_url" :siteSrc="item.site_src" :siteName="item.site_name"></site>
-        <div class="sitesmallbox">
+        <div class="sitesmallbox" v-if="islogin">
           <a @click="addBox">
           <div class="img">
             <img src="../assets/add.png">
@@ -51,13 +51,27 @@ export default {
     return {
       siteFlag: false,
       massageFlag: false,
+      islogin: false,
       noPermission: '',
     }
   },
   created () { // 在创建实例时一次性获取数据
     this.getSite()
+    this.getloginflag()
+  },
+  mounted() {
+    // this.getloginflag()
   },
   methods: {
+    getloginflag (){
+      setTimeout(() => {
+        if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+        else {
+          this.islogin = true
+          console.log('123')
+        }
+      }, 500)
+    },
     getSite () {
       console.log(this.site)
     },
@@ -142,7 +156,7 @@ export default {
   .sitebox {
     margin-top: 8%;
     padding: 10px;
-    width: 70%;
+    width: 68%;
     border-radius: 30px;
     z-index: 200;
     display: flex;

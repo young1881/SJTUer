@@ -130,12 +130,13 @@
 <style scoped>
   #searchbox {
     position: absolute;
-    top: 24%;
+    margin-top: 4%;
     left: 50%;
     transform: translate(-50%, -50%);
     height: 50px;
     width: 550px;
     z-index: 700;
+  
   }
 
   .search-engine {

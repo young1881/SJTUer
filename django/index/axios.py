@@ -1,15 +1,42 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
-import json
+
 from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
+from .draw import ai_draw
+
+import json
+
+
+def aidraw(request):
+    prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
+    # page_size理论上应该是二元元组，但是json不能传输元组，只能传输列表
+    # 所以这里加一步转换，也就是前端向后端传输列表[x,y]，这里要转成元组(x,y)
+    # ！！！前端传过来的二元数组要是整型数，不然还要再加一次转换
+    page_size = tuple(request.POST.get('page_size'))
+    need_highres = request.POST.get('need_highres')  # 是否要高质量的按钮按了没有
+
+    jaccount = request.POST.get('jaccount').strip()
+    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
+
+    try:
+        bg_path = ai_draw(prompt, page_size, need_highres)
+        res = {'key': bg_path}
+        wallpaper.photo = bg_path
+        wallpaper.photo_name = bg_path.split('/')[-1]
+        wallpaper.css = ""
+        wallpaper.save()
+    except Exception as e:
+        print(e)
+        res = {'key': -1}
+    # 这里返回了一个地址，前端添加壁纸只需要写src=127.0.0.1:8000/ + 这个地址即可
+    # res['key']形式为：media/bg_202305241829_origin.png
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def img_upload(request):
-    # jaccount = request.session['jaccount']
-
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': 1}
 
     file_img = request.FILES['upload_file']  # 获取文件对象
@@ -28,10 +55,9 @@ def img_upload(request):
     except Exception as e:
         print(e)
         return JsonResponse(0, safe=False)
-    
-def color_wallpaper(request):
-    # jaccount = request.session['jaccount']
 
+
+def color_wallpaper(request):
     jaccount = request.POST.get('jaccount').strip()
     res = {'key': 1}
     wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
@@ -42,10 +68,8 @@ def color_wallpaper(request):
 
 
 def add_site(request):
-    # jaccount = request.session['jaccount']
-
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': 1}
 
     user = User.objects.filter(jaccount=jaccount)[0]
@@ -79,7 +103,7 @@ def add_site(request):
             return HttpResponse(json.dumps(res), content_type="application/json")
         res['key'] = 2
         return HttpResponse(json.dumps(res), content_type="application/json")
-    
+
     elif 'sjtu' in site_url:
         site_src = '/dist/assets/site_icon/school.png'
         Site.objects.create(user=user, site_name=site_name, site_url=site_url, site_src=site_src)
@@ -92,7 +116,6 @@ def add_site(request):
 
 
 def refactor_site(request):
-    # jaccount = request.session['account']
     # 从前端发来的请求中拿到jaccount
     jaccount = request.POST.get('jaccount').strip()
     # print(f"\njaccount:{jaccount}\n")
@@ -141,6 +164,16 @@ def simple_mode(request):
     this_simple_mode.save()
     return HttpResponse("已保存")
 
+
+def color_wallpaper(request):
+    jaccount = request.session['jaccount']
+    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
+    css = request.POST.get('css')
+    wallpaper.css = css
+    wallpaper.save()
+    return HttpResponse("已保存")
+
+
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -155,6 +188,7 @@ def delete_task(request):
     except:
         res['key'] = -1
     return HttpResponse(json.dumps(res), content_type="application/json")
+
 
 def done_task(request):
     # jaccount = request.session['jaccount']
@@ -177,11 +211,9 @@ def done_task(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
-
 def add_task(request):
-
     jaccount = request.POST.get('jaccount').strip()
-    
+
     res = {'key': -1}
 
     user = User.objects.filter(jaccount=jaccount)[0]
@@ -191,7 +223,7 @@ def add_task(request):
     task_cate = request.POST.get('category').strip()
     task_time = request.POST.get('timeslice').strip()
     task_done = request.POST.get('done').strip()
-    
+
     if task_done == "true" or task_done == "True":
         task_done = True
     else:
@@ -199,16 +231,13 @@ def add_task(request):
 
     print(f"\ndone:{task_done}\n")
 
-    taskObj = Task.objects.create(user=user, 
-                        username=jaccount, 
-                        name=task_name,
-                        priority=task_prio, 
-                        category=task_cate,
-                        timeslice=task_time,
-                        done=task_done)
-    try:
-        id = taskObj.id
-    except:
-        pass
+    taskObj = Task.objects.create(user=user,
+                                  username=jaccount,
+                                  name=task_name,
+                                  priority=task_prio,
+                                  category=task_cate,
+                                  timeslice=task_time,
+                                  done=task_done)
+    id = taskObj.id
     res['key'] = id
     return HttpResponse(json.dumps(res), content_type="application/json")
