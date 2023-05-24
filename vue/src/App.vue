@@ -11,6 +11,9 @@
         :library="library"
         :canteen="canteen"
       ></charts>
+      <div class="loading">
+        <p v-if="showcomponent === 'charts' && !dataFlag">LOADING...</p>
+      </div>
     </div>
     <websites
       id="websites"
@@ -199,6 +202,16 @@ body {
 #head {
   margin-top: 4%;
   background-color: rgba(165, 42, 42, 0);
+}
+
+.loading{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font: bold;
+  font-size: 60px;
+  color: black;
 }
 
 .change.active {

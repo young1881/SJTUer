@@ -37,12 +37,12 @@ export default {
 </script>
 
 <style>
-.weather {
-  position: relative;
-  display: flex;
-  margin-top: 8%;
-  justify-content: center;
-}
+    .weather {
+        position: relative;
+        display: flex;
+        margin-top: 9%;
+        justify-content: center;
+    }
 
 .weather img {
   transform: scale(1.2);

@@ -1,23 +1,17 @@
 <template>
-  <div>
-    <div class="sitesmallbox" ref="box" v-if="showsite">
-      <a
-        :href="siteUrl"
-        target="_blank"
-        @contextmenu.prevent="showbox"
-        ref="delSite"
-      >
-        <div class="img">
-          <img :src="siteSrc" />
-        </div>
-      </a>
-      <p>{{ siteName }}</p>
-      <div class="del_site" v-if="delSite">
-        <div class="delbox" @click="addBox">修改</div>
-        <div class="delbox" @click="delete_site">删除</div>
+  <div class="sitesmallbox" ref="box" v-if="showsite">
+    <a :href="siteUrl" target="_blank" @contextmenu.prevent="showbox" ref="delSite">
+      <div class="img">
+        <img :src="siteSrc">
       </div>
+    </a>
+    <p >{{ siteName }}</p>
+    <div class="del_site" v-if="islogin&&delSite">
+      <div class="delbox" @click="addBox">修改</div>
+      <div class="delbox" @click="delete_site">删除</div>
     </div>
-    <div class="addSiteBox" v-if="siteFlag">
+  </div>
+  <div class="addSiteBox" v-if="siteFlag">
       <h1>修改网站名称</h1>
       <div class="box_form">
         <div class="item">
@@ -59,12 +53,25 @@ export default {
       delSite: false,
       siteFlag: false,
       massageFlag: false,
-      noPermission: "",
-    };
+      islogin: false,
+      noPermission: '',
+    }
+  },
+  created() {
+    this.getloginflag()
   },
   methods: {
+    getloginflag (){
+      setTimeout(() => {
+        if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+        else {
+          this.islogin = true
+          console.log('123')
+        }
+      }, 100)
+    },
     showbox(event) {
-      this.delSite = true;
+      this.delSite = true
       this.$nextTick(() => {
         this.$refs.delSite.style.top =
           this.$refs.box.offsetHeight - this.$refs.delSite.offsetHeight + "px";
