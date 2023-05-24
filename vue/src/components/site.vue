@@ -1,4 +1,5 @@
 <template>
+  <div> 
   <div class="sitesmallbox" ref="box" v-if="showsite">
     <a :href="siteUrl" target="_blank" @contextmenu.prevent="showbox" ref="delSite">
       <div class="img">
