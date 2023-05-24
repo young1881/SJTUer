@@ -12,17 +12,18 @@ config = Config(
     region_id='cn-shanghai'
 )
 
+
 def super_res(url, scale):
     generate_super_resolution_image_request = GenerateSuperResolutionImageRequest(
-            scale=scale,
-            output_format='png',
-            image_url=url
+        scale=scale,
+        output_format='png',
+        image_url=url
     )
     runtime = RuntimeOptions()
     try:
         client = Client(config)
         response = client.generate_super_resolution_image_with_options(
-                generate_super_resolution_image_request, runtime)
+            generate_super_resolution_image_request, runtime)
         return response.status_code, response.body
     except Exception as error:
         return error.code, error.message
