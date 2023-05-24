@@ -6,7 +6,7 @@
       </div>
     </a>
     <p >{{ siteName }}</p>
-    <div class="del_site" v-if="delSite">
+    <div class="del_site" v-if="islogin&&delSite">
       <div class="delbox" @click="addBox">修改</div>
       <div class="delbox" @click="delete_site">删除</div>
     </div>
@@ -46,11 +46,24 @@
       delSite: false,
       siteFlag: false,
       massageFlag: false,
+      islogin: false,
       noPermission: '',
     }
   },
-    methods: {
-      showbox(event) {
+  created() {
+    this.getloginflag()
+  },
+  methods: {
+    getloginflag (){
+      setTimeout(() => {
+        if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+        else {
+          this.islogin = true
+          console.log('123')
+        }
+      }, 100)
+    },
+    showbox(event) {
       this.delSite = true
       this.$nextTick(() => {
         this.$refs.delSite.style.top = 

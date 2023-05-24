@@ -39,7 +39,7 @@
     .weather {
         position: relative;
         display: flex;
-        margin-top: 8%;
+        margin-top: 9%;
         justify-content: center;
     }
 
