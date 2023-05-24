@@ -33,6 +33,7 @@
       :bilibili="bilibili"
     ></news-column>
     <weather v-if="showcomponent === 'weather'"></weather>
+    <aibackground v-if="showcomponent === 'aibackground'"></aibackground>
     <sidebar @ChangeComponent="ChangeComponent"></sidebar>
     <poem v-if="scrapyFlag" :poem="poem"></poem>
   </div>
@@ -50,6 +51,7 @@ import { getview, getscrapy, getdata } from "./api/api.js";
 import { ref, onMounted, watch } from "vue";
 import poem from "./components/poem.vue";
 import weather from "./components/weather.vue";
+import aibackground from "./components/aibackground.vue";
 
 export default {
   components: {
@@ -62,6 +64,7 @@ export default {
     TodoApp,
     NewsColumn,
     weather,
+    aibackground,
   },
   name: "App",
   setup() {
