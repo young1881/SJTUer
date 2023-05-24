@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="head">
-      <div :class="{ active: simple === true }">
+      <div class="change" :class="{ active: simple === true }">
         <flip-clock @click="changeSimple"></flip-clock>
         <searchbox id="searchbox"></searchbox>
       </div>
@@ -62,7 +62,7 @@ export default {
   },
   name: "App",
   setup() {
-    let simple = ref(true);
+    let simple = ref(false);
     const sites = ref([]);
     let showcomponent = ref("websites");
     let lastcomponent = ref("websites");
@@ -201,7 +201,7 @@ body {
   background-color: rgba(165, 42, 42, 0);
 }
 
-.active {
+.change.active {
   margin-top: 8%;
 }
 </style>
