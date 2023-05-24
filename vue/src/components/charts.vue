@@ -4,7 +4,7 @@
         <e-charts class="canteen" :option="canteenoption"/>
     </div>
 </template>
-  
+
 <script setup>
     import { ref, computed, toRefs, watch } from 'vue';
     import { defineProps } from 'vue';
@@ -23,7 +23,7 @@
     const { library,canteen } = toRefs(props);
 
     console.log(library.value[0]);
-
+    
     const CanteenData = ref([
         { value1: canteen.value[0].Seat_u, value2: canteen.value[0].Seat_r, name: '一餐' },
         { value1: canteen.value[1].Seat_u, value2: canteen.value[1].Seat_r, name: '二餐' },
@@ -46,7 +46,7 @@
     const liboption = computed(() => {
         return {
             color: [
-                '#d7ab82','#d87c7c','#4b565b','#724e58','#cc7e63','#787464','#efa18d','#6e7074',
+                '#d7ab82','#d87c7c'
             ],
             title: {
                 text: '图书馆人流量统计',
@@ -99,7 +99,7 @@
             ],
         }
     });
-  
+    
     const canteenoption = computed(() => {
         return {
             title: {
