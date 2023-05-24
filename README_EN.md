@@ -1,0 +1,70 @@
+![](vue\dist\assets\wz2.png)
+
+
+
+# SJTUer
+English | [简体中文](README.md)
+
+![](https://img.shields.io/badge/License-MIT-brightgreen.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg) ![](https://img.shields.io/badge/Release-Ver2.0-blueviolet.svg) ![](https://img.shields.io/badge/python->=3.8-blue.svg) ![](https://img.shields.io/badge/Node.js->=16.0.0-blue.svg) 
+
+SJTUers homepage is an unofficial website. The purpose of this website is to develop a personalized homepage for Shanghai Jiao Tong University students, integrating the commonly used information of SJTU and daily life.
+
+## Background
+The current domestic homepage situation is worrying:
+- Common default homepage advertisements are rampant and impractical, such as hao123, 2345, 360, etc.;
+- The default search engine can implement too few functions (only for retrieval), and the UI is not personalized enough;
+- When SJTU students visit the common websites of SJTU, they often need to memorize the URLs or add them to favorites, and they often need to search for different SJTU related information on different websites, which greatly wastes the time of countless SJTU students.
+
+Compared with existing similar homepages:
+- Some people have developed a simple and practical homepage, but the lack of personalization has not been resolved, such as [simple navigation] (https://www.jianavi.com/);
+- ZJU has built a personalized homepage for the students of the school - [ZJUers light homepage] (https://zjuers.com/), which has the characteristics of simple domain name, simple interface and complete functions, but its individuality Personalization is only for school personalization, we hope to build a personalized homepage for user units.
+
+## Features
+
+- [x] Index of commonly used websites of Jiaotong University, such as Academic Affairs Office, Teaching Information Service Network, canvas, mailbox, etc.
+- [x] User module, which supports Jaccount login, and can synchronize the URL and other data personalized by the user.
+- [x] Todolist component, which records the user's task list and supports setting task categories and priorities.
+- [x] Information components, including announcements from the Academic Affairs Office, SJTU News, Weibo, Zhihu, and bilibili hot search real-time information, using asynchronous programming to implement crawlers.
+- [x] Weather components, including real-time weather and 3-day weather forecast, can customize the current city.
+- [x] People flow components, including real-time data information visualization of canteens and libraries.
+- [x] Search engine, you can switch among commonly used search engines such as Baidu, Bing, and Google.
+- [x] Daily poems, a poem is updated at the bottom of the page with each refresh.
+- [x] Clock component, real-time page flip for dynamic display.
+- [x] Simple mode, click the clock component to automatically switch the simple mode switch, and display the todolist with the highest priority in simple mode.
+- [x] Wallpapers, users can choose from the wallpaper library or upload their own wallpapers, and synchronize with users.
+- [x] AI text to picture, you can enter a text to describe the content of the wallpaper you want to display when setting the wallpaper, and automatically generate the wallpaper according to the text.
+
+## Usage
+
+This project uses vue to build the front end and django to build the back end. The front end uses axios to request data from the back end. It works like this:
+
+Enter the `/django` directory:
+```
+pip install -r requirement.txt
+python3 manage.py migrate
+python3 manage.py runserver
+```
+
+Enter the `/vue` directory:
+```
+npm clean cache -f
+npm install
+npm run build
+```
+
+Follow the terminal prompts to access `localhost:5173/` .
+
+The output png images can be seen in the `/result` directory.
+
+## Contributing
+
+Feel free to dive in! [Open an issue](https://github.com/young1881/SJTUer/issues/new) or submit PRs.
+
+Standard Readme follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+
+### Contributors
+This project exists thanks to all the people who contribute: 
+[herfst77](https://github.com/young1881/herfst77), [joyiee](https://github.com/young1881/joyiee), [zhanzh0331](https://github.com/young1881/zhanzh0331), [Suvanka](https://github.com/young1881/Suvanka), [Zhangky11](https://github.com/young1881/Zhangky11), [young1881](https://github.com/young1881/young1881),
+
+## License
+[MIT](LICENSE) &copy; Wortox Young
