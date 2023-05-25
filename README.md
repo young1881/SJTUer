@@ -16,8 +16,8 @@ The current domestic homepage situation is worrying:
 - When SJTUers visit the common SJTU websites, they often need to memorize the URLs or add them to favorites, and they often need to search for different SJTU related information on different websites, which greatly wastes the time of countless SJTUers.
 
 Compared with existing similar homepages:
-- Some people have developed a simple and practical homepage, but the lack of personalization has not been resolved, such as [simple navigation] (https://www.jianavi.com/);
-- ZJU has built a personalized homepage for the students of the school - [ZJUers light homepage] (https://zjuers.com/), which has the characteristics of simple domain name, simple interface and complete functions, but its individuality Personalization is only for school personalization, we hope to build a personalized homepage for user units.
+- Some people have developed a simple and practical homepage, but the lack of personalization has not been resolved, such as [simple navigater](https://www.jianavi.com/);
+- ZJU has built a personalized homepage for the students of the school - [ZJUers](https://zjuers.com/), which has the characteristics of simple domain name, simple interface and complete functions, but its individuality Personalization is only for school personalization, we hope to build a personalized homepage for user units.
 
 ## Features
 
