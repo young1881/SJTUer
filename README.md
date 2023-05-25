@@ -36,7 +36,7 @@ Compared with existing similar homepages:
 
 ## Usage
 
-This project uses vue to build the front end and django to build the back end. The front end uses axios to request data from the back end. The workflow is shown as follow.
+This project uses [vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache.org/en/index.html) & [Eslint](https://eslint.org/) to build the front end and [django](https://www.djangoproject.com/), [sqlite](https://www.sqlite.org/index.html) & [aliyun](https://www.alibabacloud.com/en) to build the back end. The front end uses [axios](https://axios-http.com/) to request data from the back end. The workflow is shown as follow.
 
 ![](workflow.png)
 
