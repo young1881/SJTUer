@@ -23,7 +23,7 @@
     const { library, canteen } = toRefs(props);
 
     console.log(library.value[0]);
-    
+    //value1代表餐厅已有人数，value2代表餐厅还可以容纳的人数
     const CanteenData = ref([
         { value1: canteen.value[0].Seat_u, value2: canteen.value[0].Seat_r, name: '一餐' },
         { value1: canteen.value[1].Seat_u, value2: canteen.value[1].Seat_r, name: '二餐' },
@@ -34,7 +34,7 @@
         { value1: canteen.value[6].Seat_u, value2: canteen.value[6].Seat_r, name: '七餐' },
         { value1: canteen.value[7].Seat_u, value2: canteen.value[7].Seat_r, name: '哈乐' },
     ]);
-
+    //value1代表图书馆已有人数，value2代表图书馆还可以容纳的人数
     const LibraryData = ref([
         { value1: library.value[0].inCounter, value2: library.value[0].max - library.value[0].inCounter, name: '图书馆主馆' },
         { value1: library.value[1].inCounter, value2: library.value[1].max - library.value[1].inCounter, name: '李政道图书馆' },
@@ -59,6 +59,7 @@
                     type: 'shadow'
                 }
             },
+            //侧边栏，可以实现看数据表，bar和stack相互转换,下载图片
             toolbox: {
                 show: true,
                 orient: 'vertical',
@@ -72,6 +73,7 @@
                     saveAsImage: { show: true }
                 }
             },
+            //图例
             legend: {
                 orient: 'horizontal',
                 x: 'right]',
@@ -113,6 +115,7 @@
                     type: 'shadow'
                 }
             },
+             //侧边栏，可以实现看数据表，bar和stack相互转换,下载图片
             toolbox: {
                 show: true,
                 orient: 'vertical',
@@ -126,6 +129,7 @@
                     saveAsImage: { show: true }
                 }
             },
+             //图例
             legend: {
                 orient: 'horizontal',
                 x: 'right',
@@ -162,7 +166,7 @@
         margin-top: 9%;
         height: 400px;
         margin-bottom: 7%;
-        background-color: rgba(255, 255, 255, 0.304);
+        background-color: rgba(255, 255, 255, 0.508);
         border-radius: 30px;
         display: flex;
         align-content: center;

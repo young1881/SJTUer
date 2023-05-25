@@ -183,8 +183,14 @@ export default {
 
 
 <style>
-body{
-  background: rgb(254, 232, 253);
+html {
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: rgb(214, 207, 247);
   z-index: -3;
   position: absolute;
   top: 0;
