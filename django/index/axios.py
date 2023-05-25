@@ -165,15 +165,6 @@ def simple_mode(request):
     return HttpResponse("已保存")
 
 
-def color_wallpaper(request):
-    jaccount = request.session['jaccount']
-    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
-    css = request.POST.get('css')
-    wallpaper.css = css
-    wallpaper.save()
-    return HttpResponse("已保存")
-
-
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -228,8 +219,6 @@ def add_task(request):
         task_done = True
     else:
         task_done = False
-
-    print(f"\ndone:{task_done}\n")
 
     taskObj = Task.objects.create(user=user,
                                   username=jaccount,

@@ -11,7 +11,7 @@ SJTUers轻主页为非官方网站。本网站的目的在于为交大学生开�
 
 ## 背景
 目前的国内首页情况堪忧：
-- 常见的默认主页广告横行且不实用，例如hao123，2345，360等；
+- 常见的默认主页广告横行且不实用，例如[hao123](https://www.hao123.com/?from=hao123)，[2345](https://www.2345.com/)，[360](http://se.360.cn/wz.html)；
 - 默认的搜索引擎可以实现功能过少（仅能用于检索），并且UI个性化不足；
 - 交大学生在访问交大常见网址时，往往需要通过记忆网址或加入收藏夹的形式，且查询不同交大相关资料时往往需要在不同网站寻找，这极大地浪费了无数交大学子的时间。
 
@@ -36,7 +36,7 @@ SJTUers轻主页为非官方网站。本网站的目的在于为交大学生开�
 
 ## 使用方式
 
-本项目使用vue构建前端，使用django构建后端，前端采用axios向后端发起请求获取数据。工作流程图如下：
+本项目使用[vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache.org/en/index.html) & [Eslint](https://eslint.org/)构建前端，使用[django](https://www.djangoproject.com/), [sqlite](https://www.sqlite.org/index.html) & [aliyun](https://www.alibabacloud.com/en)构建后端，前端采用[axios](https://axios-http.com/)向后端发起请求获取数据。工作流程图如下：
 ![](workflow.png)
 
 运行方式如下：

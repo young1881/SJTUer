@@ -13,8 +13,8 @@
     <span class="prio">{{ listItem.priority.name }}</span>
     <span class="prio">{{ listItem.category.name }}</span>
     <span class="prio">{{ listItem.timeslice.name }}</span>
-    <div class="delete">
-      <button @click="deleteToDo">Delete</button>
+    <div >
+      <button class="delete" @click="deleteToDo">Delete</button>
     </div>
   </div>
 </template>
@@ -43,7 +43,9 @@ export default {
   display: flex;
   align-items: center;
   background-color: white;
-  padding: 8px;
+  padding: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
   border-radius: 8px;
   color: #414837;
 }
@@ -56,7 +58,7 @@ export default {
   width: 70%;
 
   padding: 10px;
-  font: 20px;
+  font: 16px;
   text-align: center;
   overflow: hidden;
 
@@ -79,8 +81,8 @@ export default {
   content: "";
   display: block;
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
 }
 
@@ -104,17 +106,19 @@ input[type="checkbox"] {
   display: flex;
   margin-left: 22px;
   opacity: 0;
+
 }
 
 .todoitem input:checked + span.bubble::after {
-  width: 10px;
-  height: 10px;
+  align-items: center;
+  width: 9px;
+  height: 9px;
   opacity: 1;
 }
 
 .todoitem .prio {
   display: block;
-  padding: 8px;
+  padding: 5px;
   width: 70px;
   background: #b39ddb;
   justify-items: center;
@@ -125,13 +129,7 @@ input[type="checkbox"] {
   margin-left: 12px;
 }
 
-.todoitem .delete {
-  display: block;
-  padding: 8px;
-  border-radius: 5px;
-  margin-left: 50px;
-}
-
+ 
 .todoitem .delete button:hover {
   opacity: 0.75;
 }
@@ -140,25 +138,31 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   border: 2px solid;
 }
 
 .todoitem .delete {
+
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 50px;
+  font-weight:700;
   display: flex;
-  height: 40px;
-  width: 100px;
+  height: 32px;
+  width: 80px;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 14px;
   padding: 8px 16px;
   border-radius: 24px;
-  font-weight: 700;
+  font-weight: bold;
   background-color: #dcedc8;
+  
 }
 
 .todoitem .delete:hover {

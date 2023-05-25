@@ -1,10 +1,20 @@
 <template>
   <div id="app">
-    <div id="head">
+    <div id="head" v-if="showcomponent!='todo'">
       <div class="change" :class="{ active: simple === true }">
         <flip-clock @click="changeSimple"></flip-clock>
         <searchbox id="searchbox"></searchbox>
       </div>
+      <!--transition name="move">
+        <div v-if="isshowing">
+          <flip-clock @click="changeSimple"></flip-clock>
+          <searchbox id="searchbox"></searchbox>
+        </div>
+      </transition-->
+      <!--div id="box">
+        <flip-clock @click="changeSimple"></flip-clock>
+        <searchbox id="searchbox"></searchbox>
+      </div-->
       <charts
         id="charts"
         v-if="showcomponent === 'charts' && dataFlag"
@@ -15,6 +25,7 @@
         <p v-if="showcomponent === 'charts' && !dataFlag">LOADING...</p>
       </div-->
     </div>
+
     <websites
       id="websites"
       v-if="showcomponent === 'websites'"
@@ -69,6 +80,7 @@ export default {
   name: "App",
   setup() {
     let simple = ref(false);
+    let isshowing = true;
     const sites = ref([]);
     let showcomponent = ref("websites");
     let lastcomponent = ref("websites");
@@ -132,6 +144,7 @@ export default {
         showcomponent.value = "simpletodo";
         simple.value = true;
       }
+
       //console.log(simple.value);
     };
 
@@ -154,6 +167,7 @@ export default {
     );
 
     return {
+      isshowing,
       simple,
       sites,
       library,
@@ -207,9 +221,9 @@ body {
   background-color: rgba(165, 42, 42, 0);
 }
 
-.loading{
+.loading {
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font: bold;
@@ -219,5 +233,9 @@ body {
 
 .change.active {
   margin-top: 8%;
+  transition: 0.5s;
 }
+
+
+
 </style>

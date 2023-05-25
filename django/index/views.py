@@ -119,10 +119,10 @@ def scrap_view(request):
 
 def index_view(request):
     # 初始化default用户
-    jaccount_default_flag = User.objects.filter(jaccount='0000')
+    jaccount_default_flag = User.objects.filter(jaccount='000')
     if not jaccount_default_flag:
-        User.objects.create(jaccount='0000')
-        user = User.objects.filter(jaccount='0000')[0]
+        User.objects.create(jaccount='000')
+        user = User.objects.filter(jaccount='000')[0]
         SimpleMode.objects.create(user=user)
         Wallpaper.objects.create(user=user)
         Task.objects.create(user=user)
@@ -142,7 +142,7 @@ def index_view(request):
             SimpleMode.objects.create(user=user, username=result, is_active=False)
             Wallpaper.objects.create(user=user, username=result)
             Task.objects.create(user=user, username=result)
-            user_site_flag = Site.objects.filter(user='0000')
+            user_site_flag = Site.objects.filter(user='000')
             for site in user_site_flag:
                 Site.objects.create(site_name=site.site_name, site_url=site.site_url, site_src=site.site_src, user=user,
                                     is_active=site.is_active)
@@ -161,8 +161,8 @@ def index_view(request):
 
     except:
         result = ''
-        jaccount = '0000'
-        user = User.objects.filter(jaccount='0000')[0]
+        jaccount = '000'
+        user = User.objects.filter(jaccount='000')[0]
         simple_mode = {'username': 'visitor', 'is_active': False}
         wallpaper = {'username': "visitor",
                      'photo_url': 'media/visitor.jpg',

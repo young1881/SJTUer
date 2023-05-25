@@ -52,7 +52,7 @@ export default {
     };
 
     /*与DoneFilter.vue组件相关代码*/
-    const filter = ref({ lable: "All", value: "all" });
+    let filter = ref("all");
     const filterTodo = computed(() => {
       switch (filter.value) {
         case "done":
@@ -196,7 +196,7 @@ export default {
   margin-top: 120px;
   border-radius: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.12);
-  padding: 50px 30px;
+  padding: 40px 24px;
   background-color: rgb(255, 255, 255, 0.5);
 }
 
@@ -219,7 +219,7 @@ button {
 }
 
 .todo-list {
-  max-height: 225px;
+  max-height: 275px;
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
