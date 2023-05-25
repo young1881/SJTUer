@@ -68,9 +68,8 @@ export default {
         if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
         else {
           this.islogin = true
-          console.log('123')
         }
-      }, 500)
+      }, 300)
     },
     getSite () {
       console.log(this.site)

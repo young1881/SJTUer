@@ -63,13 +63,18 @@ export default {
   },
   methods: {
     getloginflag (){
-      setTimeout(() => {
-        if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
         else {
           this.islogin = true
-          console.log('123')
         }
-      }, 100)
+      if(this.islogin = false){
+        setTimeout(() => {
+          if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+          else {
+            this.islogin = true
+          }
+        }, 100)
+      }
     },
     showbox(event) {
       this.delSite = true
@@ -217,22 +222,20 @@ export default {
 .del_site {
   position: absolute;
   top: 30%;
-  right: 5%;
+  right: 0%;
   z-index: 999;
   color: black;
   border-radius: 10px;
 }
 
 .delbox {
-  padding: 10px;
+  padding: 5px 10px;
   background-color: rgba(255, 255, 255, 0.94);
   border: 1px solid rgb(169, 169, 169);
-  border-radius: 15px;
+  border-radius: 8px;
+  font-size: 15px;
 }
 
-.delbox a {
-  font-size: 14px;
-}
 
 .addSiteBox {
   position: absolute;
