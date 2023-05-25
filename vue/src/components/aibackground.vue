@@ -217,7 +217,7 @@ import { ref } from 'vue';
 
   .color_wallpaper .color_wallpaper_desc {
     color: rgb(0, 0, 0, 0.9);
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .ai_wallpaper {
