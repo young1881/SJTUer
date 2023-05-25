@@ -8,8 +8,8 @@
     </a>
     <p >{{ siteName }}</p>
     <div class="del_site" v-if="islogin&&delSite">
-      <div class="delbox" @click="addBox">修改</div>
-      <div class="delbox" @click="delete_site">删除</div>
+      <div class="delbox" @click="addBox"><a>修改</a></div>
+      <div class="delbox" @click="delete_site"><a>删除</a></div>
     </div>
   </div>
   <div class="addSiteBox" v-if="siteFlag">
@@ -64,12 +64,11 @@ export default {
   methods: {
     getloginflag (){
       setTimeout(() => {
-        if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
-        else {
-          this.islogin = true
-          console.log('123')
-        }
-      }, 100)
+          if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
+          else {
+            this.islogin = true
+          }
+        }, 500)
     },
     showbox(event) {
       this.delSite = true
@@ -217,21 +216,21 @@ export default {
 .del_site {
   position: absolute;
   top: 30%;
-  right: 5%;
+  right: 0%;
   z-index: 999;
   color: black;
   border-radius: 10px;
 }
 
 .delbox {
-  padding: 10px;
+  padding: 5px 10px;
   background-color: rgba(255, 255, 255, 0.94);
   border: 1px solid rgb(169, 169, 169);
-  border-radius: 15px;
+  border-radius: 8px;
+  font-size: 15px;
 }
-
-.delbox a {
-  font-size: 14px;
+.delbox:hover {
+cursor: pointer;
 }
 
 .addSiteBox {
@@ -303,12 +302,17 @@ export default {
     0px 0px 0px rgba(255, 255, 255, 0.1), inset 4px 4px 4px rgba(0, 0, 0, 0.1),
     inset -4px -4px 4px rgba(255, 255, 255, 1);
   transition: box-shadow 0.2s ease-out;
+  cursor: pointer;
 }
 
 .addSiteBox .box_form .button2 {
   position: absolute;
   top: 5%;
   right: 5%;
+}
+
+.addSiteBox .box_form .button2:hover {
+cursor: pointer;
 }
 
 .addSiteBox .box_form .button2 img {

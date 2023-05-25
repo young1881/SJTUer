@@ -21,9 +21,9 @@
         :library="library"
         :canteen="canteen"
       ></charts>
-      <div class="loading">
+      <!--div class="loading">
         <p v-if="showcomponent === 'charts' && !dataFlag">LOADING...</p>
-      </div>
+      </div-->
     </div>
 
     <websites
@@ -204,7 +204,7 @@ html {
 }
 
 body {
-  background: rgb(214, 207, 247);
+  background: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
   z-index: -3;
   position: absolute;
   top: 0;
