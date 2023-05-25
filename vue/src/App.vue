@@ -231,6 +231,9 @@ body {
   color: black;
 }
 
+.change {
+  transition: 0.5s;
+}
 .change.active {
   margin-top: 8%;
   transition: 0.5s;
