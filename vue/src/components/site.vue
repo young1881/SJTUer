@@ -63,18 +63,12 @@ export default {
   },
   methods: {
     getloginflag (){
-      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
-        else {
-          this.islogin = true
-        }
-      if(this.islogin = false){
-        setTimeout(() => {
+      setTimeout(() => {
           if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
           else {
             this.islogin = true
           }
-        }, 100)
-      }
+        }, 500)
     },
     showbox(event) {
       this.delSite = true
