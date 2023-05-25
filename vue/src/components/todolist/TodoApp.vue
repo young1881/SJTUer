@@ -3,8 +3,10 @@
   <div class="container" v-else>
     <div class="todolist">
       <new-todo @new-todo="newTodo" />
+      <div class="filter"> 
       <done-filter :selected="filter" @change="filter = $event"></done-filter>
       <option-filter @option-filt="updatefilter"></option-filter>
+    </div>
       <todo-list
         class="todo-list"
         @delete-todo="RemoveTodo"
@@ -210,6 +212,10 @@ button {
   outline: none;
   background: none;
   cursor: initial;
+}
+.filter
+{
+  display: flex;
 }
 
 .todo-list {
