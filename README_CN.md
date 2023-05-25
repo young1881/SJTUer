@@ -52,7 +52,7 @@ python3 manage.py runserver
 ```
 npm clean cache -f
 npm install
-npm run build
+npm run dev
 ```
 
 按终端提示访问 `localhost:5173/` 即可。
