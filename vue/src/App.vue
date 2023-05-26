@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div id="head" v-if="showcomponent!='todo'">
-      <div class="change" :class="{ active: simple === true }">
+      <div class="change" :class="{ active: simple === true }" v-if="islogin">
+        <flip-clock @click="changeSimple"></flip-clock>
+        <searchbox id="searchbox"></searchbox>
+      </div>
+      <div class="change1" :class="{ active: simple === true }" v-if="!islogin">
         <flip-clock @click="changeSimple"></flip-clock>
         <searchbox id="searchbox"></searchbox>
       </div>
@@ -33,7 +37,7 @@
     ></websites>
     <todo-app
       :simple="simple"
-      v-if="showcomponent === 'todo' || showcomponent === 'simpletodo'"
+      v-if="(showcomponent === 'todo' || showcomponent === 'simpletodo') && islogin"
     ></todo-app>
     <news-column
       v-if="showcomponent === 'news' && scrapyFlag"
@@ -95,6 +99,7 @@ export default {
     const wallpaper = ref([])
     const scrapyFlag = ref(false);
     const dataFlag = ref(false);
+    const islogin = ref(false)
 
     const getView = async () => {
       const response = await getview();
@@ -106,6 +111,13 @@ export default {
         null,
         2
       );
+
+    setTimeout(() => {
+      if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) islogin.value = false
+      else {
+        islogin.value = true
+      }
+    }, 300)
 
       wallpaper.value = response.data["wallpaper"]
       console.log(wallpaper.value);
@@ -188,6 +200,7 @@ export default {
       zhihu,
       bilibili,
       poem,
+      islogin,
       getView,
       getScrapy,
       getData,
@@ -246,7 +259,15 @@ body {
   transition: 0.5s;
 }
 .change.active {
-  margin-top: 8%;
+  margin-top: 10%;
+  transition: 0.5s;
+}
+
+.change1 {
+  transition: 0.5s;
+}
+.change1.active {
+  margin-top: 18%;
   transition: 0.5s;
 }
 
