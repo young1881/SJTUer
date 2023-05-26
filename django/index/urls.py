@@ -16,7 +16,7 @@ urlpatterns = [
     path('add_task/', axios.add_task, name="add_task"),
     path('delete_task/', axios.delete_task, name="delete_task"),
     path('done_task/', axios.done_task, name="done_task"),
-    path('aidraw/', axios.ai_draw, name="aidraw"),
+    path('aidraw/', axios.aidraw_view, name="aidraw"),
     path('upload_img/', csrf_exempt(axios.img_upload), name="uploda_img"),
     path('color_wallpaper/', axios.color_wallpaper, name="color_wallpaper"),
 ]

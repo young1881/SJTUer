@@ -8,8 +8,7 @@ from .draw import ai_draw
 import json
 
 
-def aidraw(request):
-    print(request.POST.get('page_size'))
+def aidraw_view(request):
     prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
     page_width = int(request.POST.get('page_width'))
     page_height = int(request.POST.get('page_height'))

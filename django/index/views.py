@@ -140,7 +140,8 @@ def index_view(request):
             User.objects.create(user_name=result, jaccount=jaccount)
             user = User.objects.filter(jaccount=jaccount)[0]
             SimpleMode.objects.create(user=user, username=result, is_active=False)
-            Wallpaper.objects.create(user=user, username=result)
+            Wallpaper.objects.create(user=user, username=result,
+                                     css='linear-gradient(90deg, #70e1f5 0%, #ffd194 100%)')
             Task.objects.create(user=user, username=result)
             user_site_flag = Site.objects.filter(user='0000')
             for site in user_site_flag:
