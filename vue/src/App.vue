@@ -92,6 +92,7 @@ export default {
     const zhihu = ref([]);
     const bilibili = ref([]);
     const poem = ref([]);
+    const wallpaper = ref([])
     const scrapyFlag = ref(false);
     const dataFlag = ref(false);
 
@@ -105,6 +106,12 @@ export default {
         null,
         2
       );
+
+      wallpaper.value = response.data["wallpaper"]
+      // console.log("Wallpaper-css:");
+      // console.log(wallpaper.value.css);
+
+
       sessionStorage.setItem("name", response.data["name"]);
       sessionStorage.setItem("jaccount", response.data["account"]);
     };

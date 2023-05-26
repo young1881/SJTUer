@@ -54,24 +54,109 @@
 
 <script>
 import { ref } from 'vue';
-
+import axios from "axios";
+import { createForLoopParams } from '@vue/compiler-core';
   export default {
     name: 'aibackground',
     methods: {
       change_color_wallpaper: function(e) {
         var name = e.target.id;
         var css = name_to_css(name);
+        var that = this;
         document.querySelector('body').setAttribute('style', 'background:' + css)
+
+        var params = new URLSearchParams();
+        var jaccount = sessionStorage.getItem("jaccount");
+
+        params.append("jaccount", jaccount); // jaccount也需要传递到后端
+        params.append("css", css); 
+
+        // 发送POST请求
+        axios
+          .post("http://localhost:8000/index/color_wallpaper/", params)
+          .then(function (response) {
+            console.log("Wallpaper:");
+            console.log(response.data["key"]);
+            if (response.data["key"] == 1) {
+              console.log("壁纸修改成功！");
+            }
+            if (response.data["key"] == 0) {
+              console.log("壁纸修改失败！");
+            }
+          })
+          .catch(function (error) {
+            // 报错处理
+            console.log(error);
+          });
       },
       upload_img: function() {
         var file = document.getElementById('upload_file').files[0];
+        var formData = new FormData()
+
+        console.log("upload_wallpaper_file:")
         console.log(file);
+        
+        var params = new URLSearchParams();
+        var jaccount = sessionStorage.getItem("jaccount");
+
+        // params.append("jaccount", jaccount); // jaccount也需要传递到后端
+        // params.append("upload_file", file); 
+
+        formData.append("jaccount", jaccount);
+        formData.append("upload_file", file)
+
+        // 发送POST请求
+        axios
+          .post("http://localhost:8000/index/upload_img/", formData)
+          .then(function (response) {
+            console.log("Wallpaper:");
+            console.log(response.data["key"]);
+            if (response.data["key"] == 1) {
+              console.log("壁纸文件修改成功！");
+            }
+            if (response.data["key"] == 0) {
+              console.log("壁纸文件修改失败！");
+            }
+          })
+          .catch(function (error) {
+            // 报错处理
+            console.log(error);
+          });
       },
     },
     setup(props, context) {
       const isLoading = ref(false)
       function submit_aidraw() {
         isLoading.value = true
+        var params = new URLSearchParams();
+        var jaccount = sessionStorage.getItem("jaccount");
+
+        params.append("jaccount", jaccount); // jaccount也需要传递到后端
+
+        // 下方分别传三个参数：prompt, 页面大小的列表（必须是整型），是否勾选
+        params.append("prompt", context); 
+        params.append("page_size", context); 
+        params.append("need_highres", context); 
+
+        // 发送POST请求
+        axios
+          .post("http://localhost:8000/index/aidraw/", params)
+          .then(function (response) {
+            console.log("Wallpaper:");
+            console.log(response.data["key"]);
+            if (response.data["key"] == -1) {
+              console.log("壁纸生成失败！");
+            }
+            else
+            {
+              // res['key'] 这里返回了一个地址，前端添加壁纸只需要写src=127.0.0.1:8000/ + 这个地址即可
+              // res['key']形式为：media/bg_202305241829_origin.png
+            }
+          })
+          .catch(function (error) {
+            // 报错处理
+            console.log(error);
+          });
       }
       return {
         isLoading,
