@@ -416,7 +416,7 @@ def initialize_site(user):
     Site.objects.create(site_name='腾讯视频', site_url='https://v.qq.com/',
                         site_src="https://v.qq.com/favicon.ico", user=user)
     Site.objects.create(site_name='爱奇艺', site_url='https://www.iqiyi.com/',
-                        site_src="https://www.iqiyipic.com/pcwimg/128-128-logo.png", user=user)
+                        site_src="https://www.iqiyipic.com/lequ/20230510/256-256-logo.png", user=user)
     Site.objects.create(site_name='一个木函', site_url='https://web.woobx.cn/',
                         site_src="https://ol.woobx.cn/static/icons/apple-touch-icon.png", user=user)
     Site.objects.create(site_name='百度', site_url='https://www.baidu.com/',

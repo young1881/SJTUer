@@ -98,7 +98,7 @@ def add_site(request):
         if not site[0].is_active:
             site[0].is_active = True
             site[0].save()
-            res['key'] = 2
+            res['key'] = 1
             return HttpResponse(json.dumps(res), content_type="application/json")
         res['key'] = 2
         return HttpResponse(json.dumps(res), content_type="application/json")
