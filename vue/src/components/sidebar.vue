@@ -68,7 +68,7 @@
     position: fixed;
     top: 5%;
     left: 2%;
-    width: 60px;
+    width: 70px;
     height: 600px;
   }
 
