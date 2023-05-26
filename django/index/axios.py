@@ -1,6 +1,8 @@
 from django.http import JsonResponse, HttpResponse
 from urllib.parse import urlparse
 
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Site, SimpleMode, Wallpaper, User, Task
 from .views import get_icon_src
 from .draw import ai_draw
@@ -8,6 +10,7 @@ from .draw import ai_draw
 import json
 
 
+@csrf_exempt
 def aidraw_view(request):
     prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
     page_width = int(request.POST.get('page_width'))
@@ -33,6 +36,7 @@ def aidraw_view(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def img_upload(request):
     jaccount = request.POST.get('jaccount').strip()
     print(jaccount)
@@ -53,6 +57,7 @@ def img_upload(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def color_wallpaper(request):
     jaccount = request.POST.get('jaccount').strip()
     res = {'key': 1}
@@ -66,6 +71,7 @@ def color_wallpaper(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def add_site(request):
     jaccount = request.POST.get('jaccount').strip()
 
@@ -98,7 +104,7 @@ def add_site(request):
         if not site[0].is_active:
             site[0].is_active = True
             site[0].save()
-            res['key'] = 2
+            res['key'] = 1
             return HttpResponse(json.dumps(res), content_type="application/json")
         res['key'] = 2
         return HttpResponse(json.dumps(res), content_type="application/json")
@@ -114,6 +120,7 @@ def add_site(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def refactor_site(request):
     # 从前端发来的请求中拿到jaccount
     jaccount = request.POST.get('jaccount').strip()
@@ -138,6 +145,7 @@ def refactor_site(request):
     # return JsonResponse(1, safe=False)
 
 
+@csrf_exempt
 def delete_site(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -154,6 +162,7 @@ def delete_site(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def simple_mode(request):
     jaccount = request.session['jaccount']
     this_simple_mode = SimpleMode.objects.get(user=jaccount)
@@ -164,6 +173,7 @@ def simple_mode(request):
     return HttpResponse("已保存")
 
 
+@csrf_exempt
 def delete_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -180,6 +190,7 @@ def delete_task(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def done_task(request):
     # jaccount = request.session['jaccount']
     jaccount = request.POST.get('jaccount').strip()
@@ -201,6 +212,7 @@ def done_task(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
+@csrf_exempt
 def add_task(request):
     jaccount = request.POST.get('jaccount').strip()
 
