@@ -43,7 +43,7 @@ SJTUers（上海交通大学学生门户系统）为非官方网站应用。本�
 
 进入 `/django` 目录下：
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 python3 manage.py migrate
 python3 manage.py runserver
 ```

@@ -5,7 +5,6 @@ from . import views, axios
 urlpatterns = [
     # get请求：view.py
     path('', views.index_view, name='index'),
-    path('test/', views.test_view, name='test'),
     path('scrapy/', views.scrap_view, name='scrapy'),
     path('data/', views.data_view, name="data"),
     # post请求：axios.py
