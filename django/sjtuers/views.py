@@ -1,4 +1,6 @@
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+
 from sjtuers.oauth import jaccount
 from sjtuers.settings import JACCOUNT_CLIENT_ID
 from django.shortcuts import redirect
@@ -7,15 +9,18 @@ from authlib.oidc.core import CodeIDToken
 from urllib.parse import urlencode
 
 
+@csrf_exempt
 def index_view(request):
     return HttpResponseRedirect('/index/')
 
 
+@csrf_exempt
 def login(request):
     redirect_uri = request.build_absolute_uri('/authorize')
     return jaccount.authorize_redirect(request, redirect_uri)
 
 
+@csrf_exempt
 def authorize(request):
     token: dict = jaccount.authorize_access_token(request)
     claims = jwt.decode(token.pop('id_token'),
@@ -29,6 +34,7 @@ def authorize(request):
     return redirect(redir_uri)
 
 
+@csrf_exempt
 def logout(request):
     response = HttpResponseRedirect(
         'https://jaccount.sjtu.edu.cn/oauth2/logout?' +
@@ -42,6 +48,7 @@ def logout(request):
     return response
 
 
+@csrf_exempt
 def logged_out(request):
     # redir_uri = request.build_absolute_uri('/index')
     redir_uri = "http://localhost:5173/"  # 部署时需要改（？）

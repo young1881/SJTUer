@@ -1,4 +1,6 @@
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Site, SimpleMode, User, Wallpaper, Task
 
 import requests
@@ -17,11 +19,13 @@ headers = {
 }
 
 
+@csrf_exempt
 def data_view(request):
     data = {"library": lib(), "canteen": canteen()}
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
+@csrf_exempt
 def scrap_view(request):
     names = [
         'jwc',
@@ -117,6 +121,7 @@ def scrap_view(request):
     return HttpResponse(json.dumps(locals), content_type="application/json")
 
 
+@csrf_exempt
 def index_view(request):
     # 初始化default用户
     jaccount_default_flag = User.objects.filter(jaccount='0000')
@@ -190,11 +195,6 @@ def index_view(request):
         'task': task,
     }
     return HttpResponse(json.dumps(locals), content_type="application/json")
-
-
-def test_view(request):
-    image_data = open("media/4.jpg", 'rb').read()
-    return HttpResponse(image_data, content_type="image/png")
 
 
 # 按字符实际长度截取，一个汉字长度为2，一个字母/数字长度为1
@@ -416,7 +416,7 @@ def initialize_site(user):
     Site.objects.create(site_name='腾讯视频', site_url='https://v.qq.com/',
                         site_src="https://v.qq.com/favicon.ico", user=user)
     Site.objects.create(site_name='爱奇艺', site_url='https://www.iqiyi.com/',
-                        site_src="https://www.iqiyipic.com/pcwimg/128-128-logo.png", user=user)
+                        site_src="https://www.iqiyipic.com/lequ/20230510/256-256-logo.png", user=user)
     Site.objects.create(site_name='一个木函', site_url='https://web.woobx.cn/',
                         site_src="https://ol.woobx.cn/static/icons/apple-touch-icon.png", user=user)
     Site.objects.create(site_name='百度', site_url='https://www.baidu.com/',
