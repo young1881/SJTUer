@@ -7,7 +7,7 @@ English | [简体中文](README_CN.md)
 
 ![](https://img.shields.io/badge/License-MIT-brightgreen.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg) ![](https://img.shields.io/badge/Release-Ver2.0-blueviolet.svg) ![](https://img.shields.io/badge/python->=3.8-blue.svg) ![](https://img.shields.io/badge/Node.js->=16.0.0-blue.svg) 
 
-SJTUers homepage is an unofficial website. The purpose of this website is to develop a personalized homepage for Shanghai Jiao Tong University students, integrating the commonly used information of SJTU and daily life.
+SJTUers (a portal system for Shanghai Jiao Tong University students) is an unofficial website application. The purpose of this website is to develop a personalized homepage for SJTU students, integrating the commonly used information of SJTU and daily life.
 
 ## Background
 The current domestic homepage situation is worrying:

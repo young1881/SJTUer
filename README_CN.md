@@ -7,7 +7,7 @@
 
 ![](https://img.shields.io/badge/License-MIT-brightgreen.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg) ![](https://img.shields.io/badge/Release-Ver2.0-blueviolet.svg) ![](https://img.shields.io/badge/python->=3.8-blue.svg) ![](https://img.shields.io/badge/Node.js->=16.0.0-blue.svg) 
 
-SJTUers轻主页为非官方网站。本网站的目的在于为交大学生开发个性化主页，集成交大常用与生活常用为一体。
+SJTUers（上海交通大学学生门户系统）为非官方网站应用。本应用的目的在于为交大学生开发个性化一站式主页，集成交大常用与生活常用为一体。
 
 ## 背景
 目前的国内首页情况堪忧：
@@ -15,9 +15,9 @@ SJTUers轻主页为非官方网站。本网站的目的在于为交大学生开�
 - 默认的搜索引擎可以实现功能过少（仅能用于检索），并且UI个性化不足；
 - 交大学生在访问交大常见网址时，往往需要通过记忆网址或加入收藏夹的形式，且查询不同交大相关资料时往往需要在不同网站寻找，这极大地浪费了无数交大学子的时间。
 
-与现有相似首页相比：
-- 目前已有人开发简洁、实用的首页，但是个性化不足仍未解决，例如[简约导航](https://www.jianavi.com/)；
-- 当下友校已搭建出了该校学生个性化使用的首页——[ZJUers轻首页](https://zjuers.com/)，其具有域名简单、界面简约、功能齐全的特点，但其个性化仅为学校个性化，我们希望能够搭建一个用户单位个性化的首页。
+与现有相似门户系统相比：
+- 目前已有人开发简洁、实用的门户系统，但是个性化不足仍未解决，例如[简约导航](https://www.jianavi.com/)；
+- 当下友校已搭建出了该校学生个性化使用的门户系统——[ZJUers轻首页](https://zjuers.com/)，其具有域名简单、界面简约、功能齐全的特点，但其个性化仅为学校个性化，我们希望能够搭建一个用户单位个性化的首页。
 
 ## 功能
 
