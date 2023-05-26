@@ -1,67 +1,74 @@
-![](vue\dist\assets\wz2.png)
+![](logo.png)
 
 
 
 # SJTUer
-简体中文 | [English](README_EN.md)
+English | [简体中文](README_CN.md)
 
 ![](https://img.shields.io/badge/License-MIT-brightgreen.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg) ![](https://img.shields.io/badge/Release-Ver2.0-blueviolet.svg) ![](https://img.shields.io/badge/python->=3.8-blue.svg) ![](https://img.shields.io/badge/Node.js->=16.0.0-blue.svg) 
 
-SJTUers轻主页为非官方网站。本网站的目的在于为交大学生开发个性化主页，集成交大常用与生活常用为一体。
+SJTUers homepage is an unofficial website. The purpose of this website is to develop a personalized homepage for Shanghai Jiao Tong University students, integrating the commonly used information of SJTU and daily life.
 
-## 背景
-目前的国内首页情况堪忧：
-- 常见的默认主页广告横行且不实用，例如hao123，2345，360等；
-- 默认的搜索引擎可以实现功能过少（仅能用于检索），并且UI个性化不足；
-- 交大学生在访问交大常见网址时，往往需要通过记忆网址或加入收藏夹的形式，且查询不同交大相关资料时往往需要在不同网站寻找，这极大地浪费了无数交大学子的时间。
+## Background
+The current domestic homepage situation is worrying:
+- Common default homepage advertisements are rampant and impractical, such as [hao123](https://www.hao123.com/?from=hao123), [2345](https://www.2345.com/), [360](http://se.360.cn/wz.html), etc.;
+- Homepages like default search engines can implement too few functions (only for retrieval), and the UI is not personalized enough;
+- When SJTUers visit the common SJTU websites, they often need to memorize the URLs or add them to favorites, and they often need to search for different SJTU related information on different websites, which greatly wastes the time of countless SJTUers.
 
-与现有相似首页相比：
-- 目前已有人开发简洁、实用的首页，但是个性化不足仍未解决，例如[简约导航](https://www.jianavi.com/)；
-- 当下友校已搭建出了该校学生个性化使用的首页——[ZJUers轻首页](https://zjuers.com/)，其具有域名简单、界面简约、功能齐全的特点，但其个性化仅为学校个性化，我们希望能够搭建一个用户单位个性化的首页。
+Compared with existing similar homepages:
+- Some people have developed a simple and practical homepage, but the lack of personalization has not been resolved, such as [simple navigater](https://www.jianavi.com/);
+- ZJU has built a personalized homepage for the students of the school - [ZJUers](https://zjuers.com/), which has the characteristics of simple domain name, simple interface and complete functions, but its individuality Personalization is only for school personalization, we hope to build a personalized homepage for user units.
 
-## 功能
+## Features
 
-- [x] 交大常用网址索引，如教务处、教学信息服务网、canvas、邮箱等；
-- [x] 用户模块，支持Jaccount登录，并可以同步用户个性化设置的网址等数据；
-- [x] Todolist组件，记录用户的任务清单，支持设置任务类别、优先级;
-- [x] 资讯组件，包括教务处通知公告、交大新闻、微博、知乎、bilibili热搜实时信息，使用异步编程实现爬虫；
-- [x] 天气组件，包括实时天气与3日天气预告，可自定义当前城市；
-- [x] 人流量组件，包括食堂、图书馆实时数据信息可视化；
-- [x] 搜索引擎，可以在百度、必应、谷歌等常用搜索引擎中切换；
-- [x] 每日诗词，随着每次刷新在网页底部更新一句诗词；
-- [x] 时钟组件，实时翻页进行动态展示；
-- [x] 简洁模式，点击时钟组件可以自动切换简洁模式开关，简洁模式下展示优先级最高的todolist；
-- [x] 壁纸，用户可以在壁纸库中选择也可以上传自己的壁纸，并与用户同步；
-- [x] AI文字转图片，可以在设置壁纸时输入一段文字描述希望展示的壁纸内容，依据内容自动生成壁纸。
+- [x] Index of commonly used websites of SJTU, such as Academic Affairs Office, Teaching Information Service Network, canvas, mailbox, etc.
+- [x] User module, which supports Jaccount login, and can synchronize the URL and other data personalized by the user.
+- [x] Todolist component, which records the user's task list and supports setting task categories and priorities.
+- [x] Information components, including announcements from the Academic Affairs Office, SJTU News, Weibo, Zhihu, and bilibili hot search real-time information, using asynchronous programming to implement crawlers.
+- [x] Weather components, including real-time weather and 3-day weather forecast, can customize the current city.
+- [x] People flow components, including real-time data information visualization of canteens and libraries.
+- [x] Search engine, which allows switching among commonly used search engines such as Baidu, Bing, and Google.
+- [x] Daily poems, a poem is updated at the bottom of the page with each refresh.
+- [x] Clock component, real-time page flip for dynamic display.
+- [x] Simple mode, click the clock component to automatically switch the simple mode switch, and display the todolist with the highest priority in simple mode.
+- [x] Wallpapers, where users can choose from the wallpaper library or upload their own wallpapers, and synchronize with users.
+- [x] AI text to picture, which allows entering a text to describe the content of the wallpaper you want to display when setting the wallpaper, and automatically generate the wallpaper according to the text.
 
-## 使用方式
+## Usage
 
-本项目使用vue构建前端，使用django构建后端，前端采用axios向后端发起请求获取数据。运行方式如下：
+This project uses [vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache.org/en/index.html) & [Eslint](https://eslint.org/) to build the front end and [django](https://www.djangoproject.com/), [sqlite](https://www.sqlite.org/index.html) & [aliyun](https://www.alibabacloud.com/en) to build the back end. The front end uses [axios](https://axios-http.com/) to request data from the back end. The workflow is shown as follow.
 
-进入 `/django` 目录下：
+![](workflow.png)
+
+It could be used like this:
+
+Enter the `/django` directory:
 ```
 pip install -r requirement.txt
 python3 manage.py migrate
 python3 manage.py runserver
 ```
 
-进入 `/vue` 目录下：
+Enter the `/vue` directory:
 ```
 npm clean cache -f
 npm install
 npm run build
 ```
 
-按终端提示访问 `localhost:5173/` 即可。
+Follow the terminal prompts to access `localhost:5173/` .
 
-输出的png图片可以在 `/result` 目录下看到。
+The output png images can be seen in the `/result` directory.
 
-## 如何贡献
-非常欢迎你的加入！[提一个 Issue](https://github.com/young1881/SJTUer/issues/new) 或者提交一个 Pull Request。
+## Contributing
 
-### 贡献者
-感谢以下参与项目的人：
+Feel free to dive in! [Open an issue](https://github.com/young1881/SJTUer/issues/new) or submit PRs.
+
+Standard Readme follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+
+### Contributors
+This project exists thanks to all the people who contribute: 
 [herfst77](https://github.com/herfst77), [joyiee](https://github.com/joyiee), [zhanzh0331](https://github.com/zhanzh0331), [Suvanka](https://github.com/Suvanka), [Zhangky11](https://github.com/Zhangky11), [young1881](https://github.com/young1881)
 
-## 协议
+## License
 [MIT](LICENSE) &copy; Wortox Young

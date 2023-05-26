@@ -136,7 +136,7 @@ export default {
   margin-left: auto;
   grid-template-columns: 100px 100px 100px auto;
   grid-gap: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .optionfilter .filt {

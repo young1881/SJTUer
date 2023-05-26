@@ -14,7 +14,7 @@
     ></div>
     <div
       :class="['m-options-panel', showOptions ? 'show' : 'hidden']"
-      :style="`height: ${selectData.length * 40}px;`"
+      :style="`height: ${selectData.length * 32}px;`"
       :appendToBody="true"
     >
       <p
@@ -95,8 +95,8 @@ export default {
 <style lang="less" scoped>
 .m-select-wrap {
   width: 135px;
-  height: 40px;
-  line-height: 40px;
+  height: 32px;
+  line-height: 32px;
   position: relative;
 
   .u-select-input {
@@ -129,7 +129,7 @@ export default {
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 10px solid #111211;
+    border-top: 10px solid #b39ddb;
     position: absolute;
     top: 18px;
     right: 40px;

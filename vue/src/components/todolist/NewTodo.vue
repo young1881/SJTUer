@@ -179,7 +179,7 @@ export default {
   display: block;
   width: 100%;
   font-size: 20px;
-  padding: 16px 24px;
+  padding: 13px 20px;
   border-radius: 8px;
   margin-bottom: 24px;
   box-shadow: 0px 0px 24px rgba(230, 230, 250, 0.1);
@@ -188,9 +188,9 @@ export default {
 
 .newtodo .optionline {
   display: grid;
-  grid-template-columns: 120px 120px 120px auto;
+  grid-template-columns: 96px 96px 96px auto;
   grid-gap: 18px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .newtodo input[type="submit"] {
@@ -209,5 +209,6 @@ export default {
   border-radius: 8px;
   font-weight: 700;
   background-color: #aed581;
+  margin-bottom: 0px;
 }
 </style>
