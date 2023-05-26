@@ -127,16 +127,22 @@ import { createForLoopParams } from '@vue/compiler-core';
     setup(props, context) {
       const isLoading = ref(false)
       function submit_aidraw() {
-        isLoading.value = true
+        isLoading.value = true;
         var params = new URLSearchParams();
         var jaccount = sessionStorage.getItem("jaccount");
+        var prompt = document.getElementById("prompt_txt").value;
+        var need_highres = document.getElementById("need_highres").checked;
+        var page_width = document.documentElement.clientWidth;
+        var page_height = document.documentElement.clientHeight;
 
         params.append("jaccount", jaccount); // jaccount也需要传递到后端
 
         // 下方分别传三个参数：prompt, 页面大小的列表（必须是整型），是否勾选
-        params.append("prompt", context); 
-        params.append("page_size", context); 
-        params.append("need_highres", context); 
+        params.append("prompt", prompt); 
+        params.append("page_width", page_width);
+        params.append("page_height", page_height);
+        params.append("need_highres", need_highres); 
+        console.log(params);
 
         // 发送POST请求
         axios
@@ -147,11 +153,12 @@ import { createForLoopParams } from '@vue/compiler-core';
             if (response.data["key"] == -1) {
               console.log("壁纸生成失败！");
             }
-            else
-            {
+            else {
+              document.querySelector('body').setAttribute('style', 'background-image: url("http://127.0.0.1:8000/' + response.data["key"] + '");');
               // res['key'] 这里返回了一个地址，前端添加壁纸只需要写src=127.0.0.1:8000/ + 这个地址即可
               // res['key']形式为：media/bg_202305241829_origin.png
             }
+            isLoading.value = false;
           })
           .catch(function (error) {
             // 报错处理

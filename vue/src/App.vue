@@ -108,9 +108,12 @@ export default {
       );
 
       wallpaper.value = response.data["wallpaper"]
-      // console.log("Wallpaper-css:");
-      // console.log(wallpaper.value.css);
-
+      console.log(wallpaper.value);
+      const body = document.querySelector('body');
+      if (wallpaper.value.css)
+        body.style.background = wallpaper.value.css;
+      else
+        body.setAttribute('style', 'background-image: url("http://127.0.0.1:8000/' + wallpaper.value.photo_url + '");');
 
       sessionStorage.setItem("name", response.data["name"]);
       sessionStorage.setItem("jaccount", response.data["account"]);
@@ -212,6 +215,7 @@ html {
 
 body {
   background: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  background-size: cover;
   z-index: -3;
   position: absolute;
   top: 0;

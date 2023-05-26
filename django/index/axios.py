@@ -9,11 +9,11 @@ import json
 
 
 def aidraw(request):
+    print(request.POST.get('page_size'))
     prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
-    # page_size理论上应该是二元元组，但是json不能传输元组，只能传输列表
-    # 所以这里加一步转换，也就是前端向后端传输列表[x,y]，这里要转成元组(x,y)
-    # ！！！前端传过来的二元数组要是整型数，不然还要再加一次转换
-    page_size = tuple(request.POST.get('page_size'))
+    page_width = int(request.POST.get('page_width'))
+    page_height = int(request.POST.get('page_height'))
+    page_size = (page_width, page_height)
     need_highres = request.POST.get('need_highres')  # 是否要高质量的按钮按了没有
 
     jaccount = request.POST.get('jaccount').strip()

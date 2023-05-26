@@ -55,6 +55,7 @@ def high_res(url_init):
 
 
 def ai_draw(prompt, page_size, need_highres=False):
+    prompt += ", wallpaper, masterpiece, 8k, best quality, highres, ultra detailed"
     # 获取当前日期和时间
     now = time.strftime("%Y%m%d%H%M", time.localtime())
     # 找最接近的预设尺寸
@@ -83,6 +84,5 @@ def ai_draw(prompt, page_size, need_highres=False):
 
 # 【调试使用】从控制台输入参数
 # prompt = input("请输入prompt：")
-# prompt += ", wallpaper, masterpiece, 8k, best quality, highres, ultra detailed"
 # page_size = (1920, 1080)
 # ai_draw(prompt, page_size, False)
