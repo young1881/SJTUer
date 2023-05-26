@@ -1,51 +1,12 @@
-# SJTUer
+## Docker镜像创建方法
 
-This template should help get you started developing with Vue 3 in Vite.
+* 根据Dockerfile构建镜像，镜像名称为sjtuer_vue
 
-## Recommended IDE Setup
+    ` docker build -t sjtuer_vue . `
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## Docker镜像使用方法
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* 根据sjtuer_vue镜像构建容器（sjtuer_frontend）并运行，并且将宿主机的端口5173与容器的5173端口建立映射
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
+    ` docker run -it -d --name sjtuer_frontend -p 5173:5173 sjtuer_vue `
