@@ -9,16 +9,16 @@ import json
 
 
 def aidraw(request):
+    print(request.POST.get('page_size'))
     prompt = request.POST.get('prompt')  # 用户的文字需求，字符串类型
-    # page_siaze理论上应该是二元元组，但是json不能传输元组，只能传输列表
-    # 所以这里加一步转换，也就是前端向后端传输列表[x,y]，这里要转成元组(x,y)
-    # ！！！前端传过来的二元数组要是整型数，不然还要再加一次转换
-    page_size = tuple(request.POST.get('page_size'))
+    page_width = int(request.POST.get('page_width'))
+    page_height = int(request.POST.get('page_height'))
+    page_size = (page_width, page_height)
     need_highres = request.POST.get('need_highres')  # 是否要高质量的按钮按了没有
 
     jaccount = request.POST.get('jaccount').strip()
     wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
-
+    res = {'key': -1}
     try:
         bg_path = ai_draw(prompt, page_size, need_highres)
         res = {'key': bg_path}
@@ -36,35 +36,35 @@ def aidraw(request):
 
 def img_upload(request):
     jaccount = request.POST.get('jaccount').strip()
-
+    print(jaccount)
     res = {'key': 1}
-
     file_img = request.FILES['upload_file']  # 获取文件对象
     file_name = request.FILES['upload_file'].name.strip()
     print(file_name)
+
     if file_name == "":
-        return JsonResponse(0, safe=False)
+        res['key'] = 0
 
     wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
     wallpaper.photo = file_img
     wallpaper.photo_name = file_name
     wallpaper.css = ""
     wallpaper.save()
-    try:
-        return JsonResponse(1, safe=False)
-    except Exception as e:
-        print(e)
-        return JsonResponse(0, safe=False)
+
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def color_wallpaper(request):
     jaccount = request.POST.get('jaccount').strip()
     res = {'key': 1}
-    wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
-    css = request.POST.get('css')
-    wallpaper.css = css
-    wallpaper.save()
-    return HttpResponse("已保存")
+    try:
+        wallpaper = Wallpaper.objects.filter(user=jaccount)[0]
+        css = request.POST.get('css')
+        wallpaper.css = css
+        wallpaper.save()
+    except:
+        res['key'] = 0
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
 def add_site(request):
