@@ -176,12 +176,13 @@ export default {
 
 <style>
 .newtodo input[class="name"] {
-  display: block;
+  display: flex;
   width: 100%;
+  height: 42px;
   font-size: 20px;
-  padding: 13px 20px;
+  padding: 8px 24px;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   box-shadow: 0px 0px 24px rgba(230, 230, 250, 0.1);
   background-color: white;
 }
@@ -190,7 +191,8 @@ export default {
   display: grid;
   grid-template-columns: 96px 96px 96px auto;
   grid-gap: 18px;
-  margin-bottom: 16px;
+  margin-left: 4px;
+  margin-bottom: 4px;
 }
 
 .newtodo input[type="submit"] {
@@ -199,9 +201,9 @@ export default {
   outline: none;
   display: flex;
   margin-left: auto;
-  height: 40px;
-  width: 150px;
-  font-size: 16px;
+  height: 35px;
+  width: 100px;
+  font-size: 14px;
   padding: 8px 16px;
   text-align: center;
   align-items: center;
