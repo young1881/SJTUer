@@ -40,7 +40,7 @@ This project uses [vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache
 
 ![](workflow.png)
 
-It could be used like this:
+### Run in Terminal
 
 Enter the `/django` directory:
 ```
@@ -57,6 +57,8 @@ npm run build
 ```
 
 Follow the terminal prompts to access `localhost:5173/` .
+
+### Run in Docker
 
 The output png images can be seen in the `/result` directory.
 
