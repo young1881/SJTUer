@@ -30,20 +30,20 @@
           <input type="file" name="upload_file" id="upload_file">
         </div>
         <div class="button3">
-          <a href="javascript:void(0)" @click="upload_img">
+          <div href="javascript:void(0)" @click="upload_img">
             <input id="submit_wp" type="submit" value="提 交">
-          </a>
+          </div>
         </div>
       </form>
     </div>
-    <b class="wallpaper_btn" id="aidraw">AI创作壁纸</b>
+    <b class="wallpaper_btn" id="aidraw">AI 创作壁纸</b>
     <div class="ai_wallpaper">
       <div class="prompt_form">
-        <input class="prompt_txt" id="prompt_txt" placeholder="输入提示词或句子，支持中英文，例如：赛博朋克, 城市, 霓虹灯, 科幻, 未来, 高清, 无水印, 详细">
+        <input class="prompt_txt" id="prompt_txt" placeholder="输入一组提示词或句子，支持中英文，例如：赛博朋克, 城市, 霓虹灯, 科幻, 未来, 高清, 无水印">
       </div>
-      <div class="highres_form">
+      <label class="highres_form">
         <input type="checkbox" id="need_highres" name="need_highres" value = "need_highres">生成高清图像（耗时较长）
-      </div>
+      </label>
       <input id="submit_aidraw" type="submit" v-show="!isLoading" @click="submit_aidraw" value="提 交">
       <div class="loading_aidraw" v-show="isLoading">
         <img src="..\assets\loading.gif" id="loading_gif">创作中，请稍候...
@@ -208,6 +208,7 @@ import { createForLoopParams } from '@vue/compiler-core';
     color: rgb(0, 0, 0, 0.8);
     font-size: 20px;
     width: 150px;
+    text-shadow: 2px 2px 5px rgb(239, 194, 228);
   }
 
   #preset, #upload, #aidraw {
@@ -235,6 +236,29 @@ import { createForLoopParams } from '@vue/compiler-core';
 
   #upload_file {
     font-size: 18px;
+    color: rgb(0, 0, 0, 0.9);
+    text-shadow: 2px 2px 5px rgb(175, 175, 175);
+  }
+
+  .upload input[type="file"]::-webkit-file-upload-button {
+    appearance: none;
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #aed581;
+    margin-bottom: 0px;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .upload input[type="file"]::-webkit-file-upload-button:hover {
+    cursor: pointer;
+    opacity: 0.75;
   }
 
   #submit_wp {
@@ -246,6 +270,47 @@ import { createForLoopParams } from '@vue/compiler-core';
     font-size: 18px;
     width: 100px;
     margin-top: 10px;
+  }
+
+  .button3 input[type="submit"] {
+  appearance: none;
+  border: none;
+  outline: none;
+  display: flex;
+  margin-left: auto;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #aed581;
+  margin-bottom: 0px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+  .button3 input[type="submit"]:hover {
+    cursor: pointer;
+    opacity: 0.75;
+  }
+
+  .ai_wallpaper input[type="submit"] {
+  appearance: none;
+  border: none;
+  outline: none;
+  display: flex;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #aed581;
+  margin-bottom: 0px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+  .ai_wallpaper input[type="submit"]:hover {
+    cursor: pointer;
+    opacity: 0.75;
   }
 
   .wallpapers .wallpaperBox button {
@@ -284,7 +349,6 @@ import { createForLoopParams } from '@vue/compiler-core';
     border-radius: 5px;
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   }
-
   
   .wallpaperBox {
     position: relative;
@@ -355,18 +419,23 @@ import { createForLoopParams } from '@vue/compiler-core';
     display: flex;
     margin-top: 10px;
     font-size: 18px;
+    color: rgb(0, 0, 0, 0.9);
+    text-shadow: 2px 2px 5px rgb(175, 175, 175);
+    cursor: pointer;
   }
 
   #need_highres {
     opacity: 1;
     margin-right: 10px;
     transform: scale(1.5);
+    cursor: pointer;
   }
 
   .loading_aidraw {
     display: flex;
     color: rgb(0, 0, 0, 0.9);
     padding-top: 10px;
+    text-shadow: 2px 2px 5px rgb(175, 175, 175);
   }
 
   #loading_gif {
