@@ -153,6 +153,8 @@ export default {
           // 报错处理
           console.log(error);
         });
+        
+        todoName.value = "";
     };
 
     const showMessage = (text) => {
