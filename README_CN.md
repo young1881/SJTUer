@@ -41,6 +41,8 @@ SJTUers（上海交通大学学生门户系统）为非官方网站应用。本�
 
 ### 在终端运行
 
+### 终端运行
+
 进入 `/django` 目录下：
 ```
 pip install -r requirements.txt
@@ -60,6 +62,22 @@ npm run build
 ### 在Docker中运行
 
 输出的png图片可以在 `/result` 目录下看到。
+
+### Docker运行
+
+从Docker Hub分别拉取Django项目镜像和Vue项目镜像并运行：
+
+```shell
+docker pull kyrie11zhang/sjtuer_django
+docker run -it -d --name sjtuer_backend -p 8000:8000 kyrie11zhang/sjtuer_django
+```
+
+```shell
+docker pull kyrie11zhang/sjtuer_vue
+docker run -it -d --name sjtuer_frontend -p 5173:5173 kyrie11zhang/sjtuer_vue
+```
+
+访问 `localhost:5173/` 即可。
 
 ## 如何贡献
 非常欢迎你的加入！[提一个 Issue](https://github.com/young1881/SJTUer/issues/new) 或者提交一个 Pull Request。
