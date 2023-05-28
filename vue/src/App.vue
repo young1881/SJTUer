@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="head" v-if="showcomponent!='todo'">
+    <div id="head">
       <div class="change" :class="{ active: simple === true }" v-if="islogin">
         <flip-clock @click="changeSimple"></flip-clock>
         <searchbox id="searchbox"></searchbox>

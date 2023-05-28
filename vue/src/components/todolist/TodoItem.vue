@@ -43,7 +43,7 @@ export default {
   display: flex;
   align-items: center;
   background-color: white;
-  padding: 4px;
+  padding: 1px;
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 8px;
@@ -56,19 +56,10 @@ export default {
   align-content: center;
   cursor: pointer;
   width: 70%;
-
-  padding: 10px;
-  font: 16px;
+  padding: 8.5px;
+  font: 14px;
   text-align: center;
   overflow: hidden;
-
-  /*
-  display: flex;
-  position: relative;
-  align-content: center;
-  cursor: pointer;
-  width: 70%;
-  */
 }
 
 .todoitem label span.bubble {
@@ -117,16 +108,16 @@ input[type="checkbox"] {
 }
 
 .todoitem .prio {
-  display: block;
-  padding: 5px;
+  display: flex;
+  padding: 0px;
   width: 70px;
+  height: 24px;
   background: #b39ddb;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
-  text-align: center;
   border-radius: 16px;
   color: white;
-  margin-left: 12px;
+  font-size: 14px;
 }
 
  
@@ -139,7 +130,7 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   width: 16px;
-  height: 16px;
+  height: 15px;
   border-radius: 50%;
   border: 2px solid;
 }
@@ -158,7 +149,7 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  padding: 8px 16px;
+  padding: 8px 0px;
   border-radius: 24px;
   font-weight: bold;
   background-color: #dcedc8;

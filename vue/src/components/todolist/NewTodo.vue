@@ -1,36 +1,41 @@
 <template>
   <div class="newtodo">
-    <input
-      type="text"
-      class="name"
-      v-model="todoName"
-      placeholder="e.g Homework"
-    />
-    <div class="optionline">
-      <!--
+    <div class="regular" :class="{ active: massageFlag === true }" >
+      <input
+        type="text"
+        class="name"
+        v-model="todoName"
+        placeholder="e.g Homework"
+      />
+      <div class="optionline">
+        <!--
       <input type="text" class="option" placeholder="priority" />
       <input type="text" class="option" placeholder="category" />
       <input type="text" class="option" placeholder="timeslice" />
       !-->
-      <select-data
-        :selectData="Priority"
-        :selValue="PriorityValue"
-        color="green"
-        @getValue="getPrio"
-      />
-      <select-data
-        :selectData="Category"
-        :selValue="CategoryValue"
-        color="green"
-        @getValue="getCate"
-      />
-      <select-data
-        :selectData="Timeslice"
-        :selValue="TimesliceValue"
-        color="green"
-        @getValue="getTime"
-      />
-      <input type="submit" value="Add Todo" @click="submitNewtodo" />
+        <select-data
+          :selectData="Priority"
+          :selValue="PriorityValue"
+          color="green"
+          @getValue="getPrio"
+        />
+        <select-data
+          :selectData="Category"
+          :selValue="CategoryValue"
+          color="green"
+          @getValue="getCate"
+        />
+        <select-data
+          :selectData="Timeslice"
+          :selValue="TimesliceValue"
+          color="green"
+          @getValue="getTime"
+        />
+        <input type="submit" value="Add Todo" @click="submitNewtodo" />
+      </div>
+    </div>
+    <div class="massagebox" v-if="massageFlag">
+      {{ noPermission }}
     </div>
   </div>
 </template>
@@ -103,6 +108,8 @@ export default {
     const PriorityValue = Priority[0].value;
     const CategoryValue = Category[0].value;
     const TimesliceValue = Timeslice[0].value;
+    let massageFlag = ref(false);
+    let noPermission = ref("");
 
     const submitNewtodo = () => {
       const todo = {
@@ -114,6 +121,10 @@ export default {
         timeslice: Time,
         is_active: true,
       };
+      if (todoName.value == "") {
+        showMessage("输入不能为空！");
+        return;
+      }
       //context.emit("new-todo", todo);
       //console.log(todoName);
       var params = new URLSearchParams();
@@ -143,6 +154,15 @@ export default {
           console.log(error);
         });
     };
+
+    const showMessage = (text) => {
+      noPermission.value = text;
+      massageFlag.value = true;
+      setTimeout(() => {
+        massageFlag.value = false;
+      }, 666);
+    };
+
     const getPrio = (name, value, index) => {
       Prio = { name, value };
       console.log("item:", name, value, index);
@@ -157,8 +177,10 @@ export default {
     };
 
     return {
+      massageFlag,
+      noPermission,
       submitNewtodo,
-
+      showMessage,
       Priority,
       Category,
       Timeslice,
@@ -176,12 +198,13 @@ export default {
 
 <style>
 .newtodo input[class="name"] {
-  display: block;
+  display: flex;
   width: 100%;
+  height: 42px;
   font-size: 20px;
-  padding: 13px 20px;
+  padding: 8px 24px;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   box-shadow: 0px 0px 24px rgba(230, 230, 250, 0.1);
   background-color: white;
 }
@@ -190,7 +213,8 @@ export default {
   display: grid;
   grid-template-columns: 96px 96px 96px auto;
   grid-gap: 18px;
-  margin-bottom: 16px;
+  margin-left: 4px;
+  margin-bottom: 4px;
 }
 
 .newtodo input[type="submit"] {
@@ -199,9 +223,9 @@ export default {
   outline: none;
   display: flex;
   margin-left: auto;
-  height: 40px;
-  width: 150px;
-  font-size: 16px;
+  height: 35px;
+  width: 100px;
+  font-size: 14px;
   padding: 8px 16px;
   text-align: center;
   align-items: center;
@@ -210,5 +234,12 @@ export default {
   font-weight: 700;
   background-color: #aed581;
   margin-bottom: 0px;
+}
+.newtodo input[type="submit"]:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+.regular.active{
+  opacity: 0.5;
 }
 </style>

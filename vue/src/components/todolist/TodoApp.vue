@@ -189,14 +189,14 @@ export default {
 }
 
 .container {
-  width: 80%;
+  width: 65%;
   display: grid;
   text-align: center;
   margin: auto;
   margin-top: 120px;
   border-radius: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.12);
-  padding: 40px 24px;
+  padding: 35px 28px;
   background-color: rgb(255, 255, 255, 0.5);
 }
 
@@ -219,7 +219,7 @@ button {
 }
 
 .todo-list {
-  max-height: 275px;
+  max-height: 168px;
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
