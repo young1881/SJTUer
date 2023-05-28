@@ -42,8 +42,6 @@ This project uses [vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache
 
 ### Run in Terminal
 
-### Run in Terminal
-
 Enter the `/django` directory:
 ```
 pip install -r requirements.txt
@@ -59,10 +57,6 @@ npm run build
 ```
 
 Follow the terminal prompts to access `localhost:5173/` .
-
-### Run in Docker
-
-The output png images can be seen in the `/result` directory.
 
 ### Run in Docker
 
