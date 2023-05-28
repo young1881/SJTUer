@@ -1,4 +1,4 @@
-![](logo.png)
+![](./logo.png)
 
 
 
@@ -61,7 +61,7 @@ npm run build
 
 ### 在Docker中运行
 
-输出的png图片可以在 `/result` 目录下看到。
+输出的镜像文件可以在 `/result` 目录下看到。
 
 ### Docker运行
 
