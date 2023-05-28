@@ -17,6 +17,10 @@ def aidraw_view(request):
     page_height = int(request.POST.get('page_height'))
     page_size = (page_width, page_height)
     need_highres = request.POST.get('need_highres')  # 是否要高质量的按钮按了没有
+    if need_highres == "true" or need_highres == "True":
+        need_highres = True
+    else:
+        need_highres = False
 
     jaccount = request.POST.get('jaccount').strip()
     wallpaper = Wallpaper.objects.filter(user=jaccount)[0]

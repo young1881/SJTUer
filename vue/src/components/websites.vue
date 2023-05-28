@@ -63,6 +63,7 @@ export default {
     // this.getloginflag()
   },
   methods: {
+    // 判断是否登录
     getloginflag (){
       setTimeout(() => {
         if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
@@ -74,9 +75,11 @@ export default {
     getSite () {
       console.log(this.site)
     },
+    // 出现添加框
     addBox () {
       this.siteFlag = true
     },
+    // 出现弹窗
     showMessage (text) {
       this.noPermission = text
       this.massageFlag = true
@@ -84,11 +87,13 @@ export default {
         this.massageFlag = false
       }, 2000)
     },
+    // 关闭添加框
     closeSite () {
       this.siteFlag = false
       this.addName = ''
       this.addUrl = ''
     },
+    // 添加网站函数
     addSite(){
       this.siteFlag = false
       const siteName = this.addName

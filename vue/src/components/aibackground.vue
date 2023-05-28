@@ -285,6 +285,7 @@ import { createForLoopParams } from '@vue/compiler-core';
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   }
 
+  
   .wallpaperBox {
     position: relative;
     display: flex;
@@ -393,4 +394,5 @@ import { createForLoopParams } from '@vue/compiler-core';
   #RareWind {
     background: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
   }
+  
 </style>

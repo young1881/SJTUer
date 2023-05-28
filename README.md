@@ -40,7 +40,9 @@ This project uses [vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache
 
 ![](workflow.png)
 
-It could be used like this:
+### Run in Terminal
+
+### Run in Terminal
 
 Enter the `/django` directory:
 ```
@@ -58,7 +60,25 @@ npm run build
 
 Follow the terminal prompts to access `localhost:5173/` .
 
+### Run in Docker
+
 The output png images can be seen in the `/result` directory.
+
+### Run in Docker
+
+Pull docker image from docker hub and run, Django and Vue, respectively:
+
+```shell
+docker pull kyrie11zhang/sjtuer_django
+docker run -it -d --name sjtuer_backend -p 8000:8000 kyrie11zhang/sjtuer_django
+```
+
+```shell
+docker pull kyrie11zhang/sjtuer_vue
+docker run -it -d --name sjtuer_frontend -p 5173:5173 kyrie11zhang/sjtuer_vue
+```
+
+Visit `localhost:5173/` .
 
 ## Contributing
 

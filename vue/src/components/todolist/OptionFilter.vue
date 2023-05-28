@@ -134,9 +134,10 @@ export default {
 .optionfilter {
   display: grid;
   margin-left: auto;
-  grid-template-columns: 100px 100px 100px auto;
+  grid-template-columns: 80px 80px 80px auto;
   grid-gap: 30px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  margin-top:12px;
 }
 
 .optionfilter .filt {
@@ -145,8 +146,8 @@ export default {
   outline: none;
   display: flex;
   margin-left: auto;
-  height: 40px;
-  width: 100px;
+  height: 30px;
+  width: 90px;
   font-size: 16px;
   padding: 8px 16px;
   text-align: center;

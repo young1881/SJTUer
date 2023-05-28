@@ -94,23 +94,24 @@ export default {
 </script>
 <style lang="less" scoped>
 .m-select-wrap {
-  width: 135px;
+  width: 120px;
   height: 32px;
   line-height: 32px;
   position: relative;
 
   .u-select-input {
-    width: 105px;
+    display: flex;
+    width: 85px;
     background: #3a79ee;
     color: #ffffff;
     box-shadow: 0px 10px 20px 0px rgba(144, 119, 222, 0.2);
     border-radius: 20px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 32px;
     padding: 0 15px;
     cursor: pointer;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .m-options-panel {
@@ -131,8 +132,8 @@ export default {
     border-right: 5px solid transparent;
     border-top: 10px solid #b39ddb;
     position: absolute;
-    top: 18px;
-    right: 40px;
+    top: 12px;
+    right: 52px;
     transition: transform 0.3s ease-in-out;
   }
 
@@ -144,10 +145,10 @@ export default {
     position: absolute;
     background: #ffffff;
     border-radius: 8px;
-    width: 133px;
+    width: 85px;
     border: 1px solid #e3e3e3;
     top: 46px;
-    left: 0;
+    //margin-left: 20px;
     color: #404040;
     font-size: 16px;
 

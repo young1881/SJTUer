@@ -34,8 +34,6 @@ export default {
   margin: 24px, 2px;
   color: #c0c2ce;
   font-size: 18px;
-  margin-left: 8px;
-  margin-bottom: 0px;
 }
 
 .statusfilter .filter {

@@ -156,9 +156,9 @@
   .search-engine-list::after {
     content: '';
     width: 90%;
-    height: 50px;
+    height: 100px;
     position: absolute;
-    top: -25px;
+    top: -60px;
     left: 0px;
   }
 

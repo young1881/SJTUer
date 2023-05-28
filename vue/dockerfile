@@ -15,5 +15,4 @@ RUN npm install axios
 # copy project files and folders to the current working directory (i.e. 'app' folder)  
 COPY . .  
 
-# RUN yarn run dev --host 0.0.0.0
 CMD [ "yarn", "run", "dev", "--host", "0.0.0.0" ]

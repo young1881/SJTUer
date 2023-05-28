@@ -1,11 +1,23 @@
+/// <reference types="vitest" />
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), vueJsx()],
+  test:{
+    globals: true,
+    environment:"jsdom",
+    coverage:{
+      provider:"c8",
+    },
+    transformMode:{
+      web: [/\.[jt]sx$/],
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
