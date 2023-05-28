@@ -37,7 +37,7 @@ SJTUers（上海交通大学学生门户系统）为非官方网站应用。本�
 ## 使用方式
 
 本项目使用[vue](https://cn.vuejs.org/), [Echarts](https://echarts.apache.org/en/index.html) & [Eslint](https://eslint.org/)构建前端，使用[django](https://www.djangoproject.com/), [sqlite](https://www.sqlite.org/index.html) & [aliyun](https://www.alibabacloud.com/en)构建后端，前端采用[axios](https://axios-http.com/)向后端发起请求获取数据。工作流程图如下：
-![](workflow.png)
+![](docs/workflow.png)
 
 ### 在终端运行
 
