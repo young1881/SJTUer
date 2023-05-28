@@ -62,6 +62,7 @@ export default {
     this.getloginflag()
   },
   methods: {
+    // 判断是否登录
     getloginflag (){
       setTimeout(() => {
           if (sessionStorage.getItem("jaccount") == "0000" | sessionStorage.getItem("jaccount") == null) this.islogin = false
@@ -70,6 +71,7 @@ export default {
           }
         }, 500)
     },
+    //出现修改删除框
     showbox(event) {
       this.delSite = true
       this.$nextTick(() => {
@@ -79,17 +81,19 @@ export default {
         document.addEventListener("click", this.hidebox);
       });
     },
+    //点击任何地方隐藏修改删除框
     hidebox(event) {
       if (!this.$refs.box.contains(event.target)) {
         this.delSite = false;
         document.removeEventListener("click", this.hidebox);
       }
     },
-
+    // 修改窗口出现
     addBox() {
       this.siteFlag = true;
       this.delSite = false;
     },
+    // 弹窗
     showMessage(text) {
       this.noPermission = text;
       this.massageFlag = true;
@@ -97,6 +101,7 @@ export default {
         this.massageFlag = false;
       }, 2000);
     },
+    // 关闭修改窗口
     closeSite() {
       this.siteFlag = false;
       this.addName = "";
