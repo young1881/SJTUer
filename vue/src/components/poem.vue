@@ -1,6 +1,7 @@
 <template>
   <div class="poem">
     <p class="sentence">
+      <!--实现诗词格式是：「 诗歌内容 」 ——《诗名》 诗歌作者 -->
       {{ `「 ${poem.content} 」 ——《${poem.origin}》 ${poem.author}` }}
     </p>
   </div>

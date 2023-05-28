@@ -53,6 +53,7 @@
                 x: 'center',
                 y: 'top'
             },
+            //悬停提示已有人数和可容纳人数
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
